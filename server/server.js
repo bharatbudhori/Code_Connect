@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 //hello
-=======
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -14,4 +12,4 @@ app.listen(port, () => {
 });
 
 //testing commits
->>>>>>> 731aa112e6d0a1b2ef2dc86253df01082889918f
+//second test
