@@ -4,7 +4,7 @@ import Editor from "@monaco-editor/react";
 import CodeEditorContext from "../context/CodeEditorContext";
 const { io } = require("socket.io-client");
 
-const CodeEditor = () => {
+const FriendCodeEditor = () => {
     const [socket, setSocket] = useState(null);
     const [userText, setUserText] = useState("");
     const [friendText, setFriendText] = useState("");
@@ -28,23 +28,6 @@ const CodeEditor = () => {
     }
 
     useEffect(() => {
-        if (!editorRef.current) return;
-        console.log("language changed to", language);
-        if (language === "python") {
-            editorRef.current.setValue(`# write your code here in ${language}`);
-        } else {
-            editorRef.current.setValue(
-                `// write your code here in ${language}`
-            );
-        }
-
-        if (!editorRef.current.getModel()) {
-            return;
-        }
-        editorRef.current.getModel().setLanguage(language);
-    }, [language]);
-
-    useEffect(() => {
         const socket = io("http://localhost:3001");
         setSocket(socket);
         // socket.on("connect", () => {
@@ -52,9 +35,10 @@ const CodeEditor = () => {
         // });
         socket.on("message", (message) => {
             // setUserText(message["text"]);
+            console.log(message);
 
             if (message["id"] != user1) {
-                setFriendText(message["text"]);
+                editorRef.current.setValue(message["text"]);
             } else {
                 setUserText(message["text"]);
             }
@@ -82,23 +66,18 @@ const CodeEditor = () => {
             <Editor
                 height="90vh"
                 defaultLanguage={language}
-                defaultValue={`// write your code here in ${language}`}
+                // defaultValue={`// write your code here in ${language}`}
                 onMount={handleEditorDidMount}
-                onChange={(value, event) => setUserText(value)}
+                
                 theme={`vs-${theme}`}
                 sx={{
                     borderBottomLeftRadius: "8px",
                     borderBottomLeftRadius: "8px",
                 }}
             />
-            <button
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
-                onClick={submitCode}
-            >
-                Submit
-            </button>
+            
         </>
     );
 };
 
-export default CodeEditor;
+export default FriendCodeEditor;
