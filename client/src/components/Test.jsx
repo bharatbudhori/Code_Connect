@@ -9,7 +9,7 @@ const Test = () => {
 
   return (
     <>
-      <div>test</div>
+      <div>Hello TEst</div>
 
     </>
 
