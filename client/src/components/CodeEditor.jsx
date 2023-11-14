@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useRef } from "react";
+import axios from 'axios';
 import Editor from "@monaco-editor/react";
 import CodeEditorContext from "../context/CodeEditorContext";
 const { io } = require("socket.io-client");
@@ -9,6 +10,7 @@ const CodeEditor = () => {
     const [userText, setUserText] = useState("");
     const [friendText, setFriendText] = useState("");
     const { theme, language } = useContext(CodeEditorContext);
+    const [submissionId, setSubmissionId] = useState('');
 
     var user1 = 1;
     var user2 = 2;
@@ -24,12 +26,13 @@ const CodeEditor = () => {
     }
 
     function submitCode() {
-        alert(editorRef.current.getValue());
+        makePostRequest(editorRef.current.getValue())
+        // alert(editorRef.current.getValue());
     }
 
     useEffect(() => {
         if (!editorRef.current) return;
-        console.log("language changed to", language);
+        // console.log("language changed to", language);
         if (language === "python") {
             editorRef.current.setValue(`# write your code here in ${language}`);
         } else {
@@ -77,6 +80,47 @@ const CodeEditor = () => {
         }
     }, [userText]);
 
+
+
+
+    // useEffect(() => {
+    //       // Step 1: Make the POST request
+    //         makePostRequest();
+    //       console.log("request has made");
+    //   },[]);
+
+    const makePostRequest = async (code, language) => {
+        if(language == "python"){
+            language = "python3";
+        }
+
+        const options = {
+            method: 'POST',
+            url: 'https://online-code-compiler.p.rapidapi.com/v1/',
+            headers: {
+              'content-type': 'application/json',
+              'X-RapidAPI-Key': '66a9b6e7efmsh8aa6861c18afda4p100301jsn9a62dc2544a0',
+              'X-RapidAPI-Host': 'online-code-compiler.p.rapidapi.com'
+            },
+            data: {
+              language: language,
+              version: 'latest',
+              code: code,
+              input: null
+            }
+          };
+          
+          try {
+              const response = await axios.request(options);
+              console.log(response.data);
+          } catch (error) {
+              console.error(error);
+          }
+        
+    };
+
+
+
     return (
         <>
             <Editor
@@ -92,8 +136,13 @@ const CodeEditor = () => {
                 }}
             />
             <button
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                 onClick={submitCode}
+            >
+                Run Code
+            </button>
+            <button
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
             >
                 Submit
             </button>
