@@ -22,7 +22,7 @@ const CodeEnviornment = () => {
     return (
         <>
             <Header setIsOpen={setIsOpen} />
-            <h3 style={{ borderTop: "2px solid green", textAlign: "center" }}>
+            <h3 style={{ borderTop: "2px solid green", textAlign: "center", color:"white"}}>
                 Coding Enviornment
             </h3>
             <Stack
@@ -40,7 +40,8 @@ const CodeEnviornment = () => {
                         // height: { sx: 'auto', md: '92vh' },
                         px: { sx: 0, md: 2 },
                         width: { sx: "auto", md: "40vw" },
-                        backgroundColor: "#2b2b2b",
+                        backgroundColor: "#1e1e1e",
+                        color: "white",
                         borderRadius: "8px",
                     }}
                 >
