@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App.js";
 import reportWebVitals from "./reportWebVitals.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Navbar from "./components/Navbar.jsx";
 import CodeEnviornment from "./components/CodeEnviornment.jsx";
 import CodeEditorProvider from "./context/CodeEditorProvider.jsx";
 import Room from "./components/room.jsx";
-import Test from "./components/Test.jsx";
 import Layout from "./components/Layout.jsx";
+import YourOutput from "./components/YourOutput.jsx";
+import CustomInput from "./components/CustomInput.jsx";
+import ExpectedOutput from "./components/ExpectedOutput.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +27,20 @@ const router = createBrowserRouter([
             <CodeEnviornment />
           </CodeEditorProvider>
         ),
+        children: [
+          {
+            path: "custom_input",
+            element: <CustomInput />,
+          },
+          {
+            path: "your_output",
+            element: <YourOutput />,
+          },
+          {
+              path: "expected_output",
+              element: <ExpectedOutput/>,
+          },
+        ],
       },
       {
         path: "room",

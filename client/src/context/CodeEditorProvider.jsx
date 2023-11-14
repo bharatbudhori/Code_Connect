@@ -7,6 +7,7 @@ const CodeEditorProvider = ({ children }) => {
     const [code, setCode] = useState("");
     const [language, setLanguage] = useState("javascript");
     const [theme, setTheme] = useState("dark");
+    const [output, setOutput] = useState(null);
     
     const value = {
         code,
@@ -14,7 +15,9 @@ const CodeEditorProvider = ({ children }) => {
         language,
         setLanguage,
         theme,
-        setTheme
+        setTheme,
+        output,
+        setOutput,
     };
     
     return (
