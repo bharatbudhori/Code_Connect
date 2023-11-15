@@ -6,6 +6,8 @@ import Header from "./sub-components/Header";
 import Card from "./sub-components/Card";
 import Drawer from "./sub-components/Drawer";
 import FriendCodeEditor from "./FriendCodeEditor";
+import Output from "./Output";
+import { Outlet } from "react-router-dom";
 
 // import { fetchFromAPI } from '../utlis/fetchFromAPI';
 
@@ -95,6 +97,8 @@ const CodeEnviornment = () => {
                 >
                     <CodeEditorTop />
                     <CodeEditor />
+                    <Output />
+                    <Outlet />
                 </Box>
             </Stack>
             <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>

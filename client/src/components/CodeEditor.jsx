@@ -3,6 +3,7 @@ import { useRef } from "react";
 import axios from 'axios';
 import Editor from "@monaco-editor/react";
 import CodeEditorContext from "../context/CodeEditorContext";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 const { io } = require("socket.io-client");
 
 const CodeEditor = () => {
@@ -10,7 +11,7 @@ const CodeEditor = () => {
     const [userText, setUserText] = useState("");
     const [friendText, setFriendText] = useState("");
     const { theme, language } = useContext(CodeEditorContext);
-    const [submissionId, setSubmissionId] = useState('');
+    const { output, setOutput } = useContext(CodeEditorContext);
 
     var user1 = 1;
     var user2 = 2;
@@ -25,7 +26,7 @@ const CodeEditor = () => {
         editorRef.current = editor;
     }
 
-    function submitCode() {
+    function runCode() {
         makePostRequest(editorRef.current.getValue())
         // alert(editorRef.current.getValue());
     }
@@ -89,10 +90,14 @@ const CodeEditor = () => {
     //       console.log("request has made");
     //   },[]);
 
-    const makePostRequest = async (code, language) => {
+    const makePostRequest = async (code) => {
+        var lang = language;
         if(language == "python"){
-            language = "python3";
+            lang = "python3";
         }
+
+        // console.log("code is", code);
+        // console.log("language is", lang);
 
         const options = {
             method: 'POST',
@@ -103,7 +108,7 @@ const CodeEditor = () => {
               'X-RapidAPI-Host': 'online-code-compiler.p.rapidapi.com'
             },
             data: {
-              language: language,
+              language: lang,
               version: 'latest',
               code: code,
               input: null
@@ -112,7 +117,8 @@ const CodeEditor = () => {
           
           try {
               const response = await axios.request(options);
-              console.log(response.data);
+              // Update the state with the response data
+                setOutput(response.data);
           } catch (error) {
               console.error(error);
           }
@@ -136,13 +142,13 @@ const CodeEditor = () => {
                 }}
             />
             <button
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                onClick={submitCode}
+                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                onClick={runCode}
             >
-                Run Code
+                Run Code<PlayArrowIcon />
             </button>
             <button
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
             >
                 Submit
             </button>
