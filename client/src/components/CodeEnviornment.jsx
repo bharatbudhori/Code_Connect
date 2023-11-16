@@ -23,7 +23,7 @@ const CodeEnviornment = () => {
 
     return (
         <>
-            <Header setIsOpen={setIsOpen} />
+            <Header isOpen= {isOpen} setIsOpen={setIsOpen} />
             <h3 style={{ borderTop: "2px solid green", textAlign: "center", color:"white"}}>
                 Coding Enviornment
             </h3>
