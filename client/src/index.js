@@ -11,10 +11,14 @@ import Layout from "./components/Layout.jsx";
 import YourOutput from "./components/YourOutput.jsx";
 import CustomInput from "./components/CustomInput.jsx";
 import ExpectedOutput from "./components/ExpectedOutput.jsx";
+<<<<<<< Updated upstream
 =======
 import ProblemSet from "./components/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 
+>>>>>>> Stashed changes
+=======
+import About from "./components/About.jsx";
 >>>>>>> Stashed changes
 
 const router = createBrowserRouter([
@@ -56,6 +60,10 @@ const router = createBrowserRouter([
         path: "room",
         element: <Room/>,
       },
+      {
+        path:"about",
+        element:<About/>
+      }
     ],
   },
 ]);
