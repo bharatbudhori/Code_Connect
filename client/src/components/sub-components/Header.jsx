@@ -1,15 +1,18 @@
 import React from "react";
+import StartIcon from '@mui/icons-material/Start';
 
-export default function Header({ setIsOpen }) {
+export default function Header({ isOpen, setIsOpen }) {
     return (
         <header className="flex justify-between p-4">
-            <h1 className="font-medium">Open drawer to see your friends code</h1>
+            {!isOpen && (
             <button
-                className="bg-green-600 text-white rounded px-4 py-1"
+                style={{ position: "absolute", right: "0px", top: "400px", zIndex: "100", borderRadius: "50px 0px 0px 50px" }}
+                className="bg-green-600 text-white px-4 py-1 opacity-70 hover:opacity-100"
                 onClick={() => setIsOpen(true)}
             >
-                open
+                <div style={{ transform: "rotate(180deg)" }}><StartIcon /></div>
             </button>
+            )}
         </header>
     );
 }
