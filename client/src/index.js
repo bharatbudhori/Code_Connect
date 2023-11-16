@@ -7,19 +7,29 @@ import CodeEnviornment from "./components/CodeEnviornment.jsx";
 import CodeEditorProvider from "./context/CodeEditorProvider.jsx";
 import Room from "./components/room.jsx";
 import Layout from "./components/Layout.jsx";
+<<<<<<< Updated upstream
 import YourOutput from "./components/YourOutput.jsx";
 import CustomInput from "./components/CustomInput.jsx";
 import ExpectedOutput from "./components/ExpectedOutput.jsx";
+=======
+import ProblemSet from "./components/ProblemSet.jsx";
+import ProblemProvider from "./context/ProblemProvider.jsx";
+
+>>>>>>> Stashed changes
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      // {
-      //   path:"",
-      //   element:<Test/>,
-      // },
+      {
+        path:"",
+        element:(
+          <ProblemProvider>
+            <ProblemSet/>
+          </ProblemProvider>
+        ),
+      },
       {
         path: "code_env",
         element: (
