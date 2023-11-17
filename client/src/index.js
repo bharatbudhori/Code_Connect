@@ -13,7 +13,6 @@ import ExpectedOutput from "./components/ExpectedOutput.jsx";
 import ProblemSet from "./components/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -53,6 +52,10 @@ const router = createBrowserRouter([
         path: "room",
         element: <Room/>,
       },
+      {
+        path:"about",
+        element:<About/>
+      }
     ],
   },
 ]);
