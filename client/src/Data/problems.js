@@ -250,7 +250,7 @@ const problems = [
                 Output: [0,0,1,1,2,2]`,
     "difficulty": "Medium",
     "Video": "https://www.youtube.com/watch?v=oaVa-9wmpns&pp=ygUSc29ydCBjb2xvciBzdHJpdmVy",
-    "tags":["Arrays","Two Pointer","Sorting"],
+    "tags":["Array","Two Pointer","Sorting"],
     "testCases": [
       {
         "inputs": [
@@ -529,7 +529,7 @@ const problems = [
     "example": "Input: [0,1,0,2,1,0,1,3,2,1,2,1] Output: 6",
     "difficulty": "Hard",
     "video": "https://www.youtube.com/watch?v=HmBbcDiJapY",
-    "tags": ["Array", "Two Pointers", "Stack"],
+    "tags": ["Array", "Two Pointer", "Stack"],
     "testCases": [
       {
         "inputs": [

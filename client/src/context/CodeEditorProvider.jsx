@@ -8,6 +8,7 @@ const CodeEditorProvider = ({ children }) => {
     const [language, setLanguage] = useState("javascript");
     const [theme, setTheme] = useState("dark");
     const [output, setOutput] = useState(null);
+    const [roomCreated, setRoomCreated] = useState(false);
     
     const value = {
         code,
@@ -18,6 +19,8 @@ const CodeEditorProvider = ({ children }) => {
         setTheme,
         output,
         setOutput,
+        roomCreated,
+        setRoomCreated
     };
     
     return (

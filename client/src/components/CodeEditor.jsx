@@ -52,7 +52,7 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
             headers: {
                 "content-type": "application/json",
                 "X-RapidAPI-Key":
-                    "66a9b6e7efmsh8aa6861c18afda4p100301jsn9a62dc2544a0",
+                    ProcessingInstruction.env.REACT_APP_RAPID_API_KEY,
                 "X-RapidAPI-Host": "online-code-compiler.p.rapidapi.com",
             },
             data: {
