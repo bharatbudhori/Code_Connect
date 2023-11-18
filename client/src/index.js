@@ -12,6 +12,8 @@ import CustomInput from "./components/CustomInput.jsx";
 import ExpectedOutput from "./components/ExpectedOutput.jsx";
 import ProblemSet from "./components/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
+import About from "./components/About.jsx";
+
 
 const router = createBrowserRouter([
   {

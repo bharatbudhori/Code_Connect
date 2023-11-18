@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
 import StartIcon from '@mui/icons-material/Start';
+import CodeEditorContext from "../../context/CodeEditorContext";
 
 export default function Header({ isOpen, setIsOpen }) {
+    const {roomCreated, setRoomCreated} = useContext(CodeEditorContext);
+    console.log(roomCreated)
     return (
-        <header className="flex justify-between p-4">
-            {!isOpen && (
+        <header>
+            {roomCreated && !isOpen && (
             <button
                 style={{ position: "absolute", right: "0px", top: "400px", zIndex: "100", borderRadius: "50px 0px 0px 50px" }}
                 className="bg-green-600 text-white px-4 py-1 opacity-70 hover:opacity-100"
