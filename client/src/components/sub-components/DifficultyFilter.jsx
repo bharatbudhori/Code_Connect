@@ -1,8 +1,8 @@
-
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon} from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import ProblemContext from "../../context/ProblemContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,9 +10,19 @@ function classNames(...classes) {
 
 export default function ProblemFilter() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { allProblems, setFilteredProblems,setSelectedDifficulty } = useContext(ProblemContext);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
+  };
+  const handleClick = (difficulty) => {
+    // console.log("test handle click");
+    // const newData = allProblems.filter(
+    //   (problem) => problem.difficulty === difficulty
+    // );
+    // setFilteredProblems(newData);
+
+    setSelectedDifficulty(difficulty);
   };
 
   return (
@@ -20,9 +30,10 @@ export default function ProblemFilter() {
       <div>
         <Menu.Button
           onClick={toggleMenu}
-          className="inline-flex w-40 justify-left gap-x-12 rounded-md bg-gray-800 px-4 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-gray-700 active:bg-gray-800 hover:bg-gray-700 "
+          className="inline-flex w-40 justify-left gap-x-12 rounded-md bg-gray-800 px-4 py-3 
+          text-sm font-semibold text-white ring-1 ring-inset ring-gray-700 active:bg-gray-800 hover:bg-gray-700 "
         >
-         Difficulty
+          Difficulty
           <span
             style={{
               transition: "transform 0.3s ease-out", // Adjust the duration and easing as needed
@@ -48,20 +59,20 @@ export default function ProblemFilter() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items 
-        style={{width:'80%'}}
-        className="absolute left-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-        onClick={toggleMenu}
+        <Menu.Items
+          style={{ width: "80%" }}
+          className="absolute left-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          onClick={toggleMenu}
         >
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
                 <div
-                  href="#"
                   className={classNames(
                     active ? "bg-gray-700 text-white" : "text-green-500",
                     "block px-4 py-2 text-sm"
                   )}
+                  onClick={(e) => handleClick(e.target.innerText)}
                 >
                   Easy
                 </div>
@@ -74,6 +85,7 @@ export default function ProblemFilter() {
                     active ? "bg-gray-700 text-white" : "text-yellow-500",
                     "block px-4 py-2 text-sm"
                   )}
+                  onClick={(e) => handleClick(e.target.innerText)}
                 >
                   Medium
                 </div>
@@ -86,6 +98,7 @@ export default function ProblemFilter() {
                     active ? "bg-gray-700 text-white" : "text-red-500",
                     "block px-4 py-2 text-sm"
                   )}
+                  onClick={(e) => handleClick(e.target.innerText)}
                 >
                   Hard
                 </div>

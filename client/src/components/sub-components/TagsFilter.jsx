@@ -2,20 +2,18 @@ import { useState, useContext } from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ShowChartIcon from "@mui/icons-material/ShowChart";
 import Chip from "@mui/material/Chip";
-import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import ProblemContext from "../../context/ProblemContext";
-import { styled } from "@mui/system";
+import { v4 as uuid4 } from "uuid";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProblemFilter() {
+export default function TagsFilter() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { problems } = useContext(ProblemContext);
+  const { allProblems } = useContext(ProblemContext);
 
   function getUniqueTags(problems) {
     const uniqueTagsSet = new Set();
@@ -35,8 +33,8 @@ export default function ProblemFilter() {
     return uniqueTagsArray;
   }
 
-  const uniqueTags = getUniqueTags(problems);
-  console.log(uniqueTags);
+  const uniqueTags = getUniqueTags(allProblems);
+  // console.log(uniqueTags);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -47,7 +45,7 @@ export default function ProblemFilter() {
       <div>
         <Menu.Button
           onClick={toggleMenu}
-          className="inline-flex w-40 justify-left gap-x-12 rounded-md bg-gray-800 px-4 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-gray-700 active:bg-gray-800 hover:bg-gray-700 "
+          className="inline-flex w-35 justify-left gap-x-12 rounded-md bg-gray-800 px-4 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-gray-700 active:bg-gray-800 hover:bg-gray-700 "
         >
           Tags
           <span
@@ -83,7 +81,7 @@ export default function ProblemFilter() {
           <div className="py-1">
             <div className="flex flex-wrap gap-2">
               {uniqueTags.map((tag) => (
-                <Menu.Item>
+                <Menu.Item key={uuid4()}>
                   <Chip
                     key={tag}
                     label={tag}

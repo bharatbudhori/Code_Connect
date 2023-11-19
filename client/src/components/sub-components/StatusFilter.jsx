@@ -23,7 +23,7 @@ export default function ProblemFilter() {
       <div>
         <Menu.Button
           onClick={toggleMenu}
-          className="inline-flex w-40 justify-left gap-x-12 rounded-md bg-gray-800 px-4 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-gray-700 active:bg-gray-800 hover:bg-gray-700 "
+          className="inline-flex w-38 justify-left gap-x-12 rounded-md bg-gray-800 px-4 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-gray-700 active:bg-gray-800 hover:bg-gray-700 "
         >
          Status
           <span

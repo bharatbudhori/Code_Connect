@@ -1,31 +1,44 @@
-import React,{useEffect} from "react";
+/* eslint-disable eqeqeq */
+import React, { useEffect,useContext } from "react";
 import ProblemList from "./sub-components/ProblemList";
 import ProblemContext from "../context/ProblemContext";
 import problemsD from "../Data/problems";
+import ProblemFilter from "./sub-components/ProblemFilter";
 
 function ProblemSet() {
-  const { problems, setProblems } = React.useContext(ProblemContext);
+  const { allProblems, setAllProblems } = useContext(ProblemContext);
+  const { filteredProblems, setFilteredProblems } = useContext(ProblemContext);
+
   useEffect(() => {
-    setProblems(problemsD);
+    setAllProblems(problemsD);
+    setFilteredProblems(problemsD);
+   
   }, []);
 
   const handleClick = () => {
     console.log("test handle click");
-    const newData = problems.filter((problem) => problem.id === 22);
-    console.log(newData);
-    setProblems(newData);
-    console.log("i was reached");
+    const newData = allProblems.filter((problem) => problem.id === 22);
+    setFilteredProblems(newData);
   };
-  React.useEffect(() => {
-    console.log("Updated Problems:", problems);
-  }, [problems]);
+  if(!allProblems || allProblems=="" ) return(<div>loading...</div>)
 
   return (
     <>
       {/* <button
-      onClick={handleClick}
-      > test</button> */}
-      <ProblemList />      {/* iske andar problemFilter hai */}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={handleClick}
+      >
+        test
+      </button> */}
+
+      <div className="flex flex-col">
+        <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+          <div className="inline-block min-w-full sm:px-6 lg:px-8">
+            <ProblemFilter />
+            <ProblemList />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

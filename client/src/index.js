@@ -13,7 +13,7 @@ import ExpectedOutput from "./components/ExpectedOutput.jsx";
 import ProblemSet from "./components/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 import About from "./components/About.jsx";
-
+>>>>>>> Stashed changes
 
 const router = createBrowserRouter([
   {
@@ -55,8 +55,8 @@ const router = createBrowserRouter([
         element: <Room/>,
       },
       {
-        path:"about",
-        element:<About/>
+        path:"/about",
+        element:<About/> 
       }
     ],
   },
