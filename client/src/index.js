@@ -14,6 +14,7 @@ import ProblemSet from "./components/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 import About from "./components/About.jsx";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "problems/:problemId",
+        path: "code_env",
         element: (
           <CodeEditorProvider>
             <CodeEnviornment />

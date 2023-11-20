@@ -13,7 +13,7 @@ function classNames(...classes) {
 
 export default function TagsFilter() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { allProblems } = useContext(ProblemContext);
+  const { allProblems, tagsFilter,setTagsFilter } = useContext(ProblemContext);
 
   function getUniqueTags(problems) {
     const uniqueTagsSet = new Set();
@@ -81,14 +81,21 @@ export default function TagsFilter() {
           <div className="py-1">
             <div className="flex flex-wrap gap-2">
               {uniqueTags.map((tag) => (
-                <Menu.Item key={uuid4()}>
+                <Menu.Item key={uuid4()}
+                >
                   <Chip
                     key={tag}
                     label={tag}
-                    variant="outlined"
+                   
                     sx={{
-                        color: "white",
+                      backgroundColor : tagsFilter.includes(tag) ? "#184dff" : "#2f4876",
+                      color: "white",
                       }}
+                    onClick={() => {
+                      setTagsFilter([...tagsFilter, tag]);
+                      console.log(tagsFilter)
+                    }}
+                      
                   />
                 </Menu.Item>
               ))}

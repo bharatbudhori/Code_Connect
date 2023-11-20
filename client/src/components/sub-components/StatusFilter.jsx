@@ -1,11 +1,12 @@
 
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon} from "@heroicons/react/20/solid";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import ProblemContext from "../../context/ProblemContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -13,17 +14,21 @@ function classNames(...classes) {
 
 export default function ProblemFilter() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { setStatusFilter } = useContext(ProblemContext);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
+  const handleClick = (status) => {
+    setStatusFilter(status);
+  }
 
   return (
     <Menu as="div" className="relative inline-block text-left mt-12">
       <div>
         <Menu.Button
           onClick={toggleMenu}
-          className="inline-flex w-38 justify-left gap-x-12 rounded-md bg-gray-800 px-4 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-gray-700 active:bg-gray-800 hover:bg-gray-700 "
+          className="inline-flex w-39 justify-left gap-x-12 rounded-md bg-gray-800 px-4 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-gray-700 active:bg-gray-800 hover:bg-gray-700 "
         >
          Status
           <span
@@ -52,7 +57,7 @@ export default function ProblemFilter() {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items 
-        style={{width:'80%'}}
+        style={{width:'100%'}}
         className="absolute left-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         onClick={toggleMenu}
         >
@@ -64,6 +69,7 @@ export default function ProblemFilter() {
                     active ? "bg-gray-700 text-white" : "text-yellow-500",
                     "block px-4 py-2 text-sm"
                 )}
+                onClick={()=>handleClick("Unsolved")}
                 >
                     <HorizontalRuleIcon className="mr-2" fontSize="small" />
                 Unsolved
@@ -78,6 +84,7 @@ export default function ProblemFilter() {
                     active ? "bg-gray-700 text-white" : "text-green-500",
                     "block px-4 py-2 text-sm"
                   )}
+                  onClick={()=>handleClick("Solved")}
                 >
                     <CheckCircleIcon  className="mr-2" fontSize="small" />
                   Solved
@@ -91,6 +98,7 @@ export default function ProblemFilter() {
                     active ? "bg-gray-700 text-white" : "text-red-500",
                     "block px-4 py-2 text-sm"
                   )}
+                  onClick={()=>handleClick("Attempted")}
                 >
                     <ShowChartIcon className="mr-2" fontSize="small" />
                   Attempted

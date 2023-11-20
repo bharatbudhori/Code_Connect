@@ -1,6 +1,15 @@
 import React from 'react'
+import { useContext,useEffect } from 'react'
+import ProblemContext from '../../context/ProblemContext';
 
 const SearchFilter = () => {
+  const {searchFilter, setSearchFilter} = useContext(ProblemContext);
+  const handleClick = () => {
+    console.log("searchFilter", searchFilter)
+  
+  }
+
+ 
   return (
    <>
     <div className="relative inline-block  ">
@@ -10,13 +19,10 @@ const SearchFilter = () => {
             name="search" 
             className=" w-60 sm:text-sm rounded-md bg-gray-800 focus:border-gray-800 outline-none pl-3 py-3"
             placeholder="Search"
+            value={searchFilter}
+            onChange={(e) => { setSearchFilter(e.target.value)  } }
             />
-            <button
-            type="button"
-            className="ml-2 w-50 inline-flex justify-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700"
-            >
-            Search
-            </button>
+           
         </div>
 
        
