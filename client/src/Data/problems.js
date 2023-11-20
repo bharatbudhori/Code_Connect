@@ -572,3 +572,4 @@ const problems = [
  
 ]
 export default problems;
+export const statusList = [1, 2, 5, 9, 17]

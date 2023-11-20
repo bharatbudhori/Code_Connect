@@ -4,6 +4,7 @@ import ProblemList from "./sub-components/ProblemList";
 import ProblemContext from "../context/ProblemContext";
 import problemsD from "../Data/problems";
 import ProblemFilter from "./sub-components/ProblemFilter";
+import { Typography } from "@mui/material";
 
 function ProblemSet() {
   const { allProblems, setAllProblems } = useContext(ProblemContext);
@@ -22,6 +23,7 @@ function ProblemSet() {
   };
   if(!allProblems || allProblems=="" ) return(<div>loading...</div>)
 
+
   return (
     <>
       {/* <button
@@ -39,6 +41,16 @@ function ProblemSet() {
           </div>
         </div>
       </div>
+      {filteredProblems.length === 0 && (
+             <div> 
+                <Typography variant="h5" component="div" gutterBottom align="center" sx={{marginTop:5}}>
+                  No Problems Found
+                </Typography>
+                <Typography variant="h6" component="div" gutterBottom align="center" sx={{fontSize:13}}>
+                  Clear all filters to see all problems
+                </Typography>
+             </div>
+                )}
     </>
   );
 }
