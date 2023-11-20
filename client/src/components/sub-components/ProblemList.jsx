@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ProblemContext from "../../context/ProblemContext";
+import { Link } from "react-router-dom";
 const doneList = [1, 2, 5, 9, 17];
 
 function ProblemList() {
@@ -57,7 +58,9 @@ function ProblemList() {
                   />
                 </td>
                 <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                <Link to= {`/problems/ ${problem.id}`} className="hover:text-blue-600"> 
                   {problem.id + ". " + problem.title}
+                </Link>
                 </td>
                 <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
                   <a href={problem.video} target="_blank" rel="noreferrer">

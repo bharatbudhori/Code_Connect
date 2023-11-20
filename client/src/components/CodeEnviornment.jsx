@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Box, Stack, Button } from "@mui/material";
+import { Box, Stack, Button, Chip } from "@mui/material";
 import CodeEditor from "./CodeEditor";
 import CodeEditorTop from "./sub-components/CodeEditorTop";
 import Header from "./sub-components/Header";
@@ -10,9 +10,12 @@ import Output from "./Output";
 import { Outlet } from "react-router-dom";
 import CreateRoom from "./CreateRoom";
 import CodeEditorContext from "../context/CodeEditorContext";
+import { useParams } from "react-router-dom";
+import problems from "../Data/problems";
 const { io } = require("socket.io-client");
 
 const CodeEnviornment = () => {
+    const { problemId } = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const [displayName, setDisplayName] = useState("");
     const [roomId, setRoomId] = useState("");
@@ -20,8 +23,16 @@ const CodeEnviornment = () => {
     const [isCredentialsEntered, setIsCredentialsEntered] = useState(false);
     const [socket, setSocket] = useState(null);
     const [friendText, setFriendText] = useState("");
-
     const { roomCreated, setRoomCreated } = useContext(CodeEditorContext);
+
+    let problemIndex = 0;
+    for (let i = 0; i < problems.length; i++) {
+        if (problems[i].id === parseInt(problemId)) {
+            problemIndex = i;
+            break;
+        }
+    }
+    const problem = problems[problemIndex];
 
     const connectToRoom = () => {
         if (displayName.trim() === "" || roomId.trim() === "") {
@@ -51,6 +62,7 @@ const CodeEnviornment = () => {
         }
     }, [socket]);
 
+
     return (
         <>
             <Header isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -76,7 +88,7 @@ const CodeEnviornment = () => {
                 />
             </div>
 
-            <h3 className="text-3xl my-3 mx-10">Three Sum </h3>
+            <h3 className="text-3xl my-3 mx-10"> {problem['title']} </h3>
 
             <Stack
                 direction={{
@@ -99,32 +111,39 @@ const CodeEnviornment = () => {
                         borderRadius: "8px",
                     }}
                 >
-                    <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. Pariatur commodi modi assumenda unde laboriosam
-                        quos quae aut reiciendis harum iste, recusandae tenetur,
-                        impedit eveniet mollitia repellat doloremque aspernatur
-                        necessitatibus sequi? Quod sit voluptate iusto neque,
-                        eos adipisci ullam distinctio tenetur id similique unde
-                        hic culpa perferendis, ipsum, delectus eum. Nam quidem
-                        cupiditate accusamus enim illum, minus ut dignissimos,
-                        culpa tempora quod qui aut odio quasi ipsam, eius hic
-                        iure. Cum nesciunt voluptas voluptates recusandae
-                        consectetur aperiam molestias dicta, ex a repudiandae
-                        velit quis deserunt adipisci ad vel dignissimos libero
-                        rerum beatae. Odit magnam minus quae quibusdam pariatur
-                        omnis dolore quia rerum sunt quo voluptate, vitae iusto
-                        eum eaque voluptates! Laboriosam perspiciatis quibusdam
-                        fugiat asperiores deserunt assumenda omnis quisquam ab
-                        doloremque dolorum, libero nemo! Praesentium laboriosam
-                        veritatis illo distinctio consequuntur temporibus nisi
-                        dolore vero animi assumenda repellendus tempore fugiat
-                        voluptatem eligendi consequatur, earum esse quis. Nemo
-                        labore a aspernatur, quae amet, veniam qui non sed
-                        voluptatum consectetur suscipit doloremque debitis,
-                        similique sequi possimus placeat laborum modi excepturi
-                        quo eaque natus! In exercitationem enim similique culpas
-                    </p>
+                    <div>
+                        <p className={`text-sm font-bold px-6 py-4 whitespace-nowrap ${
+                            problem.difficulty === "Easy"
+                            ? "text-green-500"
+                            : problem.difficulty === "Medium"
+                            ? "text-yellow-500"
+                            : "text-red-500"
+                        }`}>
+                            {problem['difficulty']}
+                            </p>
+                        <p className="">
+                        {problem['tags'].map((tag, index) => (
+                            <Chip
+                            key={index}
+                            className="text-white bg-gray m-1"
+                            variant="outlined"
+                            label={tag}
+                            />          
+                        ))}
+                        </p>
+                        <br />
+                        <p>{problem['description']}</p> 
+                        <br />
+                        <p className="text-slate-400">
+  {problem['example'].split(' ').map((word, index) => (
+    <span key={index}>
+    {['input:', 'output:', 'explanation:'].includes(word.toLowerCase()) && <strong className="block text-white">{word}</strong>}
+    {['input:', 'output:', 'explanation:'].includes(word.toLowerCase()) ? null : ' ' + word}
+  </span>
+  ))}
+</p>
+
+                    </div>
                 </Box>
                 <Box
                     sx={{

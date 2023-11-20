@@ -13,7 +13,6 @@ import ExpectedOutput from "./components/ExpectedOutput.jsx";
 import ProblemSet from "./components/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 import About from "./components/About.jsx";
->>>>>>> Stashed changes
 
 const router = createBrowserRouter([
   {
@@ -29,7 +28,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "code_env",
+        path: "problems/:problemId",
         element: (
           <CodeEditorProvider>
             <CodeEnviornment />

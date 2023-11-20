@@ -25,15 +25,6 @@ function ProblemFilter() {
   }, [selectedDifficulty]);
 
   return (
-<<<<<<< Updated upstream
-    <div
-      className="flex flex-row justify-start gap-5"
-    >
-      <DifficultyFilter />
-      <StatusFilter />
-      <Tags />
-    </div>
-=======
     <>
       <div className="space-x-3">
         <DifficultyFilter />
@@ -86,7 +77,6 @@ function ProblemFilter() {
         ) : null}
       </div>
     </>
->>>>>>> Stashed changes
   );
 }
 
