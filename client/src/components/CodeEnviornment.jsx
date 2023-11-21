@@ -125,9 +125,10 @@ const CodeEnviornment = () => {
                         {problem['tags'].map((tag, index) => (
                             <Chip
                             key={index}
-                            className="text-white bg-gray m-1"
+                            className="bg-gray m-1"
                             variant="outlined"
                             label={tag}
+                            sx = {{ color: "white" }}
                             />          
                         ))}
                         </p>
