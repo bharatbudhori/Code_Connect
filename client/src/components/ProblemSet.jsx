@@ -5,6 +5,7 @@ import ProblemContext from "../context/ProblemContext";
 import problemsD from "../Data/problems";
 import ProblemFilter from "./sub-components/ProblemFilter";
 import { Typography } from "@mui/material";
+import GlobalContext from "../context/GlobalContext";
 
 function ProblemSet() {
   const { allProblems, setAllProblems } = useContext(ProblemContext);
@@ -14,6 +15,14 @@ function ProblemSet() {
     setAllProblems(problemsD);
     setFilteredProblems(problemsD);
    
+  }, []);
+  const {LoggedIn, setLoggedIn} = useContext(GlobalContext);
+  useEffect(() => {
+    alert("test");
+    const token = JSON.parse(localStorage.getItem('token'));
+    if (token) {
+      setLoggedIn(true);
+    }
   }, []);
 
   const handleClick = () => {

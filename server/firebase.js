@@ -34,14 +34,41 @@ async function setData() {
     born: 1815,
   });
   getData();
+  return true; // User added successfully
 }
 
- function setUser (user){
+function setUser(user) {
   const docRef = db.collection("users").doc();
-  docRef.set({
+  
+  // Return the promise directly
+  return docRef.set({
     email: user.email,
     password: user.password,
-    name: user.name
+    name: user.name,
+  })
+  .then(() => {
+    console.log("User added to firebase");
+    return true;
+  })
+  .catch((error) => {
+    console.log("Error adding user to firebase: ", error);
+    return false, error;
   });
-};
-module.exports = { setUser };
+}
+
+
+//check if email already exists
+async function checkEmail(email) {
+  const snapshot = await db.collection("users").get();
+
+  // Use for...of loop to iterate through asynchronous data
+  for (const doc of snapshot.docs) {
+    if (doc.data().email === email) {
+      return [true, doc.data().password];
+    }
+  }
+
+  return false;
+}
+
+module.exports = { setUser, checkEmail };
