@@ -3,15 +3,19 @@ import { Form, redirect,json, useActionData} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { saveAuthToken } from "../utlis/loginUtils";
 import { serverUrl } from "../constants";
+import GlobalContext from "../context/GlobalContext";
+import { useContext } from "react";
 
 let mode = 'login';
 function LoginForm() {
   const [signup, setSignup] = useState(false);
   const data = useActionData();
+  const {loggedIn, setLoggedIn} = useContext(GlobalContext);
 
   useEffect(() => {
  signup ? mode = 'signup' : mode = 'login';
   }, [signup]);
+  
   return (
     <>
          <ul>

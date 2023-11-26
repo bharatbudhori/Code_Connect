@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useState } from "react";
+import { Fragment, useState,u, useContext } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { isLoggedin, logout } from "../utlis/loginUtils";
+import GlobalContext from "../context/GlobalContext";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -18,7 +19,10 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [loggedIn, setLoggedIn] = useState(isLoggedin());
+  // const [loggedIn, setLoggedIn] = useState(isLoggedin());
+  const {loggedIn, setLoggedIn} = useContext(GlobalContext);
+  setLoggedIn(isLoggedin());
+
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
