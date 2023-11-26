@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import CodeEnviornment from "./components/CodeEnviornment.jsx";
+import CodeEnvironment from "./components/CodeEnvironment.jsx";
 import CodeEditorProvider from "./context/CodeEditorProvider.jsx";
 import Room from "./components/room.jsx";
 import Layout from "./components/Layout.jsx";
@@ -13,6 +13,7 @@ import ExpectedOutput from "./components/ExpectedOutput.jsx";
 import ProblemSet from "./components/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 import About from "./components/About.jsx";
+import LoginForm,{formAction} from "./components/LoginForm.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,10 +21,10 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path:"",
-        element:(
+        path: "",
+        element: (
           <ProblemProvider>
-            <ProblemSet/>
+            <ProblemSet />
           </ProblemProvider>
         ),
       },
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
         path: "problems/:problemId",
         element: (
           <CodeEditorProvider>
-            <CodeEnviornment />
+            <CodeEnvironment />
           </CodeEditorProvider>
         ),
         children: [
@@ -44,26 +45,30 @@ const router = createBrowserRouter([
             element: <YourOutput />,
           },
           {
-              path: "expected_output",
-              element: <ExpectedOutput/>,
+            path: "expected_output",
+            element: <ExpectedOutput />,
           },
         ],
       },
       {
         path: "room",
-        element: <Room/>,
+        element: <Room />,
       },
       {
-        path:"/about",
-        element:<About/> 
-      }
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "login",
+        element: <LoginForm />,
+        action: formAction
+      },
     ],
   },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
