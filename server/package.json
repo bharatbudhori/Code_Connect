@@ -4,13 +4,18 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "devStart": "nodemon server.js",
+        "devStart": "concurrently \"nodemon server.js\" \"nodemon firebase.js\" \"nodemon auth.js\" ",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "concurrently": "^8.2.2",
+        "express": "^4.18.2",
+        "firebase": "^10.6.0",
+        "firebase-admin": "^11.11.0",
+        "jsonwebtoken": "^9.0.2",
         "socket.io": "^4.7.2"
     },
     "devDependencies": {
