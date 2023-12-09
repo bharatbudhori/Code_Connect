@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "room",
+        path: "/room",
         element: <Room />,
       },
       {
@@ -42,9 +42,9 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "login",
+        path: "/login",
         element: <LoginForm />,
-        action: formAction
+        // action: formAction
       },
     ],
   },

@@ -99,6 +99,8 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
                     defaultValue= {tempCode}
                     onMount={handleEditorDidMount}
                     onChange={(value, event) => {
+                        if(socket == null) return;
+
                         socket.emit("sendMessageToRoom", {
                             room: roomId,
                             message: value,
