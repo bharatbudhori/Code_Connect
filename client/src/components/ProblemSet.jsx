@@ -18,11 +18,11 @@ function ProblemSet() {
   }, []);
   const {LoggedIn, setLoggedIn} = useContext(GlobalContext);
   useEffect(() => {
-    alert("test");
-    const token = JSON.parse(localStorage.getItem('token'));
-    if (token) {
-      setLoggedIn(true);
-    }
+    // alert("test");
+    // const token = JSON.parse(localStorage.getItem('token'));
+    // if (token) {
+    //   setLoggedIn(true);
+    // }
   }, []);
 
   const handleClick = () => {
