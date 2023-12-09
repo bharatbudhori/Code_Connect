@@ -21,11 +21,17 @@ const Testcases = () => {
     <div class="text-white w-full h-96 bg-black px-4 py-2">
        CASE 1:
        <p>
-        {problem['testCases'][0]['expectedOutput'] }
+        {problem['testCases'][0]['inputs'][0]['value'].map((tc, index) => (
+          
+          <span key={index}>{tc}, </span>
+        ))}
       </p>
       CASE 2:
       <p>
-        {problem['testCases'][1]['expectedOutput'] }
+        {problem['testCases'][1]['inputs'][0]['value'].map((tc, index) => (
+          
+          <span key={index}>{tc}, </span>
+        ))}
       </p>
     </div>
   )

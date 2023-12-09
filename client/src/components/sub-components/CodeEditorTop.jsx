@@ -28,9 +28,9 @@ export default function CodeEditorTop() {
           onChange={handleLanguage}
           sx={{ backgroundColor: "white", height: "30px", maxWidth: "280px", marginTop: "8px" }}
         >
-          <MenuItem value="javascript">JavaScript</MenuItem>
-          <MenuItem value="cpp">C++</MenuItem>
           <MenuItem value="python">Python</MenuItem>
+          <MenuItem value="cpp">C++</MenuItem>
+          <MenuItem value="rust">Rust</MenuItem>
         </Select>
         {/* <span>Selected Language: {language} </span> */}
       </Box>
