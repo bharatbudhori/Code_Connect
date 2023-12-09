@@ -12,7 +12,6 @@ import {
     ThemeProvider,
 } from "@mui/material";
 import "tailwindcss/tailwind.css";
-import CodeEditorContext from "../context/CodeEditorContext";
 
 // Create the CreateRoomDialog component
 const CreateRoomDialog = ({
@@ -24,23 +23,6 @@ const CreateRoomDialog = ({
     roomId,
     setRoomId,
 }) => {
-    // const handleUsernameChange = (event) => {
-    //     setUsername(event.target.value);
-    // };
-
-    // const handleRoomCodeChange = (event) => {
-    //     setRoomCode(event.target.value);
-    // };
-
-    // const handleCreateRoom = () => {
-    //     // Add any additional validation logic here before creating the room
-    //     onCreateRoom({ username, roomCode });
-    //     // Close the dialog after creating the room
-    //     setRoomCreated(true);
-    //     onClose();
-    // };
-
-    // Custom dark mode theme
     const darkTheme = createTheme({
         palette: {
             mode: "dark",

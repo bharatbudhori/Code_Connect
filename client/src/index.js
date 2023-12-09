@@ -7,9 +7,6 @@ import CodeEnvironment from "./components/CodeEnvironment.jsx";
 import CodeEditorProvider from "./context/CodeEditorProvider.jsx";
 import Room from "./components/room.jsx";
 import Layout from "./components/Layout.jsx";
-import YourOutput from "./components/YourOutput.jsx";
-import CustomInput from "./components/CustomInput.jsx";
-import ExpectedOutput from "./components/ExpectedOutput.jsx";
 import ProblemSet from "./components/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 import About from "./components/About.jsx";
@@ -35,20 +32,6 @@ const router = createBrowserRouter([
             <CodeEnvironment />
           </CodeEditorProvider>
         ),
-        children: [
-          {
-            path: "custom_input",
-            element: <CustomInput />,
-          },
-          {
-            path: "your_output",
-            element: <YourOutput />,
-          },
-          {
-            path: "expected_output",
-            element: <ExpectedOutput />,
-          },
-        ],
       },
       {
         path: "room",

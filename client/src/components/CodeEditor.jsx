@@ -4,10 +4,25 @@ import axios from "axios";
 import Editor from "@monaco-editor/react";
 import CodeEditorContext from "../context/CodeEditorContext";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { tempCode } from "../constants";
 
 const CodeEditor = ({ socket, displayName, roomId }) => {
     const { theme, language } = useContext(CodeEditorContext);
-    const { output, setOutput } = useContext(CodeEditorContext);
+    const { output1, setOutput1 } = useContext(CodeEditorContext);
+    const { input1, setInput1 } = useContext(CodeEditorContext);
+    const { input2, setInput2 } = useContext(CodeEditorContext);
+    const { setActiveComponent } = useContext(CodeEditorContext);
+
+    let api_input1 = input1?.length.toString() + " ";
+    for (let i = 0; i < input1?.length; i++) {
+        api_input1 += input1[i].toString() + " ";
+    }
+    
+    let api_input2 = input2?.length.toString() + " ";
+    for (let i = 0; i < input2?.length; i++) {
+        api_input2 += input2[i].toString() + " ";
+    }
+
 
     const editorRef = useRef(null);
 
@@ -16,7 +31,8 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
     }
 
     function runCode() {
-        makePostRequest(editorRef.current.getValue());
+        setActiveComponent('your output');
+        makePostRequest(editorRef.current.getValue(), api_input1);
         // alert(editorRef.current.getValue());
     }
 
@@ -37,7 +53,7 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
         editorRef.current.getModel().setLanguage(language);
     }, [language]);
 
-    const makePostRequest = async (code) => {
+    const makePostRequest = async (code, inp) => {
         var lang = language;
         if (language == "python") {
             lang = "python3";
@@ -59,18 +75,19 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
                 language: lang,
                 version: "latest",
                 code: code,
-                input: null,
+                input: api_input1,
             },
         };
 
         try {
             const response = await axios.request(options);
             // Update the state with the response data
-            setOutput(response.data);
+            setOutput1(response.data);
         } catch (error) {
             console.error(error);
         }
     };
+
 
     return (
         <div className="bg-gray-900 text-white ">
@@ -78,7 +95,8 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
                 <Editor
                     height="90vh"
                     defaultLanguage={language}
-                    defaultValue={`// write your code here in ${language}`}
+                    // defaultValue={`// write your code here in ${language}`}
+                    defaultValue= {tempCode}
                     onMount={handleEditorDidMount}
                     onChange={(value, event) => {
                         socket.emit("sendMessageToRoom", {

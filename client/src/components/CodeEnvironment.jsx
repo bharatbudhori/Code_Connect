@@ -1,16 +1,14 @@
 import React, { useEffect, useContext, useState } from "react";
+import { Outlet, useParams } from "react-router-dom";
 import { Box, Stack, Button, Chip } from "@mui/material";
 import CodeEditor from "./CodeEditor";
 import CodeEditorTop from "./sub-components/CodeEditorTop";
 import Header from "./sub-components/Header";
-import Card from "./sub-components/Card";
 import Drawer from "./sub-components/Drawer";
 import FriendCodeEditor from "./FriendCodeEditor";
 import Output from "./Output";
-import { Outlet } from "react-router-dom";
 import CreateRoom from "./CreateRoom";
 import CodeEditorContext from "../context/CodeEditorContext";
-import { useParams } from "react-router-dom";
 import problems from "../Data/problems";
 const { io } = require("socket.io-client");
 
@@ -24,6 +22,8 @@ const CodeEnviornment = () => {
     const [socket, setSocket] = useState(null);
     const [friendText, setFriendText] = useState("");
     const { roomCreated, setRoomCreated } = useContext(CodeEditorContext);
+    const { input1, setInput1 } = useContext(CodeEditorContext);
+    const { input2, setInput2 } = useContext(CodeEditorContext);
 
     let problemIndex = 0;
     for (let i = 0; i < problems.length; i++) {
@@ -34,6 +34,9 @@ const CodeEnviornment = () => {
     }
     const problem = problems[problemIndex];
 
+    setInput1(problem['testCases'][0]['inputs'][0]['value'])
+    setInput2(problem['testCases'][1]['inputs'][0]['value'])
+    
     const connectToRoom = () => {
         if (displayName.trim() === "" || roomId.trim() === "") {
             alert("Please enter a display name and room ID");
@@ -101,9 +104,7 @@ const CodeEnviornment = () => {
                 padding={{ xs: 1, sm: 2, md: 2 }}
             >
                 <Box
-                    // style={{marginTop: "-60px"}}
                     sx={{
-                        // height: { sx: 'auto', md: '92vh' },
                         px: { md: 2 },
                         width: { sx: "auto", md: "40vw" },
                         backgroundColor: "#1e1e1e",
@@ -136,13 +137,13 @@ const CodeEnviornment = () => {
                         <p>{problem['description']}</p> 
                         <br />
                         <p className="text-slate-400">
-  {problem['example'].split(' ').map((word, index) => (
-    <span key={index}>
-    {['input:', 'output:', 'explanation:'].includes(word.toLowerCase()) && <strong className="block text-white">{word}</strong>}
-    {['input:', 'output:', 'explanation:'].includes(word.toLowerCase()) ? null : ' ' + word}
-  </span>
-  ))}
-</p>
+                        {problem['example'].split(' ').map((word, index) => (
+                            <span key={index}>
+                            {['input:', 'output:', 'explanation:'].includes(word.toLowerCase()) && <strong className="block text-white">{word}</strong>}
+                            {['input:', 'output:', 'explanation:'].includes(word.toLowerCase()) ? null : ' ' + word}
+                        </span>
+                        ))}
+                        </p>
 
                     </div>
                 </Box>

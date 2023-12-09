@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import CodeEditorContext from "../context/CodeEditorContext";
 
 const YourOutput = () => {
-    const { output, setOutput } = useContext(CodeEditorContext);
+    const { output1, setOutput1 } = useContext(CodeEditorContext);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -25,18 +25,21 @@ const YourOutput = () => {
         </div>
       ) : (
         // Actual content
-        <>
-          {output !== null && (
+        <div>
+          CASE1:
+          {output1 !== null && (
             <>
-              <p>{output.output}</p>
-              <br /><br />
+              <p>{output1.output}</p>
               <div className="text-slate-400">
-                <p>Memory: {output.memory}</p>
-                <p>CPU Time: {output.cpuTime}</p>
+                <p>Memory: {output1.memory}</p>
+                <p>CPU Time: {output1.cpuTime}</p>
               </div>
             </>
           )}
-        </>
+          <br />
+          CASE2:
+        </div>
+
       )}
     </div>
   )
