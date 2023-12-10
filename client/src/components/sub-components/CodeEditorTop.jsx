@@ -30,7 +30,7 @@ export default function CodeEditorTop() {
         >
           <MenuItem value="python">Python</MenuItem>
           <MenuItem value="cpp">C++</MenuItem>
-          <MenuItem value="rust">Rust</MenuItem>
+          <MenuItem value="c">C</MenuItem>
         </Select>
         {/* <span>Selected Language: {language} </span> */}
       </Box>

@@ -13,19 +13,66 @@ const Testcases = () => {
       }
   }
   const problem = problems[problemIndex];
-  // console.log(problem);
+  const op1 = problem['testCases'][0]['expectedOutput'];
+  const op2 = problem['testCases'][1]['expectedOutput'];
 
-  console.log(problem['testCases'][0]['inputs'][0]['value']);
+
+
+  const DisplayData = ({ op1 }) => {
+    const renderValue = (value) => <span>{value}</span>;
+  
+    const renderArray = (array) => (
+      <div>
+        {array.map((item, index) => (
+          <span key={index}>{item} </span>
+        ))}
+      </div>
+    );
+  
+    const renderMatrix = (matrix) => (
+      <div>
+        {matrix.map((row, rowIndex) => (
+          <div key={rowIndex}>
+            {row.map((item, colIndex) => (
+              <span key={`${rowIndex}-${colIndex}`}>{item} </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    );
+  
+    const type = typeof op1;
+  
+    switch (type) {
+      case 'string':
+        return renderValue(op1);
+      case 'number':
+        return renderValue(op1.toString());
+      case 'object':
+        if (Array.isArray(op1[0])) {
+          return renderMatrix(op1);
+        } else  {
+          return renderArray(op1);
+        }
+        break;
+      case 'boolean':
+        return renderValue(op1.toString());
+        break;
+      default:
+        // Handle other data types
+        return <p>Unsupported data type</p>;
+    }
+  };
 
   return (
     <div class="text-white w-full h-96 bg-black px-4 py-2">
        CASE 1:
        <p>
-        {problem['testCases'][0]['expectedOutput'] }
+        <DisplayData op1={op1} />
       </p>
       CASE 2:
       <p>
-        {problem['testCases'][1]['expectedOutput'] }
+        <DisplayData op1={op2} />
       </p>
     </div>
   )

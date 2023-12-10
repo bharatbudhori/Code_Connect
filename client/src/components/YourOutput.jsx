@@ -3,13 +3,14 @@ import CodeEditorContext from "../context/CodeEditorContext";
 
 const YourOutput = () => {
     const { output1, setOutput1 } = useContext(CodeEditorContext);
+    const { output2, setOutput2 } = useContext(CodeEditorContext);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
       // Simulating an API call delay for demonstration purposes
       const delay = setTimeout(() => {
         setLoading(false);
-      }, 2000);
+      }, 0);  //2000);
   
       return () => clearTimeout(delay); // Cleanup on component unmount
     }, []);
@@ -38,6 +39,16 @@ const YourOutput = () => {
           )}
           <br />
           CASE2:
+          {output2 !== null && (
+            <>
+              <p>{output2.output}</p>
+              <div className="text-slate-400">
+                <p>Memory: {output2.memory}</p>
+                <p>CPU Time: {output2.cpuTime}</p>
+              </div>
+            </>
+          )}
+          <br />
         </div>
 
       )}
