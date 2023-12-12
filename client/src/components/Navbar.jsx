@@ -9,7 +9,6 @@ import GlobalContext from "../context/GlobalContext";
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Problems", href: "/problems", current: false },
-  { name: "Team", href: "/room", current: false },
   { name: "About Us", href: "/about", current: false },
   { name: "Code", href: "/problems/3", current: false },
   
