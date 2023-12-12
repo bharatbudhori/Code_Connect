@@ -67,7 +67,7 @@ export default function Navbar() {
                   src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
                   alt="logo"
                 />
-                CodeDual
+                Code Duel
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">

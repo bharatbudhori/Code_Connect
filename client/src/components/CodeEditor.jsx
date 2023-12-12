@@ -199,14 +199,14 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
                     }}
                 />
                 <button
-                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-5 mr-5"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-3 mr-5 float-left"
                     onClick={runCode}
                 >
                     Run
                     <PlayArrowIcon />
                 </button>
                 <button
-                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mb-5"
+                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-3 float-left"
                     onClick={submitCode}
                 >
                     Submit

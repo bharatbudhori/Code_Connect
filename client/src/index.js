@@ -12,7 +12,6 @@ import ProblemProvider from "./context/ProblemProvider.jsx";
 import About from "./components/About.jsx";
 import LoginForm, { formAction } from "./components/LoginForm.jsx";
 import Hero from "./components/LandingPage.jsx";
-import ResizableBoxes from "./components/ResizableBoxes.jsx";
 import JoinRoom from "./components/JoinRoom.jsx";
 
 const router = createBrowserRouter([
@@ -62,7 +61,6 @@ const router = createBrowserRouter([
           </CodeEditorProvider>
         ),
       },
-      { path: "/test", element: <ResizableBoxes /> },
     ],
   },
 ]);
