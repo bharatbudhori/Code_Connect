@@ -6,8 +6,6 @@ import { serverUrl } from "../constants";
 import GlobalContext from "../context/GlobalContext";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Dialog } from "@mui/material";
-import Modal from "react-modal";
 
 let mode = "login";
 
@@ -18,6 +16,7 @@ const LoginForm = ({isOpen}) => {
   const { loggedIn, setLoggedIn } = useContext(GlobalContext);
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(isOpen);
+
 
   const {
     register,
@@ -75,7 +74,7 @@ const LoginForm = ({isOpen}) => {
     } catch (error) {
       console.log(error);
 
-      alert("Invalid credentials");
+      alert("Invalid credentials",error);
     }
   }
   const customStyles = {
@@ -97,10 +96,10 @@ const LoginForm = ({isOpen}) => {
     },
   };
   //changing the default styles of the modal
-  Modal.defaultStyles.overlay.background = "rgba(0, 0, 0, 0.2)";
+  // Modal.defaultStyles.overlay.background = "rgba(0, 0, 0, 0.2)";
   return (
     <>
-      <Modal isOpen={true} style={customStyles}>
+      {/* <Modal isOpen={true} style={customStyles}> */}
         <ul>
           {data &&
             data.error &&
@@ -241,7 +240,7 @@ const LoginForm = ({isOpen}) => {
           </div>
           {/* </div> */}
         </section>
-      </Modal>
+      {/* </Modal>  */}
     </>
   );
 };

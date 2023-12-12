@@ -5,12 +5,15 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { isLoggedin, logout } from "../utlis/loginUtils";
 import GlobalContext from "../context/GlobalContext";
+import { useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
+import { use } from 'react-router-dom';
 
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Problems", href: "/problems", current: false },
   { name: "About Us", href: "/about", current: false },
-  { name: "Code", href: "/problems/3", current: false },
+  // { name: "Join Room", href: "/join", current: false },
   
 ];
 
@@ -23,8 +26,22 @@ export default function Navbar() {
   // const [loggedIn, setLoggedIn] = useState(isLoggedin());
   const {loggedIn, setLoggedIn} = useContext(GlobalContext);
   setLoggedIn(isLoggedin());
-
-
+  const url = useLocation();
+  useEffect(() => {
+    if(url.pathname==="/problems"){
+      setCurrentIndex(1);
+    }
+    else if(url.pathname==="/about"){
+      setCurrentIndex(2);
+    }
+    else if(url.pathname==="/problems/3"){
+      setCurrentIndex(3);
+    }
+    else{
+      setCurrentIndex(0);
+    }
+  }, [url.pathname]);
+  // console.log(url.pathname,"url");
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -127,7 +144,7 @@ export default function Navbar() {
                           </Link>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
+                      {/* <Menu.Item>
                         {({ active }) => (
                           <a
                             href="#"
@@ -139,7 +156,7 @@ export default function Navbar() {
                             Settings
                           </a>
                         )}
-                      </Menu.Item>
+                      </Menu.Item> */}
                       <Menu.Item>
                         {({ active }) => (
                           <Link
