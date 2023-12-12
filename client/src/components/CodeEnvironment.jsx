@@ -25,6 +25,7 @@ const CodeEnviornment = () => {
   const [isCredentialsEntered, setIsCredentialsEntered] = useState(false);
   const [socket, setSocket] = useState(null);
   const [friendText, setFriendText] = useState("");
+  const [friendLanguage, setFriendLanguage] = useState("cpp");
   const { roomCreated, setRoomCreated } = useContext(CodeEditorContext);
   const { input1, setInput1 } = useContext(CodeEditorContext);
   const { input2, setInput2 } = useContext(CodeEditorContext);
@@ -51,7 +52,7 @@ const CodeEnviornment = () => {
       return;
     }
 
-    const newSocket = io("http://localhost:3001"); // Replace with your server address
+    const newSocket = io("http://localhost:5000"); // Replace with your server address
     setSocket(newSocket);
 
     // Emit 'joinRoom' event to the server with display name and room ID
@@ -78,6 +79,13 @@ const CodeEnviornment = () => {
           setFriendText(message);
         }
       });
+
+      socket.on("language", (data) => {
+        const { displayName: userName, language } = data;
+        if (userName !== displayName) {
+          setFriendLanguage(language);
+        }
+      });
     }
   }, [socket]);
 
@@ -92,9 +100,23 @@ const CodeEnviornment = () => {
         {" "}
         {/* Use Tailwind CSS classes to style the container */}
         {!socket && (
-          <Button onClick={() => handleCreateRoom()} variant="outlined">
+          <Button
+          //white text, blue background, rounded corners, padding 2px, border 1px solid blue
+          sx={{ color: "white", background: "#1976d2",
+          '&:hover': {
+             background: "#225281",
+          }, borderRadius: "8px", p: 1, border: "1px solid #1e1e1e", }}
+
+          onClick={() => handleCreateRoom()} variant="outlined">
             Create Room
           </Button>
+
+          // same button with tailwind classes
+          // <button
+          //   className="text-white bg-blue-500 rounded px-2 border border-blue-500 "
+          //   onClick={() => handleCreateRoom()}
+          // />
+            
         )}
         <LoginToContinue
           isOpen={showModal2}
@@ -117,7 +139,6 @@ const CodeEnviornment = () => {
           setRoomId={setRoomId}
         />
       </div>{" "}
-      ``
       <h3 className="text-3xl my-3 mx-10"> {problem["title"]} </h3>
       <Stack
         direction={{
@@ -185,7 +206,11 @@ const CodeEnviornment = () => {
             width: "100%",
           }}
         >
-          <CodeEditorTop />
+          <CodeEditorTop 
+            socket={socket}
+            roomId={roomId}
+            displayName={displayName}
+          />
           <CodeEditor
             socket={socket}
             roomId={roomId}
@@ -195,8 +220,8 @@ const CodeEnviornment = () => {
           <Outlet />
         </Box>
       </Stack>
-      <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
-        <FriendCodeEditor friendText={friendText} />
+      <Drawer isOpen={isOpen} setIsOpen={setIsOpen} language={friendLanguage}>
+        <FriendCodeEditor friendText={friendText} language={friendLanguage} />
       </Drawer>
       
     </>

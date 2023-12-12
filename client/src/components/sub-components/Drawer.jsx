@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Drawer({ children, isOpen, setIsOpen }) {
+export default function Drawer({ children, isOpen, setIsOpen, language }) {
     return (
         <main
             className={
@@ -18,6 +18,12 @@ export default function Drawer({ children, isOpen, setIsOpen }) {
             >
                 <article className="relative w-screen max-w-3xl pb-10 flex flex-col space-y-6 overflow-y-scroll h-full bg-gray-900">
                     <header className="p-4 font-bold text-lg">Your Pair Programmer's code</header>
+                    <h4
+                        className="absolute top-4 left-4 text-white py-1"
+                        style={{ fontSize: "0.8rem" }}
+                    >
+                        {`Language Selected: ${language}`}
+                    </h4>
                     <span className="absolute top-4 right-4">
                         <button
                             className="text-gray-400 hover:text-gray-800"

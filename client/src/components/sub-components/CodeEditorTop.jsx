@@ -4,7 +4,7 @@ import CodeEditorContext from '../../context/CodeEditorContext';
 import { Box, Stack, Switch, Select, MenuItem, InputLabel, colors } from '@mui/material';
 
 
-export default function CodeEditorTop() {
+export default function CodeEditorTop({ socket, displayName, roomId }) {
   const {theme, setTheme} = useContext(CodeEditorContext);
   const {language, setLanguage} = useContext(CodeEditorContext);
 
@@ -16,6 +16,12 @@ export default function CodeEditorTop() {
   const handleLanguage = (event) => {
     console.log(event.target.value);
     setLanguage(event.target.value);
+    socket.emit("changeLanguage", {
+      room: roomId,
+      language: event.target.value,
+      displayName,
+  });
+    
   };
 
 

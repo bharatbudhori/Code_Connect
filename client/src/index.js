@@ -11,6 +11,7 @@ import ProblemSet from "./components/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 import About from "./components/About.jsx";
 import LoginForm,{formAction} from "./components/LoginForm.jsx";
+import Hero from "./components/LandingPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,9 +21,7 @@ const router = createBrowserRouter([
       {
         path: "",
         element: (
-          <ProblemProvider>
-            <ProblemSet />
-          </ProblemProvider>
+          <Hero />
         ),
       },
       {
@@ -36,6 +35,14 @@ const router = createBrowserRouter([
       {
         path: "/room",
         element: <Room />,
+      },
+      {
+        path: "/problems",
+        element: (
+          <ProblemProvider>
+            <ProblemSet />
+          </ProblemProvider>
+        ),
       },
       {
         path: "/about",
