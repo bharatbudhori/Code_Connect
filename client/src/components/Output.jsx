@@ -16,15 +16,15 @@ const Output = () => {
    <div>
     <div className="p-4 bg-gray-800 text-gray-200">
           <div className="flex justify-between items-center">
-            <div className="flex items-center pl-8">
-              <TerminalIcon className="h-8 w-8 text-white" />
-            </div>
+            {/* <div className="flex items-center pl-8">
+              <TerminalIcon className="h-80 w-8 text-white" />
+            </div> */}
             {/* MOBILE NAV ICON */}
             <div className="md:hidden block absolute top-4 right-8 fixed">
               <button aria-label="navigation" type="button" className="md:hidden text-gray-200 transition duration-300 focus:outline-none focus:text-white hover:text-white"><i className="fas fa-bars text-3xl" id="bars" />          </button>
             </div>
             {/* NAVIGATION - LARGE SCREENS */}
-            <div className="hidden md:flex">
+            <div className="hidden md:flex ml-8">
               <ul className="hidden md:flex">
                 <li className="text-lg pr-8">
                   <button onClick={ ()=>showComponent('testcases') } className={ `transition duration-300 ${activeComponent === 'testcases' ? "text-yellow-500 underline":""} focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500`} style={{textUnderlineOffset: '8px'}}>
@@ -43,12 +43,12 @@ const Output = () => {
                 </li>
               </ul>
             </div>
-            <div className="hidden md:flex">
+            {/* <div className="hidden md:flex">
               <a href="#"><i className="fab fa-facebook text-2xl pr-8 transition duration-300 focus:text-yellow-500 hover:text-yellow-500" /></a>
               <a href="#"><i className="fab fa-linkedin text-2xl pr-8 transition duration-300 focus:text-yellow-500 hover:text-yellow-500" /></a>
               <a href="#"><i className="fab fa-instagram text-2xl pr-8 transition duration-300 focus:text-yellow-500 hover:text-yellow-500" /></a>
               <a href="#"><i className="fab fa-twitter text-2xl pr-8 transition duration-300 focus:text-yellow-500 hover:text-yellow-500" /></a>
-            </div>
+            </div> */}
           </div>
           {/* MOBILE MENU */}
           <div id="mobileMenu" className="hidden flex w-full mx-auto py-8 text-center">
