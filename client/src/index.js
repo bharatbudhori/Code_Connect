@@ -13,6 +13,7 @@ import About from "./components/About.jsx";
 import LoginForm, { formAction } from "./components/LoginForm.jsx";
 import Hero from "./components/LandingPage.jsx";
 import ResizableBoxes from "./components/ResizableBoxes.jsx";
+import JoinRoom from "./components/JoinRoom.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: (
-          <Hero />
-        ),
+        element: <Hero />,
       },
       {
         path: "problems/:problemId",
@@ -54,8 +53,16 @@ const router = createBrowserRouter([
         element: <LoginForm />,
         // action: formAction
       },
-      { path: "/test", 
-        element: <ResizableBoxes />},
+      {
+        path: "/join",
+        element: (
+          <CodeEditorProvider>
+            {" "}
+            <JoinRoom />
+          </CodeEditorProvider>
+        ),
+      },
+      { path: "/test", element: <ResizableBoxes /> },
     ],
   },
 ]);

@@ -5,7 +5,7 @@ const Hero = () => {
     var url =
         "https://media.istockphoto.com/id/629286010/photo/programming-code-abstract-technology-background-of-software-deve.jpg?s=1024x1024&w=is&k=20&c=u6LfvezDsWUPFwDCHkkWmpzi1W7EFF-8aCnpYMUkwlk=";
     return (
-        <div className="w-screen h-[calc(100vh-5rem)]">
+        <div className="w-screen h-[calc(100vh-8rem)] overflow-hidden">
             <div className="bg-cover bg-[url('https://firebasestorage.googleapis.com/v0/b/codedual-37722.appspot.com/o/7xm.xyz800281.jpg?alt=media&token=4910535d-6f43-4e1c-93b5-f6e3a9a028a9')] bg-center bg-no-repeat h-full w-full">
                 <div className="container mx-auto flex flex-col my-auto align-middle h-full">
                     <div className="my-auto  mx-auto lg:mx-0 w-10/12 lg:w-2/5">

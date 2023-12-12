@@ -15,7 +15,7 @@ import LoginToContinue from "./sub-components/LoginToContinue";
 import LoginForm from "./LoginForm";
 const { io } = require("socket.io-client");
 
-const CodeEnviornment = () => {
+const JoinRoom = () => {
   const { problemId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [displayName, setDisplayName] = useState("");
@@ -94,7 +94,7 @@ const CodeEnviornment = () => {
   return (
     <>
 
-      <Header isOpen={isOpen} setIsOpen={setIsOpen} />
+      {/* <Header isOpen={isOpen} setIsOpen={setIsOpen} /> */}
       <div className="absolute right-0 p-4">
         {" "}
         {/* Use Tailwind CSS classes to style the container */}
@@ -107,7 +107,7 @@ const CodeEnviornment = () => {
           }, borderRadius: "8px", p: 1, border: "1px solid #1e1e1e", }}
 
           onClick={() => handleCreateRoom()} variant="outlined">
-            Create Room
+            Join Room
           </Button>
 
           // same button with tailwind classes
@@ -137,7 +137,7 @@ const CodeEnviornment = () => {
           setRoomId={setRoomId}
         />
       </div>{" "}
-      <h3 className="text-3xl my-3 mx-10"> {problem["title"]} </h3>
+      {/* <h3 className="text-3xl my-3 mx-10"> {problem["title"]} </h3>
       <Stack
         direction={{
           direction: "row",
@@ -222,9 +222,9 @@ const CodeEnviornment = () => {
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen} language={friendLanguage}>
         <FriendCodeEditor friendText={friendText} language={friendLanguage} />
       </Drawer>
-      
+       */}
     </>
   );
 };
 
-export default CodeEnviornment;
+export default JoinRoom;
