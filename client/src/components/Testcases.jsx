@@ -25,10 +25,6 @@ const Testcases = () => {
     <div class="text-white w-full h-96 bg-black px-4 py-2">
        CASE 1:
        <p>
-        {/* {problem['testCases'][0]['inputs'][0]['value'].map((tc, index) => (
-          
-          <span key={index}>{tc}, </span>
-        ))} */}
         <DisplayObjectAsIs myObject={tc1} />
       </p>
       CASE 2:

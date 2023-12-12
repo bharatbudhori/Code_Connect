@@ -18,3 +18,15 @@ code {
     monospace;
 }
 iframe#webpack-dev-server-client-overlay {  display: none !important;  }
+
+.resizable-handle {
+  width: 10px;
+  cursor: ew-resize;
+  background-color: #ddd;
+  height: 100%;
+}
+
+.slider {
+  width: 10px;
+  background-color: red;
+}

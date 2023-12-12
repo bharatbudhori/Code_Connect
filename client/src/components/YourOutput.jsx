@@ -3,7 +3,7 @@ import CodeEditorContext from "../context/CodeEditorContext";
 
 const YourOutput = () => {
     const { output1, setOutput1 } = useContext(CodeEditorContext);
-    const { output2, setOutput2 } = useContext(CodeEditorContext);
+    const { output2, setOutput2,runResponse, setRunResponse } = useContext(CodeEditorContext);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -17,17 +17,15 @@ const YourOutput = () => {
 
   return (
     <div className="text-white w-full h-96 bg-black px-4 py-2">
-      {loading ? (
+      {runResponse ? (
         // Shimmer loading effect
         <div className="shimmer">
-          <div className="shimmer-line"></div>
-          <div className="shimmer-line"></div>
-          <div className="shimmer-line"></div>
+          Loading...
         </div>
       ) : (
         // Actual content
         <div>
-          CASE1:
+          CASE1 :
           {output1 !== null && (
             <>
               <p>{output1.output}</p>

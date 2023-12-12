@@ -13,7 +13,6 @@ import problems from "../Data/problems";
 import GlobalContext from "../context/GlobalContext";
 import LoginToContinue from "./sub-components/LoginToContinue";
 import LoginForm from "./LoginForm";
-import { set } from "react-hook-form";
 const { io } = require("socket.io-client");
 
 const CodeEnviornment = () => {
@@ -150,6 +149,7 @@ const CodeEnviornment = () => {
         spacing={{ xs: 1, sm: 2, md: 2 }}
         padding={{ xs: 1, sm: 2, md: 2 }}
       >
+        
         <Box
           sx={{
             px: { md: 2 },
