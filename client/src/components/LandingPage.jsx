@@ -16,7 +16,7 @@ const Hero = () => {
                             Amplyfying Brilliance!
                         </h1>
                         <p className="text-2xl mb-8">
-                            Code Dual: Collaborative coding excellence, uniting
+                            Code Connect: Collaborative coding excellence, uniting
                             minds for superior solutions.
                         </p>
                         <div className="flex items-center">

@@ -4,7 +4,7 @@ import CodeEditorContext from "../../context/CodeEditorContext";
 
 export default function Header({ isOpen, setIsOpen }) {
     const {roomCreated, setRoomCreated} = useContext(CodeEditorContext);
-    console.log(roomCreated)
+    // console.log(roomCreated)
     return (
         <header>
             {roomCreated && !isOpen && (
