@@ -111,7 +111,7 @@ const LoginForm = ({isOpen}) => {
         </ul>
 
         <section className=" bg-gray-50 dark:bg-gray-900 z-10">
-          {/* <div class="absolute  transform -translate-x-1/2 left-1/2 z-20   "> */}
+          {/* <div className="absolute  transform -translate-x-1/2 left-1/2 z-20   "> */}
 
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <a
@@ -215,9 +215,9 @@ const LoginForm = ({isOpen}) => {
                   ) : (
                     //spinner
                     <div className="flex justify-center">
-                      <div class="relative">
-                        <div class="w-10 h-10 border-blue-200 border-2 rounded-full"></div>
-                        <div class="w-10 h-10 border-blue-700 border-t-2 animate-spin rounded-full absolute left-0 top-0"></div>
+                      <div className="relative">
+                        <div className="w-10 h-10 border-blue-200 border-2 rounded-full"></div>
+                        <div className="w-10 h-10 border-blue-700 border-t-2 animate-spin rounded-full absolute left-0 top-0"></div>
                       </div>
                     </div>
                   )}

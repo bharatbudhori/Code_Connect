@@ -23,6 +23,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isProblemPage, setIsProblemPage] = useState(false);
   // const [loggedIn, setLoggedIn] = useState(isLoggedin());
   const {loggedIn, setLoggedIn} = useContext(GlobalContext);
   setLoggedIn(isLoggedin());
@@ -41,9 +42,19 @@ export default function Navbar() {
       setCurrentIndex(0);
     }
   }, [url.pathname]);
+
+  const location = useLocation();
+    useEffect(() => {
+      console.log("Head"+location.pathname);
+        if (location.pathname.includes("/problems/")) {
+            setIsProblemPage(true);
+        }
+    }, [location]);
+
+
   // console.log(url.pathname,"url");
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className={`${isProblemPage ? "hidden" : ""} bg-gray-800`}>
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -67,7 +78,7 @@ export default function Navbar() {
                   src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
                   alt="logo"
                 />
-                Code Duel
+                Code Connect
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">

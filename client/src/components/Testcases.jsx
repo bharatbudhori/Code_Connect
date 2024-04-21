@@ -14,23 +14,9 @@ const Testcases = () => {
   }
   const problem = problems[problemIndex];
   
-  const tc1 = problem['testCases'][0]['inputs'][0]['value'];
-  const tc2 = problem['testCases'][1]['inputs'][0]['value'];  
-
-  const DisplayObjectAsIs = ({ myObject }) => (
-    <pre>{JSON.stringify(myObject)}</pre>
-  );
-
   return (
-    <div class="text-white w-full h-96 bg-black px-4 py-2">
-       CASE 1:
-       <p>
-        <DisplayObjectAsIs myObject={tc1} />
-      </p>
-      CASE 2:
-      <p>
-        <DisplayObjectAsIs myObject={tc1} />
-      </p>
+    <div className="text-white w-full h-full bg-orange-800 px-4 py-2 whitespace-pre-line overflow-y-scroll">
+       {problem['RunInput']}
     </div>
   )
 }

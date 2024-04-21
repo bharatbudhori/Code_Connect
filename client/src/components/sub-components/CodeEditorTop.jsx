@@ -32,7 +32,7 @@ export default function CodeEditorTop({ socket, displayName, roomId }) {
         <Select
           value={language}
           onChange={handleLanguage}
-          sx={{ backgroundColor: "white", height: "30px", maxWidth: "280px", marginTop: "8px" }}
+          sx={{ backgroundColor: "white", height: "30px", maxWidth: "280px", marginTop: "6px" }}
         >
           <MenuItem value="python">Python</MenuItem>
           <MenuItem value="cpp">C++</MenuItem>
@@ -41,7 +41,7 @@ export default function CodeEditorTop({ socket, displayName, roomId }) {
         {/* <span>Selected Language: {language} </span> */}
       </Box>
 
-      <Box sx={{ marginLeft: 'auto', paddingRight: '16px', paddingTop: '5px' }}>
+      <Box sx={{ marginLeft: 'auto', paddingRight: '16px', paddingTop: '2px' }}>
         Dark Mode:
         <Switch
           onChange={handleMode}
