@@ -1,18 +1,18 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Outlet, redirect, useParams ,useNavigate } from "react-router-dom";
-import { Box, Stack, Button, Chip } from "@mui/material";
-import CodeEditor from "./CodeEditor";
-import CodeEditorTop from "./sub-components/CodeEditorTop";
-import Header from "./sub-components/Header";
-import Drawer from "./sub-components/Drawer";
-import FriendCodeEditor from "./FriendCodeEditor";
-import Output from "./Output";
-import CreateRoom from "./CreateRoom";
+import {  useParams, useNavigate } from "react-router-dom";
+import {  Button } from "@mui/material";
+// import CodeEditor from "./CodeEditor";
+// import CodeEditorTop from "./sub-components/CodeEditorTop";
+// import Header from "./sub-components/Header";
+// import Drawer from "./sub-components/Drawer";
+// import FriendCodeEditor from "./FriendCodeEditor";
+// import Output from "./Output";
+import CreateRoomModal from "./create room/CreateRoomButton";
 import CodeEditorContext from "../context/CodeEditorContext";
 import problems from "../Data/problems";
 import GlobalContext from "../context/GlobalContext";
 import LoginToContinue from "./sub-components/LoginToContinue";
-import LoginForm from "./LoginForm";
+// import LoginForm from "./LoginForm";
 const { io } = require("socket.io-client");
 
 const JoinRoom = () => {
@@ -43,8 +43,8 @@ const JoinRoom = () => {
   }
   const problem = problems[problemIndex];
 
-  setInput1(problem["testCases"][0]["inputs"][0]["value"]);
-  setInput2(problem["testCases"][1]["inputs"][0]["value"]);
+  // setInput1(problem["testCases"][0]["inputs"][0]["value"]);
+  // setInput2(problem["testCases"][1]["inputs"][0]["value"]);
 
   const connectToRoom = () => {
     if (displayName.trim() === "" || roomId.trim() === "") {
@@ -89,24 +89,28 @@ const JoinRoom = () => {
     }
   }, [socket]);
 
-
-
   return (
     <>
-
       {/* <Header isOpen={isOpen} setIsOpen={setIsOpen} /> */}
       <div className="absolute right-0 p-4">
         {" "}
         {/* Use Tailwind CSS classes to style the container */}
         {!socket && (
           <Button
-          //white text, blue background, rounded corners, padding 2px, border 1px solid blue
-          sx={{ color: "white", background: "#1976d2",
-          '&:hover': {
-             background: "#225281",
-          }, borderRadius: "8px", p: 1, border: "1px solid #1e1e1e", }}
-
-          onClick={() => handleCreateRoom()} variant="outlined">
+            //white text, blue background, rounded corners, padding 2px, border 1px solid blue
+            sx={{
+              color: "white",
+              background: "#1976d2",
+              "&:hover": {
+                background: "#225281",
+              },
+              borderRadius: "8px",
+              p: 1,
+              border: "1px solid #1e1e1e",
+            }}
+            onClick={() => handleCreateRoom()}
+            variant="outlined"
+          >
             Join Room
           </Button>
 
@@ -115,7 +119,6 @@ const JoinRoom = () => {
           //   className="text-white bg-blue-500 rounded px-2 border border-blue-500 "
           //   onClick={() => handleCreateRoom()}
           // />
-            
         )}
         <LoginToContinue
           isOpen={showModal2}
@@ -123,11 +126,11 @@ const JoinRoom = () => {
           onLogin={() => {
             navigate("/login", { replace: true });
             // setShowModal(true);
-            
+
             // {showLoginForm && <LoginForm />}
           }}
         />
-        <CreateRoom
+        {/* <CreateRoom
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           onCreateRoom={connectToRoom}
@@ -135,7 +138,7 @@ const JoinRoom = () => {
           setDisplayName={setDisplayName}
           roomId={roomId}
           setRoomId={setRoomId}
-        />
+        /> */}
       </div>{" "}
       {/* <h3 className="text-3xl my-3 mx-10"> {problem["title"]} </h3>
       <Stack
