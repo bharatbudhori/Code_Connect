@@ -25,11 +25,10 @@ const router = createBrowserRouter([
       },
       {
         path: "problems/:problemId",
-        element: (
+        element:
           <CodeEditorProvider>
-            <CodeEnvironment />
-          </CodeEditorProvider>
-        ),
+           <CodeEnvironment /> 
+         </CodeEditorProvider>
       },
       {
         path: "/room",

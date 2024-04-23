@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import CodeEditorContext from "../context/CodeEditorContext";
-import problems from "../Data/problems";
+import CodeEditorContext from "../../context/CodeEditorContext";
+import problems from "../../Data/problems";
 import { useParams } from "react-router-dom";
 import SubmitResut from "./SubmitResult";
 
 const TestResult = () => {
-  const { output, runResponse,submitOutput} =
-    useContext(CodeEditorContext);
+  const { output, runResponse, submitOutput } = useContext(CodeEditorContext);
 
   const { problemId } = useParams();
   let problemIndex = 0;
@@ -18,7 +17,7 @@ const TestResult = () => {
   }
   const problem = problems[problemIndex];
 
-  return ((!submitOutput) ?(
+  return !submitOutput ? (
     <div className="text-white w-full h-full bg-orange-800 px-4 py-2 whitespace-pre-line overflow-y-scroll">
       <p>
         <b>Test Case</b>
@@ -59,8 +58,9 @@ const TestResult = () => {
         <br />
         {problem["RunOutput"]}
       </p>
-      </div>):
-      (<>{submitOutput && <SubmitResut/>}</>)
+    </div>
+  ) : (
+    <>{submitOutput && <SubmitResut />}</>
   );
 };
 
