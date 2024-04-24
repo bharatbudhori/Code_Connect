@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import DifficultyFilter from "./DifficultyFilter";
 import StatusFilter from "./StatusFilter";
-import ProblemContext from "../../context/ProblemContext";
+import ProblemContext from "../../../context/ProblemContext";
 import CancelIcon from "@mui/icons-material/Cancel";
 import TagsFilter from "./TagsFilter";
 import SearchFilter from "./SearchFilter";
-import {statusList} from "../../Data/problems";
+import { statusList } from "../../../Data/problems";
 
 function ProblemFilter() {
   const {
@@ -41,16 +41,14 @@ function ProblemFilter() {
     }
     if (statusFilter !== "All") {
       // newData = newData.filter((problem) => problem.status === statusFilter);
-      if(statusFilter==="Solved"){
+      if (statusFilter === "Solved") {
         newData = newData.filter((problem) => statusList.includes(problem.id));
-      }
-      else if(statusFilter==="Unsolved"){
+      } else if (statusFilter === "Unsolved") {
         newData = newData.filter((problem) => !statusList.includes(problem.id));
       }
-      
     }
     setFilteredProblems(newData);
-  }, [selectedDifficulty, searchFilter, tagsFilter,statusFilter]);
+  }, [selectedDifficulty, searchFilter, tagsFilter, statusFilter]);
 
   return (
     <>

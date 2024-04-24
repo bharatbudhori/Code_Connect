@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useRef } from "react";
 import Editor from "@monaco-editor/react";
-import RunSubmit from "../OutputDisplay/RunSubmit";
+import RunSubmit from "../outputDisplay/RunSubmit";
 import CodeEditorContext from "../../context/CodeEditorContext";
 import CodeEditorTop from "./CodeEditorTop";
 // import SubmitReport from "./sub-components/SubmitReport";

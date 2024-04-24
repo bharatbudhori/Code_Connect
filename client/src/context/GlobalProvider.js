@@ -8,6 +8,10 @@ const GlobalProvider = ({ children }) => {
     useState(false);
   const [friendText, setFriendText] = useState("");
   const [friendLanguage, setFriendLanguage] = useState("cpp");
+  const [socket, setSocket] = useState(null);
+  const [displayName, setDisplayName] = useState("");
+  const [roomId, setRoomId] = useState("");
+  const [roomCreated, setRoomCreated] = useState(false);
 
   const value = {
     loggedIn,
@@ -20,6 +24,14 @@ const GlobalProvider = ({ children }) => {
     setFriendText,
     friendLanguage,
     setFriendLanguage,
+    socket,
+    setSocket,
+    displayName,
+    setDisplayName,
+    roomId,
+    setRoomId,
+    roomCreated,
+    setRoomCreated,
   };
 
   return (

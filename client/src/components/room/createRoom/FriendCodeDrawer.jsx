@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import FriendCodeEditor from "../FriendCodeEditor";
-import Drawer from "../sub-components/Drawer";
-import GlobalContext from "../../context/GlobalContext";
-import ShowFriendCodeButton from "../sub-components/ShowFriendCodeButton";
+import Drawer from "../Drawer";
+import GlobalContext from "../../../context/GlobalContext";
+import ShowFriendCodeButton from "../ShowFriendCodeButton";
 
 function FriendCodeDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,7 @@ function FriendCodeDrawer() {
 
   return (
     <>
-      {/* <div>FriendCodeDrawer</div> */}
+      <div>FriendCodeDrawer</div>
       <ShowFriendCodeButton isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen} language={friendLanguage}>

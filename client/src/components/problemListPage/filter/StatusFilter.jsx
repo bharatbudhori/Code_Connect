@@ -1,12 +1,11 @@
-
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon} from "@heroicons/react/20/solid";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
-import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
-import ProblemContext from "../../context/ProblemContext";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
+import ProblemContext from "../../../context/ProblemContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,7 +20,7 @@ export default function ProblemFilter() {
   };
   const handleClick = (status) => {
     setStatusFilter(status);
-  }
+  };
 
   return (
     <Menu as="div" className="relative inline-block text-left mt-12">
@@ -30,7 +29,7 @@ export default function ProblemFilter() {
           onClick={toggleMenu}
           className="inline-flex w-39 justify-left gap-x-12 rounded-md bg-gray-800 px-4 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-gray-700 active:bg-gray-800 hover:bg-gray-700 "
         >
-         Status
+          Status
           <span
             style={{
               transition: "transform 0.3s ease-out", // Adjust the duration and easing as needed
@@ -56,25 +55,25 @@ export default function ProblemFilter() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items 
-        style={{width:'100%'}}
-        className="absolute left-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-        onClick={toggleMenu}
+        <Menu.Items
+          style={{ width: "100%" }}
+          className="absolute left-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          onClick={toggleMenu}
         >
           <div className="py-1">
             <Menu.Item>
-            {({ active }) => (
+              {({ active }) => (
                 <div
-                className={classNames(
+                  className={classNames(
                     active ? "bg-gray-700 text-white" : "text-yellow-500",
                     "block px-4 py-2 text-sm"
-                )}
-                onClick={()=>handleClick("Unsolved")}
+                  )}
+                  onClick={() => handleClick("Unsolved")}
                 >
-                    <HorizontalRuleIcon className="mr-2" fontSize="small" />
-                Unsolved
+                  <HorizontalRuleIcon className="mr-2" fontSize="small" />
+                  Unsolved
                 </div>
-            )}
+              )}
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
@@ -84,9 +83,9 @@ export default function ProblemFilter() {
                     active ? "bg-gray-700 text-white" : "text-green-500",
                     "block px-4 py-2 text-sm"
                   )}
-                  onClick={()=>handleClick("Solved")}
+                  onClick={() => handleClick("Solved")}
                 >
-                    <CheckCircleIcon  className="mr-2" fontSize="small" />
+                  <CheckCircleIcon className="mr-2" fontSize="small" />
                   Solved
                 </div>
               )}
@@ -98,9 +97,9 @@ export default function ProblemFilter() {
                     active ? "bg-gray-700 text-white" : "text-red-500",
                     "block px-4 py-2 text-sm"
                   )}
-                  onClick={()=>handleClick("Attempted")}
+                  onClick={() => handleClick("Attempted")}
                 >
-                    <ShowChartIcon className="mr-2" fontSize="small" />
+                  <ShowChartIcon className="mr-2" fontSize="small" />
                   Attempted
                 </div>
               )}

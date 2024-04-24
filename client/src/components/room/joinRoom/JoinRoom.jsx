@@ -1,17 +1,17 @@
 import React, { useEffect, useContext, useState } from "react";
-import {  useParams, useNavigate } from "react-router-dom";
-import {  Button } from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 // import CodeEditor from "./CodeEditor";
 // import CodeEditorTop from "./sub-components/CodeEditorTop";
 // import Header from "./sub-components/Header";
 // import Drawer from "./sub-components/Drawer";
 // import FriendCodeEditor from "./FriendCodeEditor";
 // import Output from "./Output";
-import CreateRoomModal from "./create room/CreateRoomButton";
-import CodeEditorContext from "../context/CodeEditorContext";
-import problems from "../Data/problems";
-import GlobalContext from "../context/GlobalContext";
-import LoginToContinue from "./sub-components/LoginToContinue";
+
+import CodeEditorContext from "../../../context/CodeEditorContext";
+import problems from "../../../Data/problems";
+import GlobalContext from "../../../context/GlobalContext";
+import LoginToContinue from "../LoginToContinue";
 // import LoginForm from "./LoginForm";
 const { io } = require("socket.io-client");
 
@@ -25,11 +25,11 @@ const JoinRoom = () => {
   const [socket, setSocket] = useState(null);
   const [friendText, setFriendText] = useState("");
   const [friendLanguage, setFriendLanguage] = useState("cpp");
-  const { roomCreated, setRoomCreated } = useContext(CodeEditorContext);
   const { input1, setInput1 } = useContext(CodeEditorContext);
   const { input2, setInput2 } = useContext(CodeEditorContext);
 
-  const { loggedIn, setLoggedIn } = useContext(GlobalContext);
+  const { loggedIn, setLoggedIn, roomCreated, setRoomCreated } =
+    useContext(GlobalContext);
   const [showModal2, setShowModal2] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const navigate = useNavigate();

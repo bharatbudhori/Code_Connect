@@ -12,26 +12,33 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import "tailwindcss/tailwind.css";
+import GlobalContext from "../context/GlobalContext";
 
 // Create the CreateRoomDialog component
-const CreateRoomModal = ({
-  isOpen,
-  onClose,
-  onCreateRoom,
-  displayName,
-  setDisplayName,
-  roomId,
-  setRoomId,
-}) => {
+const CreateRoomModal = ({ onCreateRoom }) => {
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
     },
   });
 
+  const {
+    showCreateRoomModal,
+    setShowCreateRoomModal,
+    displayName,
+    setDisplayName,
+    roomId,
+    setRoomId,
+  } = useContext(GlobalContext);
+
   return (
     <ThemeProvider theme={darkTheme}>
-      <Dialog open={isOpen} onClose={onClose}>
+      <Dialog
+        open={showCreateRoomModal}
+        onClose={() => {
+          setShowCreateRoomModal(false);
+        }}
+      >
         <DialogTitle>Create Room</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -55,7 +62,7 @@ const CreateRoomModal = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={() => setShowCreateRoomModal(false)}>Cancel</Button>
           <Button onClick={onCreateRoom}>Create Room</Button>
         </DialogActions>
       </Dialog>

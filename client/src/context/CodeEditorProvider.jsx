@@ -10,7 +10,7 @@ const CodeEditorProvider = ({ children }) => {
     const [output, setOutput] = useState(null);
     const [submitOutput, setSubmitOutput ] = useState(null);
     const [input, setInput] = useState(null);
-    const [roomCreated, setRoomCreated] = useState(false);
+
     const [activeComponent, setActiveComponent] = useState('testcases');
     const [runResponse,setRunResponse] = useState(false);
     
@@ -27,8 +27,6 @@ const CodeEditorProvider = ({ children }) => {
         setSubmitOutput, 
         input,
         setInput,
-        roomCreated,
-        setRoomCreated,
         activeComponent,
         setActiveComponent,
         runResponse,

@@ -3,9 +3,8 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Chip from "@mui/material/Chip";
-import ProblemContext from "../../context/ProblemContext";
+import ProblemContext from "../../../context/ProblemContext";
 import { v4 as uuid4 } from "uuid";
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -13,7 +12,7 @@ function classNames(...classes) {
 
 export default function TagsFilter() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { allProblems, tagsFilter,setTagsFilter } = useContext(ProblemContext);
+  const { allProblems, tagsFilter, setTagsFilter } = useContext(ProblemContext);
 
   function getUniqueTags(problems) {
     const uniqueTagsSet = new Set();
@@ -81,21 +80,20 @@ export default function TagsFilter() {
           <div className="py-1">
             <div className="flex flex-wrap gap-2">
               {uniqueTags.map((tag) => (
-                <Menu.Item key={uuid4()}
-                >
+                <Menu.Item key={uuid4()}>
                   <Chip
                     key={tag}
                     label={tag}
-                   
                     sx={{
-                      backgroundColor : tagsFilter.includes(tag) ? "#184dff" : "#2f4876",
+                      backgroundColor: tagsFilter.includes(tag)
+                        ? "#184dff"
+                        : "#2f4876",
                       color: "white",
-                      }}
+                    }}
                     onClick={() => {
                       setTagsFilter([...tagsFilter, tag]);
-                      console.log(tagsFilter)
+                      console.log(tagsFilter);
                     }}
-                      
                   />
                 </Menu.Item>
               ))}
