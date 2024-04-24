@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { useRef } from "react";
 import Editor from "@monaco-editor/react";
-import RunSubmit from "./OutputDisplay/RunSubmit";
-import CodeEditorContext from "../context/CodeEditorContext";
+import RunSubmit from "../OutputDisplay/RunSubmit";
+import CodeEditorContext from "../../context/CodeEditorContext";
+import CodeEditorTop from "./CodeEditorTop";
 // import SubmitReport from "./sub-components/SubmitReport";
 
 const CodeEditor = ({ socket, displayName, roomId }) => {
@@ -16,6 +17,11 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
 
   return (
     <div className="bg-gray-900 text-white">
+      <CodeEditorTop
+        socket={socket}
+        roomId={roomId}
+        displayName={displayName}
+      />
       <div className="bg-gray-900 h-[600edpx]">
         {/* <SubmitReport
           accepted={accepted}

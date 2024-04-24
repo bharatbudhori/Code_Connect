@@ -10,7 +10,7 @@ function FriendCodeDrawer() {
 
   return (
     <>
-      <div>FriendCodeDrawer</div>
+      {/* <div>FriendCodeDrawer</div> */}
       <ShowFriendCodeButton isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen} language={friendLanguage}>

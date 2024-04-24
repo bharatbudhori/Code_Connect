@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+
+::-webkit-scrollbar {
+  width: 1em;
+  height: 1em;
+}
+
+::-webkit-scrollbar-track {
+  background: hsla(120, 75%, 43%, 0.7);
+  border-radius: 100vw;
+  margin-block: 0em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(rgb(93, 95, 119), rgb(92, 92, 161));
+  /* background: hsl(120 100% 20% / 1); */
+  border: 0.2em solid hsla(120, 75%, 43%, 0.5);
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(120 100% 15% / 1);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -86,30 +109,3 @@ iframe#webpack-dev-server-client-overlay {  display: none !important;  }
   background: lightgray;
 }
 
-
-/* .div1{
-  overflow: hidden;
-} */ */
-
-
-.div1 {
-  /* background: pink; */
-  min-width: 650px;
-}
-
-
-
-/* .div0 p, */
-.div1 p{
-  /* font-size: 2rem; */
-  margin-left: 1em;
-  /* text-transform: uppercase; */
-  text-overflow: ellipsis;
-  /* white-space: nowrap; */
-  /* overflow: hidden; */
-}
-
-/* .quest{
-  /* background: pink; */
-  /* max-height: 400px; */
-/* } */ 

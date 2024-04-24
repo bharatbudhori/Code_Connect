@@ -14,7 +14,7 @@ const Testcases = () => {
   const problem = problems[problemIndex];
 
   return (
-    <div className="text-white w-full h-full bg-orange-800 px-4 py-2 whitespace-pre-line overflow-y-scroll">
+    <div>
       {problem["RunInput"]}
     </div>
   );

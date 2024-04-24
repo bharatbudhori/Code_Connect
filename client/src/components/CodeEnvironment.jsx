@@ -1,11 +1,11 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Stack, Button, Chip } from "@mui/material";
-import CodeEditor from "./CodeEditor";
-import CodeEditorTop from "./sub-components/CodeEditorTop";
+import CodeEditor from "./CodeDisplay/CodeEditor";
+// import CodeEditorTop from "./CodeDisplay/CodeEditorTop";
 
-// // 
-import Output from "./Output";
+
+import Output from "./OutputDisplay/Output";
 import CreateRoomModal from "./CreateRoomModal";
 import CodeEditorContext from "../context/CodeEditorContext";
 import problems from "../Data/problems";
@@ -228,7 +228,7 @@ const CodeEnviornment = () => {
   }, []);
 
   return (
-    <>
+    <div className="">
       {/* {showLoginForm && <LoginForm />} */}
       {/* <LoginForm isOpen={showLoginForm} /> */}
       <div className="absolute right-0 p-4">
@@ -258,7 +258,7 @@ const CodeEnviornment = () => {
         padding={{ xs: 1, sm: 2, md: 2 }}
         className="resizable-x"
       >
-        <div id="app" classname="h-screen">
+        <div id="app" classname="">
           <div className="resizable-x">
             <div style={{ flex: "40%" }}>
               <QuestionDataDisplay />
@@ -266,18 +266,15 @@ const CodeEnviornment = () => {
             </div>
             <div className="resizer-x" />
             <div className="resizable-x" style={{ flex: "60%" }}>
-              <div className="div1" style={{ flex: "100%" }}>
+              <div style={{ flex: "100%" }}>
          
-                <CodeEditorTop
-                  socket={socket}
-                  roomId={roomId}
-                  displayName={displayName}
-                />
+                
                 <CodeEditor
                   socket={socket}
                   roomId={roomId}
                   displayName={displayName}
                 />
+                <Output/>
                 <div className="resizer-y"></div>
                 <div className="resizable-y" style={{ flex: "60%" }}>
                
@@ -289,7 +286,7 @@ const CodeEnviornment = () => {
         </div>
       </Stack>
       <FriendCodeDrawer />
-    </>
+    </div>
   );
 };
 
