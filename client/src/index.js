@@ -7,12 +7,12 @@ import CodeEnvironment from "./components/CodeEnvironment.jsx";
 import CodeEditorProvider from "./context/CodeEditorProvider.jsx";
 import Room from "./components/room.jsx";
 import Layout from "./components/Layout.jsx";
-import ProblemSet from "./components/ProblemSet.jsx";
+import ProblemSet from "./components/problemListPage/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 import About from "./components/About.jsx";
 import LoginForm, { formAction } from "./components/LoginForm.jsx";
 import Hero from "./components/LandingPage.jsx";
-import JoinRoom from "./components/JoinRoom.jsx";
+import JoinRoom from "./components/room/joinRoom/JoinRoom.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,10 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: "problems/:problemId",
-        element:
+        element: (
           <CodeEditorProvider>
-           <CodeEnvironment /> 
-         </CodeEditorProvider>
+            <CodeEnvironment />
+          </CodeEditorProvider>
+        ),
       },
       {
         path: "/room",
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginForm />,
-        // action: formAction
+        action: formAction
       },
       {
         path: "/join",

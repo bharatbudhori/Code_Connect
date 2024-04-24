@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import StartIcon from "@mui/icons-material/Start";
-import CodeEditorContext from "../../context/CodeEditorContext";
+import GlobalContext from "../../context/GlobalContext";
 
 export default function ShowFriendCodeButton({ isOpen, setIsOpen }) {
-  const { roomCreated, setRoomCreated } = useContext(CodeEditorContext);
+  const { roomCreated, setRoomCreated } = useContext(GlobalContext);
   // console.log(roomCreated)
   return (
     <header>

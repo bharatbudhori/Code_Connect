@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import ProblemContext from "../../context/ProblemContext";
+import ProblemContext from "../../../context/ProblemContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,7 +10,8 @@ function classNames(...classes) {
 
 export default function ProblemFilter() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { allProblems, setFilteredProblems,setSelectedDifficulty } = useContext(ProblemContext);
+  const { allProblems, setFilteredProblems, setSelectedDifficulty } =
+    useContext(ProblemContext);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);

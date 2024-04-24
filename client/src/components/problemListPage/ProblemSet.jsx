@@ -1,11 +1,11 @@
 /* eslint-disable eqeqeq */
-import React, { useEffect,useContext } from "react";
-import ProblemList from "./sub-components/ProblemList";
-import ProblemContext from "../context/ProblemContext";
-import problemsD from "../Data/problems";
-import ProblemFilter from "./sub-components/ProblemFilter";
+import React, { useEffect, useContext } from "react";
+import ProblemList from "./ProblemList";
+import ProblemContext from "../../context/ProblemContext";
+import problemsD from "../../Data/problems";
+import ProblemFilter from "./filter/ProblemFilter";
 import { Typography } from "@mui/material";
-import GlobalContext from "../context/GlobalContext";
+import GlobalContext from "../../context/GlobalContext";
 
 function ProblemSet() {
   const { allProblems, setAllProblems } = useContext(ProblemContext);
@@ -14,9 +14,8 @@ function ProblemSet() {
   useEffect(() => {
     setAllProblems(problemsD);
     setFilteredProblems(problemsD);
-   
   }, []);
-  const {LoggedIn, setLoggedIn} = useContext(GlobalContext);
+  const { LoggedIn, setLoggedIn } = useContext(GlobalContext);
   useEffect(() => {
     // alert("test");
     // const token = JSON.parse(localStorage.getItem('token'));
@@ -30,8 +29,7 @@ function ProblemSet() {
     const newData = allProblems.filter((problem) => problem.id === 22);
     setFilteredProblems(newData);
   };
-  if(!allProblems || allProblems=="" ) return(<div>loading...</div>)
-
+  if (!allProblems || allProblems == "") return <div>loading...</div>;
 
   return (
     <>
@@ -51,15 +49,27 @@ function ProblemSet() {
         </div>
       </div>
       {filteredProblems.length === 0 && (
-             <div> 
-                <Typography variant="h5" component="div" gutterBottom align="center" sx={{marginTop:5}}>
-                  No Problems Found
-                </Typography>
-                <Typography variant="h6" component="div" gutterBottom align="center" sx={{fontSize:13}}>
-                  Clear all filters to see all problems
-                </Typography>
-             </div>
-                )}
+        <div>
+          <Typography
+            variant="h5"
+            component="div"
+            gutterBottom
+            align="center"
+            sx={{ marginTop: 5 }}
+          >
+            No Problems Found
+          </Typography>
+          <Typography
+            variant="h6"
+            component="div"
+            gutterBottom
+            align="center"
+            sx={{ fontSize: 13 }}
+          >
+            Clear all filters to see all problems
+          </Typography>
+        </div>
+      )}
     </>
   );
 }

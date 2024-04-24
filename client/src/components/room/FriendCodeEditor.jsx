@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useRef } from "react";
 import Editor from "@monaco-editor/react";
-import CodeEditorContext from "../context/CodeEditorContext";
+import CodeEditorContext from "../../context/CodeEditorContext";
 const FriendCodeEditor = ({ friendText, language }) => {
     const { theme } = useContext(CodeEditorContext);
 

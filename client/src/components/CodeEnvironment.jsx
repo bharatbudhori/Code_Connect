@@ -1,37 +1,27 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Stack, Button, Chip } from "@mui/material";
-import CodeEditor from "./CodeDisplay/CodeEditor";
-// import CodeEditorTop from "./CodeDisplay/CodeEditorTop";
 
+import CodeEditor from "./codeDisplay/CodeEditor";
 
-import Output from "./OutputDisplay/Output";
-import CreateRoomModal from "./CreateRoomModal";
-import CodeEditorContext from "../context/CodeEditorContext";
+import Output from "./outputDisplay/Output";
+
 import problems from "../Data/problems";
 import GlobalContext from "../context/GlobalContext";
-import LoginToContinue from "./sub-components/LoginToContinue";
-import LoginForm from "./LoginForm";
-import QuestionDataDisplay from "./QuestionDisplay/QuestionDataDisplay";
-import CreateRoomButton from "./create room/CreateRoomButton";
-import FriendCodeDrawer from "./create room/FriendCodeDrawer";
 
-const { io } = require("socket.io-client");
+import QuestionDataDisplay from "./questionDisplay/QuestionDataDisplay";
+import CreateRoomButton from "./room/createRoom/CreateRoomButton";
+import FriendCodeDrawer from "./room/createRoom/FriendCodeDrawer";
 
 const CodeEnviornment = () => {
   const { problemId } = useParams();
-  const [isOpen, setIsOpen] = useState(false);
-  const [displayName, setDisplayName] = useState("");
-  const [roomId, setRoomId] = useState("");
-  const { showCreateRoomModal, setShowCreateRoomModal, setFriendText } =
-    useContext(GlobalContext);
-  const [isCredentialsEntered, setIsCredentialsEntered] = useState(false);
-  const [socket, setSocket] = useState(null);
 
-  const [friendLanguage, setFriendLanguage] = useState("cpp");
-  const { roomCreated, setRoomCreated } = useContext(CodeEditorContext);
+  const {
+    socket,
 
-  // const [showLoginForm, setShowLoginForm] = useState(false);
+    roomId,
+
+    displayName,
+  } = useContext(GlobalContext);
 
   let problemIndex = 0;
   for (let i = 0; i < problems.length; i++) {
@@ -41,41 +31,6 @@ const CodeEnviornment = () => {
     }
   }
   const problem = problems[problemIndex];
-
-  const connectToRoom = () => {
-    if (displayName.trim() === "" || roomId.trim() === "") {
-      alert("Please enter a display name and room ID");
-      return;
-    }
-
-    const newSocket = io("http://localhost:5000"); // Replace with your server address
-    setSocket(newSocket);
-
-    // Emit 'joinRoom' event to the server with display name and room ID
-    newSocket.emit("joinRoom", { displayName, roomId });
-    console.log("Connected to room", roomId);
-    setShowCreateRoomModal(false);
-    setRoomCreated(true);
-  };
-
-  useEffect(() => {
-    if (socket) {
-      // Listen for incoming messages
-      socket.on("message", (data) => {
-        const { displayName: userName, message } = data;
-        if (userName !== displayName) {
-          setFriendText(message);
-        }
-      });
-
-      socket.on("language", (data) => {
-        const { displayName: userName, language } = data;
-        if (userName !== displayName) {
-          setFriendLanguage(language);
-        }
-      });
-    }
-  }, [socket]);
 
   useEffect(() => {
     (function () {
@@ -228,65 +183,35 @@ const CodeEnviornment = () => {
   }, []);
 
   return (
-    <div className="">
-      {/* {showLoginForm && <LoginForm />} */}
-      {/* <LoginForm isOpen={showLoginForm} /> */}
-      <div className="absolute right-0 p-4">
-        {" "}
+    <>
+      <CreateRoomButton className="absolute right-0 " />
 
-        <CreateRoomButton />
-        
-        <CreateRoomModal
-          isOpen={showCreateRoomModal}
-          onClose={() => setShowCreateRoomModal(false)}
-          onCreateRoom={connectToRoom}
-          displayName={displayName}
-          setDisplayName={setDisplayName}
-          roomId={roomId}
-          setRoomId={setRoomId}
-        />
-      </div>{" "}
       <h3 className="text-3xl mt-1 mx-10"> {problem["title"]} </h3>
-      <Stack
-        direction={{
-          direction: "row",
-          xs: "column",
-          sm: "column",
-          md: "row",
-        }}
-        spacing={{ xs: 1, sm: 2, md: 2 }}
-        padding={{ xs: 1, sm: 2, md: 2 }}
-        className="resizable-x"
-      >
-        <div id="app" classname="">
+      <div className="m-5 resizable-x">
+    
+        <div id="app">
           <div className="resizable-x">
             <div style={{ flex: "40%" }}>
               <QuestionDataDisplay />
-          
             </div>
             <div className="resizer-x" />
             <div className="resizable-x" style={{ flex: "60%" }}>
               <div style={{ flex: "100%" }}>
-         
-                
                 <CodeEditor
                   socket={socket}
                   roomId={roomId}
                   displayName={displayName}
                 />
-                <Output/>
                 <div className="resizer-y"></div>
-                <div className="resizable-y" style={{ flex: "60%" }}>
-               
-                </div>
-
+                <Output />
+                <div className="resizable-y" style={{ flex: "60%" }}></div>
               </div>
             </div>
           </div>
         </div>
-      </Stack>
+      </div>
       <FriendCodeDrawer />
-    </div>
+    </>
   );
 };
 
