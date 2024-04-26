@@ -44,65 +44,65 @@
 // // export default LoginToContinue;
 
 // // Import necessary dependencies
-// import React, { useContext, useEffect } from "react";
-// import {
-//   Button,
-//   Dialog,
-//   DialogActions,
-//   DialogContent,
-//   DialogContentText,
-//   DialogTitle,
-//   createTheme,
-//   ThemeProvider,
-// } from "@mui/material";
-// import "tailwindcss/tailwind.css";
-// import GlobalContext from "../../context/GlobalContext";
-// import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  createTheme,
+  ThemeProvider,
+} from "@mui/material";
+import "tailwindcss/tailwind.css";
+import GlobalContext from "../../context/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
-// // Create the LoginToContinue component
-// const LoginToContinue = () => {
-//   const { showLoginToContinueModal, setShowLoginToContinueModal } =
-//     useContext(GlobalContext);
+// Create the LoginToContinue component
+const LoginToContinue = () => {
+  const { showLoginToContinueModal, setShowLoginToContinueModal } =
+    useContext(GlobalContext);
 
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-//   const onLogin = () => {
-//     navigate("/login", { replace: true });
-//   };
+  const onLogin = () => {
+    navigate("/login", { replace: true });
+  };
 
-//   const darkTheme = createTheme({
-//     palette: {
-//       mode: "dark",
-//     },
-//   });
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
 
-//   useEffect(() => {
-//     setShowLoginToContinueModal(false);
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, []);
+  useEffect(() => {
+    setShowLoginToContinueModal(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-//   console.log("showLoginToCOntuneu", showLoginToContinueModal);
-//   return (
-//     <ThemeProvider theme={darkTheme}>
-//       <Dialog
-//         open={showLoginToContinueModal}
-//         onClose={() => setShowLoginToContinueModal(false)}
-//       >
-//         <DialogTitle>Create Room</DialogTitle>
-//         <DialogContent>
-//           <DialogContentText>
-//             Please login / Sign up create to create new room.
-//           </DialogContentText>
-//         </DialogContent>
-//         <DialogActions>
-//           <Button onClick={() => setShowLoginToContinueModal(false)}>
-//             Cancel
-//           </Button>
-//           <Button onClick={onLogin}>Login</Button>
-//         </DialogActions>
-//       </Dialog>
-//     </ThemeProvider>
-//   );
-// };
+  console.log("showLoginToCOntuneu", showLoginToContinueModal);
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <Dialog
+        open={showLoginToContinueModal}
+        onClose={() => setShowLoginToContinueModal(false)}
+      >
+        <DialogTitle>Create Room</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please login / Sign up create to create new room.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowLoginToContinueModal(false)}>
+            Cancel
+          </Button>
+          <Button onClick={onLogin}>Login</Button>
+        </DialogActions>
+      </Dialog>
+    </ThemeProvider>
+  );
+};
 
-// export default LoginToContinue;
+export default LoginToContinue;
