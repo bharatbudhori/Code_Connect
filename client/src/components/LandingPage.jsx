@@ -21,7 +21,7 @@ const Hero = () => {
                         </p>
                         <div className="flex items-center">
                             <Link
-                                to={"/problems"}
+                                to={"/connect"}
                                 className="rounded px-10 py-3 text-white bg-blue-500 hover:bg-blue-600"
                             >
                                 Explore

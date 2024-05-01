@@ -7,8 +7,10 @@ const {
   getFirestore,
   Timestamp,
   FieldValue,
-  Filter,
+  Filter
 } = require("firebase-admin/firestore");
+
+
 
 const serviceAccount = require("./serviceAccountKey.json");
 
@@ -39,23 +41,24 @@ async function setData() {
 
 function setUser(user) {
   const docRef = db.collection("users").doc();
-  
-  // Return the promise directly
-  return docRef.set({
-    email: user.email,
-    password: user.password,
-    name: user.name,
-  })
-  .then(() => {
-    console.log("User added to firebase");
-    return true;
-  })
-  .catch((error) => {
-    console.log("Error adding user to firebase: ", error);
-    return false, error;
-  });
-}
 
+  // Return the promise directly
+  return docRef
+    .set({
+      email: user.email,
+      password: user.password,
+      name: user.name,
+      createdAt: Timestamp.now(),
+    })
+    .then(() => {
+      console.log("User added to firebase");
+      return true;
+    })
+    .catch((error) => {
+      console.log("Error adding user to firebase: ", error);
+      return false, error;
+    });
+}
 
 //check if email already exists
 async function checkEmail(email) {

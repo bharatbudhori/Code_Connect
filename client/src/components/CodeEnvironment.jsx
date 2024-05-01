@@ -9,7 +9,7 @@ import problems from "../Data/problems";
 import GlobalContext from "../context/GlobalContext";
 
 import QuestionDataDisplay from "./questionDisplay/QuestionDataDisplay";
-import CreateRoomButton from "./room/createRoom/CreateRoomButton";
+// import CreateRoomButton from "./room/createRoom/CreateRoomButton";
 import FriendCodeDrawer from "./room/createRoom/FriendCodeDrawer";
 
 const CodeEnviornment = () => {
@@ -184,7 +184,7 @@ const CodeEnviornment = () => {
 
   return (
     <>
-      <CreateRoomButton className="absolute right-0 " />
+      {/* <CreateRoomButton className="absolute right-0 " /> */}
 
       <h3 className="text-3xl mt-1 mx-10"> {problem["title"]} </h3>
       <div className="m-5 resizable-x">
