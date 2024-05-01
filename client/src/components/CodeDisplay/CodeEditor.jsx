@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { useRef } from "react";
 import Editor from "@monaco-editor/react";
-import RunSubmit from "../outputDisplay/RunSubmit";
 import CodeEditorContext from "../../context/CodeEditorContext";
 import CodeEditorTop from "./CodeEditorTop";
 // import SubmitReport from "./sub-components/SubmitReport";
 
 const CodeEditor = ({ socket, displayName, roomId }) => {
   const { theme, language } = useContext(CodeEditorContext);
+  const { editorRef} = useContext(CodeEditorContext);
 
-  const editorRef = useRef(null);
+  // const editorRef = useRef(null);
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
@@ -47,7 +47,7 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
             borderBottomLeftRadius: "8px",
           }}
         />
-        <RunSubmit editorRef={editorRef} />
+        {/* <RunSubmit editorRef={editorRef} /> */}
       </div>
     </div>
   );

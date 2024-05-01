@@ -14,7 +14,7 @@ const QuestionDataDisplay = () => {
   const problem = problems[problemIndex];
   return (
     <>
-      <div className="quest whitespace-pre-line text-justify h-[90vh] overflow-y-scroll">
+      <div className="quest whitespace-pre-line text-justify h-[88vh] overflow-y-scroll">
         <div className="flex items-center ">
           <Chip
             className={`text-sm font-bold px-6 py-4 whitespace-nowrap`}

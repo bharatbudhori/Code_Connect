@@ -1,9 +1,10 @@
-import React,{useState} from "react";
+import React, {useState, useRef} from "react";
 import  CodeEditorContext  from "./CodeEditorContext";
 
 
 const CodeEditorProvider = ({ children }) => {
     
+    const editorRef = useRef(null);
     const [code, setCode] = useState("");
     const [language, setLanguage] = useState("cpp");
     const [theme, setTheme] = useState("dark");
@@ -13,8 +14,10 @@ const CodeEditorProvider = ({ children }) => {
 
     const [activeComponent, setActiveComponent] = useState('testcases');
     const [runResponse,setRunResponse] = useState(false);
+    const [submitResponse,setSubmitResponse] = useState(false);
     
     const value = {
+        editorRef,
         code,
         setCode,
         language,
@@ -30,7 +33,9 @@ const CodeEditorProvider = ({ children }) => {
         activeComponent,
         setActiveComponent,
         runResponse,
-        setRunResponse
+        setRunResponse,
+        submitResponse,
+        setSubmitResponse
     };
     
     return (
