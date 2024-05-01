@@ -2,10 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import CodeEditorContext from "../../context/CodeEditorContext";
 import problems from "../../Data/problems";
 import { useParams } from "react-router-dom";
-import SubmitResut from "./SubmitResult";
 
 const TestResult = () => {
-  const { output, runResponse, submitOutput } = useContext(CodeEditorContext);
+  const { output, runResponse} = useContext(CodeEditorContext);
 
   const { problemId } = useParams();
   let problemIndex = 0;
@@ -17,16 +16,10 @@ const TestResult = () => {
   }
   const problem = problems[problemIndex];
 
-  return !submitOutput ? (
+  return (
     <div>
       <p>
-        <b>Test Case</b>
-        <br />
-        {problem["RunInput"]}
-      </p>
-      <br />
-      <p>
-        <b>Expecetd Output</b>
+        <b>EXPECTED OUTPUT</b>
         <br />
         {problem["RunOutput"]}
       </p>
@@ -54,7 +47,7 @@ const TestResult = () => {
           </div>
         ) : (
           <>
-            {output?.output && <b>Your Output</b>}
+            {output?.output && <b>YOUR OUTPUT</b>}
             
             <p>{output?.output}</p>
           </>
@@ -62,8 +55,6 @@ const TestResult = () => {
       </p>
       
     </div>
-  ) : (
-    <>{submitOutput && <SubmitResut />}</>
   );
 };
 

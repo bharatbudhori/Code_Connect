@@ -249,42 +249,42 @@ const LoginForm = ({ isOpen }) => {
 
 export default LoginForm;
 
-// export async function formAction({ request }) {
-//   console.log("form submitted");
+export async function formAction({ request }) {
+  console.log("form submitted");
 
-//   const data = await request.formData();
+  const data = await request.formData();
 
-//   const authData = {
-//     email: data.get('email'),
-//     password: data.get('password'),
-//   };
+  const authData = {
+    email: data.get('email'),
+    password: data.get('password'),
+  };
 
-//   const response = await fetch(serverUrl + mode, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(authData),
-//   });
+  const response = await fetch(serverUrl + mode, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(authData),
+  });
 
-//   if (response.status === 400 || response.status === 401 || response.status === 409) {
-//     return response;
-//   }
+  if (response.status === 400 || response.status === 401 || response.status === 409) {
+    return response;
+  }
 
-//   if (!response.ok) {
-//     throw json({ msg: 'Can not authenticate the user' }, { status: 500 });
-//   }
+  if (!response.ok) {
+    throw json({ msg: 'Can not authenticate the user' }, { status: 500 });
+  }
 
-//   // access token
-//   const respData = await response.json();
+  // access token
+  const respData = await response.json();
 
-//   const token = respData.token;
+  const token = respData.token;
 
-//   if(token != null){
-//     setLoggedIn(true);
-//     console.log("logged in");
-//     saveAuthToken(token);
-//   }
+  if(token != null){
+    setLoggedIn(true);
+    console.log("logged in");
+    saveAuthToken(token);
+  }
 
-//   return redirect('/');
-// }
+  return redirect('/');
+}

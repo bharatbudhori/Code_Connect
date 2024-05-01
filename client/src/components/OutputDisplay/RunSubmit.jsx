@@ -8,8 +8,7 @@ import problems from "../../Data/problems";
 const RunSubmit = ({ editorRef }) => {
   const { output, setOutput } = useContext(CodeEditorContext);
   const { submitOutput, setSubmitOutput } = useContext(CodeEditorContext);
-  const { input, setInput, runResponse, setRunResponse } =
-    useContext(CodeEditorContext);
+  const { input, setInput, runResponse, setRunResponse , submitResponse, setSubmitResponse} = useContext(CodeEditorContext);
   const { setActiveComponent } = useContext(CodeEditorContext);
   const [showAccepted, setShowAccepted] = useState(false);
   const [accepted, setAccepted] = useState(false);
@@ -27,6 +26,7 @@ const RunSubmit = ({ editorRef }) => {
 
   let api_input_run = problem["RunInput"];
   let api_input_submit = problem["SubmitInput"];
+
   async function runCode() {
     setActiveComponent("test result");
     setRunResponse(true);
@@ -35,11 +35,11 @@ const RunSubmit = ({ editorRef }) => {
   }
 
   async function submitCode() {
-    setActiveComponent("test result");
-    setSubmitOutput(true);
-    // let expected_output = problem['SubmitOutput'];
+    setActiveComponent("submit result");
+    setSubmitResponse(true);
     await makePostRequest(editorRef.current.getValue(), api_input_submit);
-    alert("Submitted");
+    // alert("Submitted");
+    setSubmitResponse(false);
   }
 
   useEffect(() => {
@@ -84,11 +84,10 @@ const RunSubmit = ({ editorRef }) => {
       if (inp == api_input_run) {
         setOutput(response.data);
       } else if (inp == api_input_submit) {
-        // console.log("Total"+response.data);
-        console.log("From API Response Data" + response.data.output);
+        // console.log("From API Response Data" + response.data);
 
-        setSubmitOutput(response.data.output.split("\n"));
-        console.log("submit output:" + submitOutput.output);
+        setSubmitOutput(response.data);
+        // console.log("submit output:" + submitOutput.output);
       }
     } catch (error) {
       console.error(error);
@@ -97,19 +96,23 @@ const RunSubmit = ({ editorRef }) => {
 
   return (
     <>
-      <button
-        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded mt-1 mr-5 ml-3 float-left h-8"
-        onClick={runCode}
-      >
-        Run
-        <PlayArrowIcon />
-      </button>
-      <button
-        className="bg-green-500 hover:bg-green-600 text-white font-bold px-4 rounded mt-1 float-left h-8"
-        onClick={submitCode}
-      >
-        Submit
-      </button>
+      <div className="pt-1 flex justify-end">
+        <div className="">
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded  mr-5 h-8"
+            onClick={runCode}
+          >
+            Run
+            <PlayArrowIcon />
+          </button>
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white font-bold px-4 mr-3 rounded  h-8"
+            onClick={submitCode}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
     </>
   );
 };
