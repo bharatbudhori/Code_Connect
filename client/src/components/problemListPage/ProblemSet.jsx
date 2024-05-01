@@ -2,7 +2,7 @@
 import React, { useEffect, useContext } from "react";
 import ProblemList from "./ProblemList";
 import ProblemContext from "../../context/ProblemContext";
-import problemsD from "../../Data/problems";
+// import problemsD from "../../Data/problems";
 import ProblemFilter from "./filter/ProblemFilter";
 import { Typography } from "@mui/material";
 import GlobalContext from "../../context/GlobalContext";
@@ -10,10 +10,11 @@ import GlobalContext from "../../context/GlobalContext";
 function ProblemSet() {
   const { allProblems, setAllProblems } = useContext(ProblemContext);
   const { filteredProblems, setFilteredProblems } = useContext(ProblemContext);
+  const {problems,setProblems} = useContext(GlobalContext);
 
   useEffect(() => {
-    setAllProblems(problemsD);
-    setFilteredProblems(problemsD);
+    setAllProblems(problems);
+    setFilteredProblems(problems);
   }, []);
   const { LoggedIn, setLoggedIn } = useContext(GlobalContext);
   useEffect(() => {

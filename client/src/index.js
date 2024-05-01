@@ -9,10 +9,12 @@ import Room from "./components/room.jsx";
 import Layout from "./components/Layout.jsx";
 import ProblemSet from "./components/problemListPage/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
-import About from "./components/About.jsx";
+import About from "./components/aboutPage/About.jsx";
 import LoginForm, { formAction } from "./components/LoginForm.jsx";
 import Hero from "./components/LandingPage.jsx";
 import JoinRoom from "./components/room/joinRoom/JoinRoom.jsx";
+import ConnectHomePage from "./components/connectPage/ConnectHomePage.jsx";
+import ProfilePage from "./components/userProfilePage/ProfilePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,8 +29,8 @@ const router = createBrowserRouter([
         path: "problems/:problemId",
         element: (
           <CodeEditorProvider>
-            <CodeEnvironment />
-          </CodeEditorProvider>
+             <CodeEnvironment />
+           </CodeEditorProvider>
         ),
       },
       {
@@ -61,6 +63,14 @@ const router = createBrowserRouter([
           </CodeEditorProvider>
         ),
       },
+      {
+        path:"/connect",
+        element: <ConnectHomePage/>,
+      },
+      {
+        path:"/yourProfile",
+        element: <ProfilePage/>,
+      }
     ],
   },
 ]);

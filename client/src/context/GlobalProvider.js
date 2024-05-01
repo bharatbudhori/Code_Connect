@@ -12,6 +12,7 @@ const GlobalProvider = ({ children }) => {
   const [displayName, setDisplayName] = useState("");
   const [roomId, setRoomId] = useState("");
   const [roomCreated, setRoomCreated] = useState(false);
+  const [problems, setProblems] = useState([]);
 
   const value = {
     loggedIn,
@@ -32,6 +33,8 @@ const GlobalProvider = ({ children }) => {
     setRoomId,
     roomCreated,
     setRoomCreated,
+    problems,
+    setProblems,
   };
 
   return (

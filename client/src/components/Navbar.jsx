@@ -8,11 +8,13 @@ import GlobalContext from "../context/GlobalContext";
 import { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { use } from 'react-router-dom';
+import  useProblems  from "./hooks/useProblems";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Problems", href: "/problems", current: false },
   { name: "About Us", href: "/about", current: false },
+  {name: "Connect", href:"/connect", current:false},
   // { name: "Join Room", href: "/join", current: false },
   
 ];
@@ -22,6 +24,9 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+
+  useProblems();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isProblemPage, setIsProblemPage] = useState(false);
   // const [loggedIn, setLoggedIn] = useState(isLoggedin());
@@ -38,6 +43,9 @@ export default function Navbar() {
     else if(url.pathname==="/problems/3"){
       setCurrentIndex(3);
     }
+    else if(url.pathname==="/connect"){
+      setCurrentIndex(4);
+    }
     else{
       setCurrentIndex(0);
     }
@@ -49,7 +57,11 @@ export default function Navbar() {
         if (location.pathname.includes("/problems/")) {
             setIsProblemPage(true);
         }
-    }, [location]);
+        else{
+          console.log("IN ELSE PART");
+        setIsProblemPage(false);
+        }
+    }, [location.pathname]);
 
 
   // console.log(url.pathname,"url");
@@ -74,8 +86,8 @@ export default function Navbar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                 <img
-                  className="w-8 h-8 mr-2"
-                  src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+                  className="w-8 h-8 mr-2 rounded-full"
+                  src="mainLogo2.JPG"
                   alt="logo"
                 />
                 Code Connect
@@ -145,7 +157,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="#"
+                            to="/yourProfile"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
