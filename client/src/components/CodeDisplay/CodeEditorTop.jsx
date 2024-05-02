@@ -9,7 +9,7 @@ export default function CodeEditorTop({ socket, displayName, roomId }) {
   const {language, setLanguage} = useContext(CodeEditorContext);
 
   function handleMode() {
-    theme == 'light'? setTheme('dark'):setTheme("light")
+    theme === 'light'? setTheme('dark'):setTheme("light")
   }
 
 

@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 // import Output from "./Output";
 
 import CodeEditorContext from "../../../context/CodeEditorContext";
-import problems from "../../../Data/problems";
+// import problems from "../../../Data/problems";
 import GlobalContext from "../../../context/GlobalContext";
 import LoginToContinue from "../LoginToContinue";
 // import LoginForm from "./LoginForm";
@@ -17,6 +17,7 @@ const { io } = require("socket.io-client");
 
 const JoinRoom = () => {
   const { problemId } = useParams();
+  const {problems} = useContext(GlobalContext);
   const [isOpen, setIsOpen] = useState(false);
   const [displayName, setDisplayName] = useState("");
   const [roomId, setRoomId] = useState("");
@@ -57,7 +58,7 @@ const JoinRoom = () => {
 
     // Emit 'joinRoom' event to the server with display name and room ID
     newSocket.emit("joinRoom", { displayName, roomId });
-    console.log("Connected to room", roomId);
+    // console.log("Connected to room", roomId);
     setShowModal(false);
     setRoomCreated(true);
   };

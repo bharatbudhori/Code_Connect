@@ -3,7 +3,8 @@ import CodeEditorContext from "../../context/CodeEditorContext";
 import axios from "axios";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useParams } from "react-router-dom";
-import problems from "../../Data/problems";
+import GlobalContext from "../../context/GlobalContext";
+// import problems from "../../Data/problems";
 
 const RunSubmit = ({ editorRef }) => {
   const { output, setOutput } = useContext(CodeEditorContext);
@@ -13,6 +14,7 @@ const RunSubmit = ({ editorRef }) => {
   const [showAccepted, setShowAccepted] = useState(false);
   const [accepted, setAccepted] = useState(false);
   const { language } = useContext(CodeEditorContext);
+  const {problems} = useContext(GlobalContext);
 
   const { problemId } = useParams();
   let problemIndex = 0;
@@ -24,8 +26,8 @@ const RunSubmit = ({ editorRef }) => {
   }
   const problem = problems[problemIndex];
 
-  let api_input_run = problem["RunInput"];
-  let api_input_submit = problem["SubmitInput"];
+  let api_input_run = problem?.runInput;
+  let api_input_submit = problem?.submitInput;
 
   async function runCode() {
     setActiveComponent("test result");

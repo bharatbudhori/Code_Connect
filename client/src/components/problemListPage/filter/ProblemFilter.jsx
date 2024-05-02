@@ -31,7 +31,7 @@ function ProblemFilter() {
     }
     if (searchFilter !== "") {
       newData = newData.filter((problem) =>
-        problem.title.toLowerCase().includes(searchFilter.toLowerCase())
+        problem?.title.toLowerCase().includes(searchFilter.toLowerCase())
       );
     }
     if (tagsFilter.length > 0 && tagsFilter.includes("All") === false) {
@@ -108,7 +108,7 @@ function ProblemFilter() {
             </span>
           </div>
         ) : null}
-        {console.log(statusFilter)}
+        {/* {console.log(statusFilter)} */}
         {statusFilter !== "All" ? (
           <div
             className={` gap-x-12 inline px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm  bg-gray-800
@@ -151,7 +151,7 @@ function ProblemFilter() {
             </span>
           </div>
         ) : null}
-        {console.log(tagsFilter)}
+        {/* {console.log(tagsFilter)} */}
         {tagsFilter.length > 0 && tagsFilter.includes("All") === false
           ? tagsFilter.map((tag) => (
               <div

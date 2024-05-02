@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import CodeEditorContext from "../../context/CodeEditorContext";
-import problems from "../../Data/problems";
+// import problems from "../../Data/problems";
 import { useParams } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
 
 const SubmitResut = () => {
   const { submitOutput, submitResponse } = useContext(CodeEditorContext);
+  const {problems} = useContext(GlobalContext);
 
   const { problemId } = useParams();
   let problemIndex = 0;
@@ -14,7 +16,7 @@ const SubmitResut = () => {
       break;
     }
   }
-  const problem = problems[problemIndex]["SubmitOutput"];
+  const problem = problems[problemIndex]?.submitOutput;
   const arr1=problem.split("\n");
   // Initialize an array with a specific length
   let res = new Array(arr1.length);
@@ -79,7 +81,7 @@ const SubmitResut = () => {
         ) : (
           <>
             
-            <p>
+            <>
             {
              func().map((value, index) =>{
                 if (value === 1) {
@@ -112,7 +114,7 @@ const SubmitResut = () => {
               
             }
 
-            </p>
+            </>
           </>)}
 
       </div>

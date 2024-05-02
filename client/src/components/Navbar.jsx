@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useState,u, useContext } from "react";
+import { Fragment, useState, u, useContext } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
@@ -7,16 +7,15 @@ import { isLoggedin, logout } from "../utlis/loginUtils";
 import GlobalContext from "../context/GlobalContext";
 import { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { use } from 'react-router-dom';
-import  useProblems  from "./hooks/useProblems";
+import { use } from "react-router-dom";
+import useProblems from "./hooks/useProblems";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Problems", href: "/problems", current: false },
   { name: "About Us", href: "/about", current: false },
-  {name: "Connect", href:"/connect", current:false},
+  { name: "Connect", href: "/connect", current: false },
   // { name: "Join Room", href: "/join", current: false },
-  
 ];
 
 function classNames(...classes) {
@@ -24,49 +23,47 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-
   useProblems();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isProblemPage, setIsProblemPage] = useState(false);
   // const [loggedIn, setLoggedIn] = useState(isLoggedin());
-  const {loggedIn, setLoggedIn} = useContext(GlobalContext);
-  setLoggedIn(isLoggedin());
+  const { loggedIn, setLoggedIn } = useContext(GlobalContext);
+  useEffect(() => {
+    setLoggedIn(isLoggedin());
+  }, [setLoggedIn]);
   const url = useLocation();
   useEffect(() => {
-    if(url.pathname==="/problems"){
+    if (url.pathname === "/problems") {
       setCurrentIndex(1);
-    }
-    else if(url.pathname==="/about"){
+    } else if (url.pathname === "/about") {
       setCurrentIndex(2);
-    }
-    else if(url.pathname==="/problems/3"){
+    } else if (url.pathname === "/problems/3") {
       setCurrentIndex(3);
-    }
-    else if(url.pathname==="/connect"){
+    } else if (url.pathname === "/connect") {
       setCurrentIndex(4);
-    }
-    else{
+    } else {
       setCurrentIndex(0);
     }
   }, [url.pathname]);
 
   const location = useLocation();
-    useEffect(() => {
-      console.log("Head"+location.pathname);
-        if (location.pathname.includes("/problems/")) {
-            setIsProblemPage(true);
-        }
-        else{
-          console.log("IN ELSE PART");
-        setIsProblemPage(false);
-        }
-    }, [location.pathname]);
-
+  useEffect(() => {
+    // console.log("Head"+location.pathname);
+    if (location.pathname.includes("/problems/")) {
+      setIsProblemPage(true);
+    } else {
+      // console.log("IN ELSE PART");
+      setIsProblemPage(false);
+    }
+  }, [location.pathname]);
 
   // console.log(url.pathname,"url");
   return (
-    <Disclosure as="nav" className={`${isProblemPage ? "hidden" : ""} bg-gray-800`}>
+    <Disclosure
+      as="nav"
+      className={`${isProblemPage ? "hidden" : ""} bg-gray-800`}
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -85,12 +82,12 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                <img
-                  className="w-8 h-8 mr-2 rounded-full"
-                  src="mainLogo2.JPG"
-                  alt="logo"
-                />
-                Code Connect
+                  <img
+                    className="w-8 h-8 mr-2 rounded-full"
+                    src="mainLogo2.JPG"
+                    alt="logo"
+                  />
+                  Code Connect
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -120,29 +117,33 @@ export default function Navbar() {
                 >
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">View notifications</span>
-                  {loggedIn?
-                 <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  :null
-                }
-                 </button>
+                  {loggedIn ? (
+                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  ) : null}
+                </button>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    {loggedIn?
-                    <Menu.Button className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src={`https://api.dicebear.com/7.x/bottts/svg?seed=${localStorage.getItem('authToken')}`}
-                        alt=""
-                      />
-                    </Menu.Button>
-                    : 
-                    <Link to="/login" className="text-white bg-gray-600 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                      Login
-                    </Link>
-                    }
+                    {loggedIn ? (
+                      <Menu.Button className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span className="sr-only">Open user menu</span>
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={`https://api.dicebear.com/7.x/bottts/svg?seed=${localStorage.getItem(
+                            "authToken"
+                          )}`}
+                          alt=""
+                        />
+                      </Menu.Button>
+                    ) : (
+                      <Link
+                        to="/login"
+                        className="text-white bg-gray-600 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                      >
+                        Login
+                      </Link>
+                    )}
                   </div>
                   <Transition
                     as={Fragment}
@@ -183,12 +184,15 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            to='/'
+                            to="/"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
-                            onClick={()=>{setLoggedIn(false) ;logout()}}
+                            onClick={() => {
+                              setLoggedIn(false);
+                              logout();
+                            }}
                           >
                             Sign out
                           </Link>

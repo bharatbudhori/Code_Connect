@@ -1,6 +1,6 @@
 export const  saveAuthToken = (token) => {
     localStorage.setItem('authToken', token);
-    console.log('token saved to local storage: ', token);
+    // console.log('token saved to local storage: ', token);
 }
 export const isLoggedin = () => {  
     const token = localStorage.getItem('authToken');
@@ -11,5 +11,5 @@ export const isLoggedin = () => {
 }
 export const logout = () => {
     localStorage.removeItem('authToken');
-    console.log('token removed from local storage');
+    // console.log('token removed from local storage');
 }
