@@ -81,7 +81,7 @@ const LoginToContinue = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log("showLoginToCOntuneu", showLoginToContinueModal);
+  // console.log("showLoginToCOntuneu", showLoginToContinueModal);
   return (
     <ThemeProvider theme={darkTheme}>
       <Dialog

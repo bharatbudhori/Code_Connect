@@ -92,7 +92,7 @@ export default function TagsFilter() {
                     }}
                     onClick={() => {
                       setTagsFilter([...tagsFilter, tag]);
-                      console.log(tagsFilter);
+                      // console.log(tagsFilter);
                     }}
                   />
                 </Menu.Item>

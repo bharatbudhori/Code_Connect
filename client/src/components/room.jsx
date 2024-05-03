@@ -33,7 +33,7 @@ function ChatRoom() {
 
         // Emit 'joinRoom' event to the server with display name and room ID
         newSocket.emit("joinRoom", { displayName, roomId });
-        console.log("Connected to room", roomId);
+        // console.log("Connected to room", roomId);
     };
 
     const handleModalClose = () => {

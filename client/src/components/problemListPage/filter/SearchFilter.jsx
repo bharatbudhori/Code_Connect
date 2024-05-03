@@ -5,7 +5,7 @@ import ProblemContext from "../../../context/ProblemContext";
 const SearchFilter = () => {
   const { searchFilter, setSearchFilter } = useContext(ProblemContext);
   const handleClick = () => {
-    console.log("searchFilter", searchFilter);
+    // console.log("searchFilter", searchFilter);
   };
 
   return (

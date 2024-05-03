@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
-const { setUser, checkEmail } = require("./firebase.js");
+const { setUser, checkEmail, getProblems ,setAllProblemsInFirebase } = require("./firebase.js");
 const path = require("path");
 const SECRET_KEY = "random-string";
 
@@ -117,18 +117,30 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/getProblems", (req, res) => {
-  const problems = [
-    {
-      id: 1,
-      name: "Two Sum",
-      difficulty: "Easy",
-      description:
-        "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
-    },
-  ];
+  
+  try {
+    getProblems().then((snapshot) => {
+      const problems = [];
+      snapshot.forEach((doc) => {
+        problems.push({ id: doc.id, ...doc.data() });
+      });
+      problems.sort((a, b) => a.id - b.id);
+      res.json(problems);
+    });
+  } catch (error) {
+    console.error("Error getting problems:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
-  res.json(problems);
-
+app.get("/setAllProblems", (req, res) => {
+  try {
+    setAllProblemsInFirebase();
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error setting problems:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 function verifyToken(req, res, next) {

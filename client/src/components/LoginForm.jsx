@@ -29,9 +29,9 @@ const LoginForm = ({ isOpen }) => {
 
   async function formAction({ request }) {
     try {
-      console.log("form submitted");
+      // console.log("form submitted tmkc");
 
-      console.log(request);
+      // console.log(request);
 
       const email = await request.email;
       const password = await request.password;
@@ -64,7 +64,7 @@ const LoginForm = ({ isOpen }) => {
 
       if (token != null) {
         setLoggedIn(true);
-        console.log("logged in");
+        // console.log("logged in");
         saveAuthToken(token);
 
         //replace instead of push
@@ -250,7 +250,7 @@ const LoginForm = ({ isOpen }) => {
 export default LoginForm;
 
 export async function formAction({ request }) {
-  console.log("form submitted");
+  // console.log("form submitted");
 
   const data = await request.formData();
 
@@ -281,10 +281,10 @@ export async function formAction({ request }) {
   const token = respData.token;
 
   if(token != null){
-    setLoggedIn(true);
-    console.log("logged in");
+    // setLoggedIn(true);
+    // console.log("logged in");
     saveAuthToken(token);
   }
 
-  return redirect('/');
+  // return redirect('/');
 }

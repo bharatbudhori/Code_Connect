@@ -6,17 +6,18 @@ import ProblemContext from "../../context/ProblemContext";
 import ProblemFilter from "./filter/ProblemFilter";
 import { Typography } from "@mui/material";
 import GlobalContext from "../../context/GlobalContext";
+import Shimmer from "./Shimmer";
 
 function ProblemSet() {
   const { allProblems, setAllProblems } = useContext(ProblemContext);
   const { filteredProblems, setFilteredProblems } = useContext(ProblemContext);
-  const {problems,setProblems} = useContext(GlobalContext);
+  const {problems} = useContext(GlobalContext);
 
   useEffect(() => {
     setAllProblems(problems);
     setFilteredProblems(problems);
-  }, []);
-  const { LoggedIn, setLoggedIn } = useContext(GlobalContext);
+  }, [problems, setAllProblems, setFilteredProblems]);
+  // const { LoggedIn, setLoggedIn } = useContext(GlobalContext);
   useEffect(() => {
     // alert("test");
     // const token = JSON.parse(localStorage.getItem('token'));
@@ -25,12 +26,12 @@ function ProblemSet() {
     // }
   }, []);
 
-  const handleClick = () => {
-    console.log("test handle click");
-    const newData = allProblems.filter((problem) => problem.id === 22);
-    setFilteredProblems(newData);
-  };
-  if (!allProblems || allProblems == "") return <div>loading...</div>;
+  // const handleClick = () => {
+  //   console.log("test handle click");
+  //   const newData = allProblems.filter((problem) => problem.id === 22);
+  //   setFilteredProblems(newData);
+  // };
+  if (!allProblems || allProblems == "") return <Shimmer />;
 
   return (
     <>

@@ -1,19 +1,20 @@
 import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
-import CodeEditor from "./CodeDisplay/CodeEditor";
+import CodeEditor from "./codeDisplay/CodeEditor";
 
-import Output from "./OutputDisplay/Output";
+import Output from "./outputDisplay/Output";
 
-import problems from "../Data/problems";
+// import problems from "../Data/problems";
 import GlobalContext from "../context/GlobalContext";
 
-import QuestionDataDisplay from "./QuestionDisplay/QuestionDataDisplay";
+import QuestionDataDisplay from "./questionDisplay/QuestionDataDisplay";
 import CreateRoomButton from "./room/createRoom/CreateRoomButton";
 import FriendCodeDrawer from "./room/createRoom/FriendCodeDrawer";
 
 const CodeEnviornment = () => {
   const { problemId } = useParams();
+  const {problems} = useContext(GlobalContext);
 
   const {
     socket,
@@ -186,7 +187,7 @@ const CodeEnviornment = () => {
     <>
       <CreateRoomButton className="absolute right-0  p-1 px-4" />
 
-      <h3 className="text-3xl mt-1 mx-10"> {problem["title"]} </h3>
+      <h3 className="text-3xl mt-1 mx-10"> {problem?.title} </h3>
       <div className="m-5 resizable-x">
     
         <div id="app">

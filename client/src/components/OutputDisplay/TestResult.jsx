@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import CodeEditorContext from "../../context/CodeEditorContext";
-import problems from "../../Data/problems";
+// import problems from "../../Data/problems";
 import { useParams } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
 
 const TestResult = () => {
   const { output, runResponse} = useContext(CodeEditorContext);
+  const {problems} = useContext(GlobalContext);
 
   const { problemId } = useParams();
   let problemIndex = 0;
@@ -18,13 +20,13 @@ const TestResult = () => {
 
   return (
     <div>
-      <p>
+      <>
         <b>EXPECTED OUTPUT</b>
         <br />
-        {problem["RunOutput"]}
-      </p>
+        {problem?.runOutput}
+      </>
       <br />
-      <p>
+      <>
         {runResponse ? (
           <div role="status">
             <svg
@@ -52,7 +54,7 @@ const TestResult = () => {
             <p>{output?.output}</p>
           </>
         )}
-      </p>
+      </>
       
     </div>
   );
