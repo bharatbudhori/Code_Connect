@@ -1,7 +1,12 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
-const { setUser, checkEmail, getProblems ,setAllProblemsInFirebase } = require("./firebase.js");
+const {
+  setUser,
+  checkEmail,
+  getProblems,
+  setAllProblemsInFirebase,
+} = require("./firebase.js");
 const path = require("path");
 const SECRET_KEY = "random-string";
 
@@ -117,7 +122,6 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/getProblems", (req, res) => {
-  
   try {
     getProblems().then((snapshot) => {
       const problems = [];
@@ -126,6 +130,7 @@ app.get("/getProblems", (req, res) => {
       });
       problems.sort((a, b) => a.id - b.id);
       res.json(problems);
+      console.log("Problems sent", Date(Date.now()));
     });
   } catch (error) {
     console.error("Error getting problems:", error);

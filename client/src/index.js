@@ -15,6 +15,7 @@ import Hero from "./components/LandingPage.jsx";
 import JoinRoom from "./components/room/joinRoom/JoinRoom.jsx";
 import ConnectHomePage from "./components/connectPage/ConnectHomePage.jsx";
 import ProfilePage from "./components/userProfilePage/ProfilePage.jsx";
+import Heatmap from "./components/userProfilePage/Heatmap.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,8 +30,8 @@ const router = createBrowserRouter([
         path: "problems/:problemId",
         element: (
           <CodeEditorProvider>
-             <CodeEnvironment />
-           </CodeEditorProvider>
+            <CodeEnvironment />
+          </CodeEditorProvider>
         ),
       },
       {
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginForm />,
-        action: formAction
+        action: formAction,
       },
       {
         path: "/join",
@@ -64,14 +65,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path:"/connect",
-        element: <ConnectHomePage/>,
+        path: "/connect",
+        element: <ConnectHomePage />,
       },
       {
-        path:"/yourProfile",
-        element: <ProfilePage/>,
-      }
+        path: "/u/:username",
+        element: <ProfilePage />,
+      },
     ],
+  },
+  {
+    path: "/test",
+    element: <Heatmap />,
   },
 ]);
 

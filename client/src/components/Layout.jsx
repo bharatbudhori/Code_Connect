@@ -8,14 +8,15 @@ import Footer from "./footerItems/Footer";
 function Layout() {
   return (
     <>
-    <GlobalProvider>
-      <Navbar/>
-      <Outlet />
-      <Footer/>
-    </GlobalProvider>
+      <GlobalProvider>
+        <Navbar />
+        <div className="min-h-[74vh]">
+          <Outlet />
+        </div>
+        {/* <Footer /> */}
+      </GlobalProvider>
     </>
   );
 }
-
 
 export default Layout;
