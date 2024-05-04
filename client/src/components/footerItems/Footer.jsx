@@ -22,13 +22,13 @@ function Footer() {
     >
       {({ open }) => (
         <>
-          <footer className=" fixed p-6 bottom-0 w-full bg-gray-800">
+          <footer className="  p-6  w-full bg-gray-800 mt-10">
             <div className="max-w-screen-md mx-auto">
               <div className="flex flex-wrap sm:justify-center items-center">
                 <ul className="flex font-bold mb-0 sm:mr-2">
                   <li>
                     <small>
-                      <Privacypolicy/>
+                      <Privacypolicy />
                     </small>
                   </li>
                 </ul>
