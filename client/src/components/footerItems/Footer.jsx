@@ -22,7 +22,7 @@ function Footer() {
     >
       {({ open }) => (
         <>
-          <footer className="  p-6  w-full bg-gray-800 mt-10">
+          <footer className="py-2 bottom-0 w-full bg-gray-800">
             <div className="max-w-screen-md mx-auto">
               <div className="flex flex-wrap sm:justify-center items-center">
                 <ul className="flex font-bold mb-0 sm:mr-2">
@@ -33,7 +33,7 @@ function Footer() {
                   </li>
                 </ul>
                 <span className="hidden sm:inline-block text-gray-500 dark:text-gray-400">
-                  {"{"}" "{"}"}|{"{"}" "{"}"}
+                  |
                 </span>
                 <p className="font-bold mb-0 sm:ml-2 text-gray-500 dark:text-a1">
                   <small>
@@ -55,7 +55,6 @@ function Footer() {
               <p className="font-bold mb-0 sm:text-center text-gray-500 dark:text-a1">
                 <small>
                   Copyright © 2020 - <span id="copyright-year">2024</span>
-                  {"{"}" "{"}"}
                 </small>
               </p>
             </div>
