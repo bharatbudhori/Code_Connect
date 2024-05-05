@@ -122,7 +122,7 @@ const LoginForm = ({ isOpen }) => {
           >
             <img
               className="w-8 h-8 mr-2 rounded-full"
-              src="/mainLogo2.JPG"
+              src="/mainLogo2.png"
               alt="logo"
             />
             CodeDual

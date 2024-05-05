@@ -82,12 +82,12 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="w-8 h-8 mr-2 rounded-full"
-                    src="mainLogo2.JPG"
-                    alt="logo"
-                  />
-                  Code Connect
+                <img
+                  className="w-8 h-8 mr-2 rounded-full"
+                  src="mainLogo2.png"
+                  alt="logo"
+                />
+                Code Connect
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
