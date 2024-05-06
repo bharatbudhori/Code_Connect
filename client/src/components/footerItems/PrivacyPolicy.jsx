@@ -17,7 +17,7 @@ function PrivacyPolicy() {
         position={modalPlacement}
         onClose={() => setOpenModal(false)}
         // className="w-2/3 h-4/5 rounded-lg flex items-center justify-center"
-        className="w-full h-full rounded-lg fixed top-0 left-0 flex flex-col justify-center items-center z-50"
+        className="w-2/3 h-2/3 mx-auto my-auto rounded-lg flex flex-col justify-center items-center z-50"
       >
         <div className="flex flex-col items-center bg-gray-800 px-5 justift-text rounded-lg">
           <div className="flex justify-end w-full">

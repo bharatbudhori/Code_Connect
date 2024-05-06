@@ -1,13 +1,14 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useParams } from "react-router-dom";
 import Heatmap from "./Heatmap";
 import ApexChart from "./questionProgress/PieChart";
 import CircularProgress from "./questionProgress/CircularProgress";
 import DifficultyProgressBar from "./questionProgress/DifficultyProgressBar";
-
+import GlobalContext from "../../context/GlobalContext";
 
 const ProfilePage = () => {
   const { username } = useParams();
+  const { problems } = useContext(GlobalContext);
   console.log(username);
   const codeScore = 150;
   const wrongSubmissions = 15;
@@ -22,7 +23,7 @@ const ProfilePage = () => {
   const languages = [
     { name: "C++", count: 12 },
     { name: "C", count: 5 },
-    { name: "Python", count: 1 }
+    { name: "Python", count: 1 },
   ];
   const questionsTrack = {
     totalQuestions: { total: 20, solved: 9 },
@@ -33,9 +34,6 @@ const ProfilePage = () => {
   const calculatePercentage = (count, total) => {
     return (count / total) * 100;
   };
-
-  
-  
 
   return (
     <>
@@ -56,14 +54,16 @@ const ProfilePage = () => {
                 <div className="relative">
                   <h2 className="absolute right-0  p-2">
                     <span className="text-green-600 ">Rank</span>{" "}
-                    <span className="text-green-400 font-semibold">283</span>
+                    <span className="text-green-400 font-semibold">23</span>
                   </h2>
                 </div>
                 <h1 className="text-white font-bold text-xl leading-8 my-1">
-                  Jane Doe
+                  Anshdeep Singh
                 </h1>
                 <p className="text-sm text-gray-200 hover:text-gray-100 leading-6">
-                  Student at gtbit. Very good in english.
+                  I am a computer science student, currently completing my
+                  B-tech at GGSIPU. If you have any questions, feel free to
+                  contact me.
                 </p>
                 <div className="flex items-center mt-4 text-gray-400">
                   <svg className="h-6 w-6 fill-current" viewBox="0 0 512 512">
@@ -84,7 +84,7 @@ const ProfilePage = () => {
                   <svg className="h-6 w-6 fill-current" viewBox="0 0 512 512">
                     <path d="M437.332 80H74.668C51.199 80 32 99.198 32 122.667v266.666C32 412.802 51.199 432 74.668 432h362.664C460.801 432 480 412.802 480 389.333V122.667C480 99.198 460.801 80 437.332 80zM432 170.667L256 288 80 170.667V128l176 117.333L432 128v42.667z" />
                   </svg>
-                  <h1 className="px-2 text-sm">ansh@example.com</h1>
+                  <h1 className="px-2 text-sm">anshdeep0singh@gmail.com</h1>
                 </div>
                 <div className="cursor-pointer text-white bg-green-500 hover:bg-green-600 py-2 px-3 mt-3 rounded shadow-sm text-center">
                   <i className="fa-solid fa-pen mr-2"></i>Edit Profile
@@ -96,7 +96,7 @@ const ProfilePage = () => {
               <div className="bg-gray-800 p-3 hover:shadow rounded-lg">
                 <div className="flex items-center space-x-3 font-semibold text-white text-xl leading-8 mb-4">
                   <span className="text-green-500">
-                  <i class="fa-solid fa-list-check"></i>
+                    <i class="fa-solid fa-list-check"></i>
                   </span>
                   <span>Topics</span>
                 </div>
@@ -115,7 +115,7 @@ const ProfilePage = () => {
               <div className="bg-gray-800 p-3 hover:shadow rounded-lg">
                 <div className="flex items-center space-x-3 font-semibold text-white text-xl leading-8 mb-4">
                   <span className="text-green-500">
-                  <i class="fa-solid fa-code"></i>
+                    <i class="fa-solid fa-code"></i>
                   </span>
                   <span>Languages</span>
                 </div>
@@ -124,7 +124,10 @@ const ProfilePage = () => {
                     <div className="px-2 py-1 bg-gray-600 rounded text-main-color">
                       {language.name}
                     </div>
-                    <div className="ml-auto"> {language.count} problems solved</div>
+                    <div className="ml-auto">
+                      {" "}
+                      {language.count} problems solved
+                    </div>
                   </div>
                 ))}
               </div>
@@ -136,157 +139,148 @@ const ProfilePage = () => {
             <div className="w-full md:w-9/12 mx-2 h-64">
               {/* <!-- Progress tab --> */}
 
-
               {/* <!-- Question progress --> */}
 
               <div className="flex flex-row bg-gray-1000">
-
                 <div className="bg-gray-800 p-3 shadow-sm rounded-lg mr-2 flex">
-                <div className="flex justify-between">
-                  {/* <!-- Circular Progress Bar --> */}
+                  <div className="flex justify-between">
+                    {/* <!-- Circular Progress Bar --> */}
                     <div className="my-auto">
-                      <CircularProgress calculatePercentage={calculatePercentage} solved={questionsTrack.totalQuestions.solved} total={questionsTrack.totalQuestions.total}/>
+                      <CircularProgress
+                        calculatePercentage={calculatePercentage}
+                        solved={questionsTrack.totalQuestions.solved}
+                        total={questionsTrack.totalQuestions.total}
+                      />
                     </div>
                     <div className=" my-auto rounded flex-col">
-                      <div className="w-[200px]  bg-slate-700 mb-3 rounded px-2 py-2 ">Coding Score: {codeScore}</div>
+                      <div className="w-[200px]  bg-slate-700 mb-3 rounded px-2 py-2 ">
+                        Coding Score: {codeScore}
+                      </div>
                       <div className="w-[200px] bg-slate-700 mt-3 rounded px-2 py-2 text-sm ">
-                        <div className="text-green-400">Accepted Submissions: {correctSubmissions}</div>
-                        <div className="text-red-400">Wrong Submissions: {wrongSubmissions}</div>
+                        <div className="text-green-400">
+                          Accepted Submissions: {correctSubmissions}
+                        </div>
+                        <div className="text-red-400">
+                          Wrong Submissions: {wrongSubmissions}
+                        </div>
                       </div>
                     </div>
-                  {/* <!-- Circular Progress Bar End --> */}
+                    {/* <!-- Circular Progress Bar End --> */}
+                  </div>
                 </div>
-              </div>
 
-              <div className="bg-gray-800 p-3 shadow-sm rounded-lg flex ml-2 w-full">
-                {/* <!-- Difficulty Pie Chart --> */}
-                <div className="my-auto mx-[-30px] ">
-                      <ApexChart easy={questionsTrack.easy.solved} medium={questionsTrack.medium.solved} hard={questionsTrack.hard.solved} />
+                <div className="bg-gray-800 p-3 shadow-sm rounded-lg flex ml-2 w-full">
+                  {/* <!-- Difficulty Pie Chart --> */}
+                  <div className="my-auto mx-[-30px] ">
+                    <ApexChart
+                      easy={questionsTrack.easy.solved}
+                      medium={questionsTrack.medium.solved}
+                      hard={questionsTrack.hard.solved}
+                    />
                   </div>
                   {/* <!-- Difficulty Pie Chart End --> */}
                   {/* <!-- Difficulty Progress Bar --> */}
                   <div className="flex-1">
-                      <DifficultyProgressBar questionsTrack={questionsTrack} calculatePercentage={calculatePercentage}/>
+                    <DifficultyProgressBar
+                      questionsTrack={questionsTrack}
+                      calculatePercentage={calculatePercentage}
+                    />
                   </div>
                   {/* <!-- Difficulty Progress Bar End --> */}
+                </div>
               </div>
 
+              {/* <!-- Question progress End --> */}
 
-            </div>
-
-            {/* <!-- Question progress End --> */}
-
-            <div className="my-4"></div>
-
-              {/* <!-- Experience and education --> */}
-              {/* <div className="bg-gray-800 p-3 shadow-sm rounded-lg">
-                <div className="grid grid-cols-2">
-                  <div>
-                    <div className="flex items-center space-x-2 font-semibold text-white leading-8 mb-3">
-                      <span clas="text-green-500">
-                        <svg
-                          className="h-5"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                          />
-                        </svg>
-                      </span>
-                      <span className="tracking-wide">Experience</span>
-                    </div>
-                    <ul className="list-inside space-y-2">
-                      <li>
-                        <div className="text-teal-600">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-gray-200 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-teal-600">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-gray-200 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-teal-600">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-gray-200 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-teal-600">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-gray-200 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <div className="flex items-center space-x-2 font-semibold text-white leading-8 mb-3">
-                      <span clas="text-green-500">
-                        <svg
-                          className="h-5"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
-                          <path
-                            fill="#fff"
-                            d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                          />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                          />
-                        </svg>
-                      </span>
-                      <span className="tracking-wide">Education</span>
-                    </div>
-                    <ul className="list-inside space-y-2">
-                      <li>
-                        <div className="text-teal-600">
-                          Masters Degree in Oxford
-                        </div>
-                        <div className="text-gray-200 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-teal-600">
-                          Bachelors Degreen in LPU
-                        </div>
-                        <div className="text-gray-200 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div> */}
-                {/* <!-- End of Experience and education grid --> */}
-              {/* </div> */}
+              <div className="my-4"></div>
 
               {/* <!-- Heat map --> */}
               <div className="bg-gray-800 p-3 shadow-sm rounded-lg mt-5">
                 <Heatmap />
+              </div>
+
+              {/* <!-- List of solved question --> */}
+              <div className="bg-gray-800 p-3 shadow-sm rounded-lg mt-5">
+                <div className="grid ">
+                  <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
+                        <tr>
+                          <th scope="col" className="px-6 py-3">
+                            Problem
+                          </th>
+
+                          <th scope="col" className="px-6 py-3">
+                            Difficulty
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                            Submiited on
+                          </th>
+                        </tr>
+                      </thead>
+                      {/* <tbody> */}
+                        <tbody>
+                          {problems.slice(12).map((problem, index) => (
+                            <tr
+                              key={index}
+                              className={`border-b hover:text-green hover:bg-gray-800 ${
+                                index % 2 === 0 ? "bg-gray-800" : "bg-neutral-900"
+                              }  `}
+                            >
+                              <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                <Link
+                                  to={`/problems/ ${problem.id}`}
+                                  className="hover:text-blue-600"
+                                >
+                                  { problem.title}
+                                </Link>
+                              </td>
+
+                              <td
+                                className={`text-sm font-light px-6 py-4 whitespace-nowrap ${
+                                  problem.difficulty === "Easy"
+                                    ? "text-green-500"
+                                    : problem.difficulty === "Medium"
+                                    ? "text-yellow-500"
+                                    : "text-red-500"
+                                }`}
+                              >
+                                {problem.difficulty}
+                              </td>
+                              <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                {index + 1} days ago
+                                
+                                
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                        {/* <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            Apple MacBook Pro 17"
+                          </th>
+                          <td className="px-6 py-4">Silver</td>
+                          <td className="px-6 py-4">Laptop</td>
+                        </tr>
+
+                        <tr>
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            Apple Watch 5
+                          </th>
+                          <td className="px-6 py-4">Red</td>
+                          <td className="px-6 py-4">Wearables</td>
+                        </tr> */}
+                      {/* </tbody> */}
+                    </table>
+                  </div>
+                </div>
+                {/* <!-- End of List of solved question grid --> */}
               </div>
 
               {/* <!-- End of Progress tab --> */}

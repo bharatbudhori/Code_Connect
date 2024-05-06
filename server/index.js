@@ -6,8 +6,10 @@ const {
   checkEmail,
   getProblems,
   setAllProblemsInFirebase,
+  checkUser,
 } = require("./firebase.js");
 const path = require("path");
+const axios = require("axios");
 const SECRET_KEY = "random-string";
 
 const app = express();
@@ -44,10 +46,27 @@ app.post("/signup", (req, res) => {
     email: req.body.email,
     password: req.body.password,
     name: req.body.email.split("@")[0],
+    createdAt: new Date().toISOString(),
+    codingScore: 0,
+    solved: [
+      // {
+      //   id: 1,
+      //   status: "solved",
+      //   date: new Date().toISOString(),
+      //   language: "python",
+      //   code: "print('Hello World')",
+      //   input: "",
+      //   output: "Hello World",
+      // },
+
+    ],
+ 
+
+    
   };
   // Check if email already exist
   checkEmail(user.email)
-    .then((exists) => {
+    .then(([exists]) => {
       if (exists) {
         error.email = "Email already exists";
         return res.status(400).json({ error });
@@ -60,7 +79,7 @@ app.post("/signup", (req, res) => {
               expiresIn: "1h",
             });
 
-            // Return token
+            // Return token 
             res.json({ token });
           }
         })
@@ -81,8 +100,10 @@ app.post("/login", (req, res) => {
   const { email, password } = req.body;
   let error = {};
   // Check if email and password are provided
+  
   if (!email || !password) {
-    error.email = "Email is required";
+  // if(true){ 
+  error.email = "Email is required";
     error.password = "Password is required";
 
     return res.status(400).json({ error });
@@ -114,10 +135,10 @@ app.post("/login", (req, res) => {
       // Return token
       const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
       res.json({ token });
-    })
-    .catch((error) => {
-      console.error("Error checking email:", error);
-      return res.status(500).json({ error: "Internal Server Error" });
+      })
+      .catch((error) => {
+        console.error("Error checking email:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
     });
 });
 
@@ -144,6 +165,67 @@ app.get("/setAllProblems", (req, res) => {
     res.json({ success: true });
   } catch (error) {
     console.error("Error setting problems:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/getUserProfile", (req, res) => {
+  const user = req.query?.user;
+  console.log("Received get user profile request:", user);
+  // console.log(req)
+  checkUser(user).then((data) => {
+    if (!data) {
+      return res.status(400).json({ error: "User not found" });
+    }
+    res.json(data);
+  });
+});
+
+app.post("/api/run-submit", (req, res) => {
+  console.log("Received run-submit request:", req.body);
+  const { code, input, language, reqType } = req.body;
+  if (!code || !input || !language || !reqType) {
+    return res
+      .status(400)
+      .json({ error: "Code, input, language and reqType are required" });
+  }
+  // console.log(code, input, language, reqType);
+  const lang = language === "python" ? "python3" : language;
+  const options = {
+    method: "POST",
+    url: "https://online-code-compiler.p.rapidapi.com/v1/",
+    headers: {
+      "content-type": "application/json",
+      "X-RapidAPI-Key": "3516332cffmshc0d34525892c996p1f3d4bjsn8c894003db61",
+      "X-RapidAPI-Host": "online-code-compiler.p.rapidapi.com",
+    },
+    data: {
+      language: lang,
+      version: "latest",
+      code: code,
+      input: input,
+    },
+  };
+  try {
+    axios(options)
+      .then((response) => {
+        console.log("API response:", response.data);
+        if (reqType === "run") {
+          return res.json(response.data);
+        } else if (reqType === "submit") {
+
+          // update the data in firebase
+          
+
+          return res.json(response.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error running code:", error);
+        return res.status(500).json({ error: "Internal Server Error from rapid api" });
+      });
+  } catch (error) {
+    console.error("Error running code:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });

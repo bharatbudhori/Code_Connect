@@ -6,7 +6,7 @@ import { useContext } from "react";
 
 const QuestionDataDisplay = () => {
   const { problemId } = useParams();
-  const {problems} = useContext(GlobalContext);
+  const { problems } = useContext(GlobalContext);
   let problemIndex = 0;
   for (let i = 0; i < problems.length; i++) {
     if (problems[i].id === parseInt(problemId)) {
@@ -26,7 +26,9 @@ const QuestionDataDisplay = () => {
                 ? "success"
                 : problem?.difficulty === "Medium"
                 ? "warning"
-                : "error"
+                : problem?.difficulty === "Hard"
+                ? "error"
+                : "default"
             }
             label={problem?.difficulty}
             variant="filled"

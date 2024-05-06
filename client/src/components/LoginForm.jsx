@@ -6,6 +6,7 @@ import { serverUrl } from "../constants";
 import GlobalContext from "../context/GlobalContext";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 let mode = "login";
 
@@ -28,19 +29,14 @@ const LoginForm = ({ isOpen }) => {
   }, [signup]);
 
   async function formAction({ request }) {
+    const email = await request.email;
+    const password = await request.password;
+
+    const authData = {
+      email: email,
+      password: password,
+    };
     try {
-      // console.log("form submitted tmkc");
-
-      // console.log(request);
-
-      const email = await request.email;
-      const password = await request.password;
-
-      const authData = {
-        email: email,
-        password: password,
-      };
-
       setLoading(true);
 
       const response = await fetch(serverUrl + mode, {
@@ -54,7 +50,13 @@ const LoginForm = ({ isOpen }) => {
       setLoading(false);
 
       if (!response.ok) {
-        throw json({ msg: "Can not authenticate the user" }, { status: 500 });
+        const errorData = await response.json();
+        console.log(errorData);
+        const errorMsg = errorData?.error?.email ? errorData?.error?.email:""  + errorData?.error?.password ? errorData?.error?.password:"";
+        toast.error(errorMsg,{theme:"dark"});
+        
+        return;         
+        // throw new Error(errorData.error.email);
       }
 
       // access token
@@ -64,16 +66,12 @@ const LoginForm = ({ isOpen }) => {
 
       if (token != null) {
         setLoggedIn(true);
-        // console.log("logged in");
-        saveAuthToken(token);
-
-        //replace instead of push
+        saveAuthToken(token); //logged in
         navigate("/", { replace: true });
       }
     } catch (error) {
       console.log(error);
-
-      alert("Invalid credentials", error);
+      toast.error("Error reaching server",{theme:"dark"});
     } finally {
       setIsOpen(false);
       setLoading(false);
@@ -125,7 +123,7 @@ const LoginForm = ({ isOpen }) => {
               src="/mainLogo2.png"
               alt="logo"
             />
-            CodeDual
+            Code Connect
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -157,7 +155,7 @@ const LoginForm = ({ isOpen }) => {
                     })}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
-                    required="true"
+                    required
                   />
                 </div>
                 <div>
@@ -173,11 +171,10 @@ const LoginForm = ({ isOpen }) => {
                     id="password"
                     {...register("password", {
                       required: true,
-                      minLength: 6,
                     })}
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required="true"
+                    required
                   />
                 </div>
                 <div className="flex items-center justify-between">
@@ -223,6 +220,7 @@ const LoginForm = ({ isOpen }) => {
                     </div>
                   </div>
                 )}
+              </form>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   {signup
                     ? "Already have an account?  "
@@ -236,7 +234,6 @@ const LoginForm = ({ isOpen }) => {
                     {signup ? "Sign in" : "Sign up"}
                   </button>
                 </p>
-              </form>
             </div>
           </div>
         </div>
@@ -249,42 +246,46 @@ const LoginForm = ({ isOpen }) => {
 
 export default LoginForm;
 
-export async function formAction({ request }) {
-  // console.log("form submitted");
+// export async function formAction({ request }) {
+//   // console.log("form submitted");
 
-  const data = await request.formData();
+//   const data = await request.formData();
 
-  const authData = {
-    email: data.get('email'),
-    password: data.get('password'),
-  };
+//   const authData = {
+//     email: data.get("email"),
+//     password: data.get("password"),
+//   };
 
-  const response = await fetch(serverUrl + mode, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(authData),
-  });
+//   const response = await fetch(serverUrl + mode, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(authData),
+//   });
 
-  if (response.status === 400 || response.status === 401 || response.status === 409) {
-    return response;
-  }
+//   if (
+//     response.status === 400 ||
+//     response.status === 401 ||
+//     response.status === 409
+//   ) {
+//     return response;
+//   }
 
-  if (!response.ok) {
-    throw json({ msg: 'Can not authenticate the user' }, { status: 500 });
-  }
+//   if (!response.ok) {
+//     throw json({ msg: "Can not authenticate the user" }, { status: 500 });
+//   }
 
-  // access token
-  const respData = await response.json();
+//   // access token
+//   const respData = await response.json();
 
-  const token = respData.token;
+//   const token = respData.token;
 
-  if(token != null){
-    // setLoggedIn(true);
-    // console.log("logged in");
-    saveAuthToken(token);
-  }
+//   if (token != null) {
+//     // setLoggedIn(true);
+//     // console.log("logged in");
+//     saveAuthToken(token);
+//   }
 
-  // return redirect('/');
-}
+//   // return redirect('/');
+// }

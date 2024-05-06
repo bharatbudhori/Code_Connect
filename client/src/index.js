@@ -10,7 +10,7 @@ import Layout from "./components/Layout.jsx";
 import ProblemSet from "./components/problemListPage/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
 import About from "./components/aboutPage/About.jsx";
-import LoginForm, { formAction } from "./components/LoginForm.jsx";
+import LoginForm from "./components/LoginForm.jsx";
 import Hero from "./components/LandingPage.jsx";
 import JoinRoom from "./components/room/joinRoom/JoinRoom.jsx";
 import ConnectHomePage from "./components/connectPage/ConnectHomePage.jsx";
@@ -53,12 +53,12 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginForm />,
-        action: formAction,
+        // action: formAction,
       },
       {
         path: "/join",
         element: (
-          <CodeEditorProvider>
+          <CodeEditorProvider> Programmer's cod
             {" "}
             <JoinRoom />
           </CodeEditorProvider>
