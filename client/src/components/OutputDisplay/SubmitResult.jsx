@@ -23,7 +23,7 @@ const SubmitResut = () => {
   res.fill(0); // Fills the array with zeros
 
  const func = ()=>{
-  if (!submitOutput.output.includes('\n')) return res;
+  if (!submitOutput?.output?.includes('\n')) return res;
   // console.log("IN SubmitResulr.jsx op="+submitOutput);
   // console.log(submitOutput);
   const arr2=submitOutput.output.split("\n");
@@ -80,41 +80,33 @@ const SubmitResut = () => {
           </div>
         ) : (
           <>
-            
-            <>
-            {
-             func().map((value, index) =>{
-                if (value === 1) {
+              <>
+              { submitOutput?.output ?
+               (func().map((value, index) =>{
                   return (
-                    <div className="">
-                      Test Case {index+1}
-                      <img
-                        className="w-5 h-5 m-2 inline"
-                        src="/correct.png"
-                        alt="correct"
-                      />
-                      <hr />
-                    </div>
+                 <div className="">
+                   Test Case {index+1}
+                    {value == 1 ?
+                          (<img
+                            className="w-5 h-5 m-2 inline"
+                            src="/correct.png"
+                            alt="correct"
+                          />)
+                    :
+                          (<img
+                            className="w-5 h-5 m-2 inline"
+                            src="/wrong.png"
+                            alt="wrong"
+                          />)
+                    }
+                  </div>
                   );
-                } else {
-                  return (
-                    <div className="">
-                      Test Case {index+1}
-                      <img
-                        className="w-5 h-5 m-2 inline"
-                        src="/wrong.png"
-                        alt="wrong"
-                      />
-                      <hr />
-                    </div>
-                  );
-                }
-              })
+                }))
+                : <>no submission yet</>
+              }
 
-              
-            }
+              </>
 
-            </>
           </>)}
 
       </div>
