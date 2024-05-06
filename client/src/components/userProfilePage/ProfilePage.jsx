@@ -1,10 +1,17 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Heatmap from "./Heatmap";
+import ApexChart from "./questionProgress/PieChart";
+import CircularProgress from "./questionProgress/CircularProgress";
+import DifficultyProgressBar from "./questionProgress/DifficultyProgressBar";
+
 
 const ProfilePage = () => {
   const { username } = useParams();
   console.log(username);
+  const codeScore = 150;
+  const wrongSubmissions = 15;
+  const correctSubmissions = 32;
   const topics = [
     { name: "matrix", count: 1 },
     { name: "Array", count: 2 },
@@ -12,6 +19,24 @@ const ProfilePage = () => {
     { name: "tree", count: 4 },
     { name: "binary tree", count: 5 },
   ];
+  const languages = [
+    { name: "C++", count: 12 },
+    { name: "C", count: 5 },
+    { name: "Python", count: 1 }
+  ];
+  const questionsTrack = {
+    totalQuestions: { total: 20, solved: 9 },
+    easy: { total: 10, solved: 4 },
+    medium: { total: 6, solved: 4 },
+    hard: { total: 4, solved: 1 },
+  };
+  const calculatePercentage = (count, total) => {
+    return (count / total) * 100;
+  };
+
+  
+  
+
   return (
     <>
       <div className="">
@@ -23,15 +48,15 @@ const ProfilePage = () => {
               <div className="bg-gray-800 p-3 border-t-4 border-green-400 rounded-lg">
                 <div className="image overflow-hidden border-bottom">
                   <img
-                    className="h-52 w-52 rounded-full mx-auto border-b-green-500 border-4 -mt-10 "
+                    className="h-52 w-52 rounded-full mx-auto border-x-gray-300 border-y-gray-800 border-4"
                     src="https://media.licdn.com/dms/image/D5603AQGk1IcPa0-G_g/profile-displayphoto-shrink_400_400/0/1700127327417?e=1720051200&v=beta&t=NmEb20uBWDKe3H_X1A1Ryo818kQCPsSGWUoZ9UGckfc"
                     alt=""
                   />
                 </div>
                 <div className="relative">
                   <h2 className="absolute right-0  p-2">
-                    <span className="text-green-600">Rank</span>{" "}
-                    <span className="text-green-400">283</span>
+                    <span className="text-green-600 ">Rank</span>{" "}
+                    <span className="text-green-400 font-semibold">283</span>
                   </h2>
                 </div>
                 <h1 className="text-white font-bold text-xl leading-8 my-1">
@@ -71,20 +96,7 @@ const ProfilePage = () => {
               <div className="bg-gray-800 p-3 hover:shadow rounded-lg">
                 <div className="flex items-center space-x-3 font-semibold text-white text-xl leading-8 mb-4">
                   <span className="text-green-500">
-                    <svg
-                      className="h-5 fill-current"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
+                  <i class="fa-solid fa-list-check"></i>
                   </span>
                   <span>Topics</span>
                 </div>
@@ -98,93 +110,76 @@ const ProfilePage = () => {
                 ))}
               </div>
               {/* <!-- End of Topics card --> */}
+              <div className="my-4"></div>
+              {/* <!-- Languages card --> */}
+              <div className="bg-gray-800 p-3 hover:shadow rounded-lg">
+                <div className="flex items-center space-x-3 font-semibold text-white text-xl leading-8 mb-4">
+                  <span className="text-green-500">
+                  <i class="fa-solid fa-code"></i>
+                  </span>
+                  <span>Languages</span>
+                </div>
+                {languages.map((language, index) => (
+                  <div className="mb-2  flex flex-row">
+                    <div className="px-2 py-1 bg-gray-600 rounded text-main-color">
+                      {language.name}
+                    </div>
+                    <div className="ml-auto"> {language.count} problems solved</div>
+                  </div>
+                ))}
+              </div>
+              {/* <!-- End of Languages card --> */}
             </div>
             {/* <!-- Right Side --> */}
+            <div className="my-4"></div>
+
             <div className="w-full md:w-9/12 mx-2 h-64">
-              {/* <!-- Profile tab --> */}
+              {/* <!-- Progress tab --> */}
 
-              {/* <!-- About Section --> */}
-              <div className="bg-gray-800 p-3 shadow-sm rounded-lg">
-                <div className="flex items-center space-x-2 font-semibold text-white leading-8">
-                  <span clas="text-green-500">
-                    <svg
-                      className="h-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </span>
-                  <span className="tracking-wide">About</span>
+
+              {/* <!-- Question progress --> */}
+
+              <div className="flex flex-row bg-gray-1000">
+
+                <div className="bg-gray-800 p-3 shadow-sm rounded-lg mr-2 flex">
+                <div className="flex justify-between">
+                  {/* <!-- Circular Progress Bar --> */}
+                    <div className="my-auto">
+                      <CircularProgress calculatePercentage={calculatePercentage} solved={questionsTrack.totalQuestions.solved} total={questionsTrack.totalQuestions.total}/>
+                    </div>
+                    <div className=" my-auto rounded flex-col">
+                      <div className="w-[200px]  bg-slate-700 mb-3 rounded px-2 py-2 ">Coding Score: {codeScore}</div>
+                      <div className="w-[200px] bg-slate-700 mt-3 rounded px-2 py-2 text-sm ">
+                        <div className="text-green-400">Accepted Submissions: {correctSubmissions}</div>
+                        <div className="text-red-400">Wrong Submissions: {wrongSubmissions}</div>
+                      </div>
+                    </div>
+                  {/* <!-- Circular Progress Bar End --> */}
                 </div>
-                <div className="text-gray-100">
-                  <div className="grid md:grid-cols-2 text-sm">
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">First Name</div>
-                      <div className="px-4 py-2">Jane</div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Last Name</div>
-                      <div className="px-4 py-2">Doe</div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Gender</div>
-                      <div className="px-4 py-2">Female</div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Contact No.</div>
-                      <div className="px-4 py-2">+11 998001001</div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">
-                        Current Address
-                      </div>
-                      <div className="px-4 py-2">
-                        Beech Creek, PA, Pennsylvania
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">
-                        Permanant Address
-                      </div>
-                      <div className="px-4 py-2">
-                        Arlington Heights, IL, Illinois
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Email.</div>
-                      <div className="px-4 py-2">
-                        <a
-                          className="text-blue-800"
-                          href="mailto:jane@example.com"
-                        >
-                          jane@example.com
-                        </a>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Birthday</div>
-                      <div className="px-4 py-2">Feb 06, 1998</div>
-                    </div>
-                  </div>
-                </div>
-                <button className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
-                  Show Full Information
-                </button>
               </div>
-              {/* <!-- End of about section --> */}
 
-              <div className="my-4"></div>
+              <div className="bg-gray-800 p-3 shadow-sm rounded-lg flex ml-2 w-full">
+                {/* <!-- Difficulty Pie Chart --> */}
+                <div className="my-auto mx-[-30px] ">
+                      <ApexChart easy={questionsTrack.easy.solved} medium={questionsTrack.medium.solved} hard={questionsTrack.hard.solved} />
+                  </div>
+                  {/* <!-- Difficulty Pie Chart End --> */}
+                  {/* <!-- Difficulty Progress Bar --> */}
+                  <div className="flex-1">
+                      <DifficultyProgressBar questionsTrack={questionsTrack} calculatePercentage={calculatePercentage}/>
+                  </div>
+                  {/* <!-- Difficulty Progress Bar End --> */}
+              </div>
+
+
+            </div>
+
+            {/* <!-- Question progress End --> */}
+
+            <div className="my-4"></div>
 
               {/* <!-- Experience and education --> */}
-              <div className="bg-gray-800 p-3 shadow-sm rounded-lg">
+              {/* <div className="bg-gray-800 p-3 shadow-sm rounded-lg">
                 <div className="grid grid-cols-2">
                   <div>
                     <div className="flex items-center space-x-2 font-semibold text-white leading-8 mb-3">
@@ -285,16 +280,16 @@ const ProfilePage = () => {
                       </li>
                     </ul>
                   </div>
-                </div>
+                </div> */}
                 {/* <!-- End of Experience and education grid --> */}
-              </div>
+              {/* </div> */}
 
               {/* <!-- Heat map --> */}
               <div className="bg-gray-800 p-3 shadow-sm rounded-lg mt-5">
                 <Heatmap />
               </div>
 
-              {/* <!-- End of profile tab --> */}
+              {/* <!-- End of Progress tab --> */}
             </div>
           </div>
         </div>
