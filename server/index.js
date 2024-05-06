@@ -259,42 +259,65 @@ const server = app.listen(port, () => {
 });
 
 let io = require("socket.io")(server, {
-  cors: {
-    origin: "*",
-  },
-  methods: ["GET", "POST"],
+    cors: {
+        origin: "*",
+    },
+    methods: ["GET", "POST"],
 });
 
+const roomUsersCount = new Map();
+
 io.on("connection", function (socket) {
-  console.log("a user connected");
+    console.log("a user connected");
 
-  // Handle joining a room
-  socket.on("joinRoom", (room) => {
-    const { roomId, displayName } = room;
-    socket.join(roomId);
-    console.log(`User joined room: ${roomId} as ${displayName}`);
-  });
+    // Handle joining a room
+    socket.on("joinRoom", (room) => {
+        const { roomId, displayName } = room;
+        socket.join(roomId);
+        console.log(`User joined room: ${roomId} as ${displayName}`);
 
-  // Handle sending messages to the room
-  socket.on("sendMessageToRoom", (data) => {
-    const { room, message, displayName } = data;
-    console.log(
-      `Sending message to room ${room} by ${displayName} : ${message}`
-    );
-    io.to(room).emit("message", { displayName, message });
-  });
+        // Increment the user count for the joined room
+        if (roomUsersCount.has(roomId)) {
+            roomUsersCount.set(roomId, [...roomUsersCount.get(roomId), displayName]);
+        } else {
+            roomUsersCount.set(roomId, [displayName]);
+        }
 
-  // Handle language change
-  socket.on("changeLanguage", (data) => {
-    const { room, language, displayName } = data;
-    console.log(
-      `Changing language to ${language} by ${displayName} in room ${room}`
-    );
-    io.to(room).emit("language", { displayName, language });
-  });
+        // Broadcast the updated user count to all users in the room
+        io.to(roomId).emit("userCount", roomUsersCount.get(roomId));
+    });
 
-  // Handle disconnection
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
+    // Handle sending messages to the room
+    socket.on("sendMessageToRoom", (data) => {
+        const { room, message, from, to } = data;
+        console.log(
+            `Sending message to room ${room} by ${from} to ${to} : ${message}`
+        );
+        io.to(room).emit("message", { to, message });
+    });
+
+    // Handle language change
+    socket.on("changeLanguage", (data) => {
+        const { room, language, displayName } = data;
+        console.log(
+            `Changing language to ${language} by ${displayName} in room ${room}`
+        );
+        io.to(room).emit("language", { displayName, language });
+    });
+
+    // Handle disconnection
+    socket.on("disconnectUser", (data) => {
+      const { room, displayName } = data;
+        console.log("User disconnected");
+
+        if (roomUsersCount.has(room)) {
+            // roomUsersCount.set(room, roomUsersCount.get(room) - 1);
+            // io.to(room).emit("userCount", roomUsersCount.get(room));
+            const index = roomUsersCount.get(room).indexOf(displayName);
+            if (index > -1) {
+                roomUsersCount.get(room).splice(index, 1);
+                io.to(room).emit("userCount", roomUsersCount.get(room));
+            }
+        }
+    });
 });

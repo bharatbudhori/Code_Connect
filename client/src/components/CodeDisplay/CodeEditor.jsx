@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useRef } from "react";
 import Editor from "@monaco-editor/react";
 import CodeEditorContext from "../../context/CodeEditorContext";
 import CodeEditorTop from "./CodeEditorTop";
 // import SubmitReport from "./sub-components/SubmitReport";
 
-const CodeEditor = ({ socket, displayName, roomId }) => {
+const CodeEditor = ({ socket, displayName, roomId, friendText }) => {
   const { theme, language } = useContext(CodeEditorContext);
   const { editorRef} = useContext(CodeEditorContext);
 
@@ -14,6 +14,10 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
   }
+
+//   useEffect(() => {
+//     console.log(friendText);
+// }, [friendText]);
 
   return (
     <div className="bg-gray-900 text-white">
@@ -39,7 +43,8 @@ const CodeEditor = ({ socket, displayName, roomId }) => {
             socket.emit("sendMessageToRoom", {
               room: roomId,
               message: value,
-              displayName,
+              from : displayName,
+              to : displayName,
             });
           }}
           theme={`vs-${theme}`}

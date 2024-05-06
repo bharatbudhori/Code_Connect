@@ -6,7 +6,8 @@ const GlobalProvider = ({ children }) => {
   const [showCreateRoomModal, setShowCreateRoomModal] = useState(false);
   const [showLoginToContinueModal, setShowLoginToContinueModal] =
     useState(false);
-  const [friendText, setFriendText] = useState("");
+  const [friendText, setFriendText] = useState({});
+  const [memberCount, setMemberCount] = useState([]);
   const [friendLanguage, setFriendLanguage] = useState("cpp");
   const [socket, setSocket] = useState(null);
   const [displayName, setDisplayName] = useState("");
@@ -35,6 +36,8 @@ const GlobalProvider = ({ children }) => {
     setRoomCreated,
     problems,
     setProblems,
+    memberCount,
+    setMemberCount,
   };
 
   return (
