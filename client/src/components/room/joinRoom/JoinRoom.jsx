@@ -71,24 +71,24 @@ const JoinRoom = () => {
     }
   };
 
-  useEffect(() => {
-    if (socket) {
-      // Listen for incoming messages
-      socket.on("message", (data) => {
-        const { displayName: userName, message } = data;
-        if (userName !== displayName) {
-          setFriendText(message);
-        }
-      });
+  // useEffect(() => {
+  //   if (socket) {
+  //     Listen for incoming messages
+  //     socket.on("message", (data) => {
+  //       const { displayName: userName, message } = data;
+  //       if (userName !== displayName) {
+  //         setFriendText(message);
+  //       }
+  //     });
 
-      socket.on("language", (data) => {
-        const { displayName: userName, language } = data;
-        if (userName !== displayName) {
-          setFriendLanguage(language);
-        }
-      });
-    }
-  }, [socket]);
+  //     socket.on("language", (data) => {
+  //       const { displayName: userName, language } = data;
+  //       if (userName !== displayName) {
+  //         setFriendLanguage(language);
+  //       }
+  //     });
+  //   }
+  // }, [socket]);
 
   return (
     <>

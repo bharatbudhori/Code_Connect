@@ -1,49 +1,64 @@
-import { useContext, useEffect } from 'react'
-import GlobalContext from '../../context/GlobalContext';
-import { io } from 'socket.io-client';
+import { useContext, useEffect } from "react";
+import GlobalContext from "../../context/GlobalContext";
+import { io } from "socket.io-client";
 // const { io } = require("socket.io-client");
 
-
 function useSocket() {
-    const{socket,setSocket,displayName,setFriendText,setFriendLanguage,setShowCreateRoomModal,setRoomCreated,roomId} = useContext(GlobalContext);
+    const {
+        socket,
+        setSocket,
+        displayName,
+        setFriendText,
+        friendText,
+        setFriendLanguage,
+        setShowCreateRoomModal,
+        setRoomCreated,
+        roomId,
+        setMemberCount,
+    } = useContext(GlobalContext);
 
     useEffect(() => {
         if (socket) {
-          // Listen for incoming messages
-          socket.on("message", (data) => {
-            const { displayName: userName, message } = data;
-            if (userName !== displayName) {
-              setFriendText(message);
-            }
-          });
-    
-          socket.on("language", (data) => {
-            const { displayName: userName, language } = data;
-            if (userName !== displayName) {
-              setFriendLanguage(language);
-            }
-          });
-        }
-      }, [socket]);
+            // Listen for incoming messages
+            socket.on("message", (data) => {
+                const { to, message } = data;
+                // console.log(friendText)
+                setFriendText(prev => ({ ...prev, [to]: message}));
+                // console.log(friendText)
+                // console.log(data);
+            });
 
-      const connectToRoom = () => {
-        if (displayName.trim() === "" || roomId.trim() === "") {
-          alert("Please enter a display name and room ID");
-          return;
+            socket.on("language", (data) => {
+                const { displayName: userName, language } = data;
+                if (userName !== displayName) {
+                    setFriendLanguage(language);
+                }
+            });
+
+            socket.on("userCount", (data) => {
+                console.log(data);
+                setMemberCount(data);
+            });
         }
-    
+    }, [socket]);
+
+    const connectToRoom = () => {
+        if (displayName.trim() === "" || roomId.trim() === "") {
+            alert("Please enter a display name and room ID");
+            return;
+        }
+
         const newSocket = io("http://localhost:5000"); // Replace with your server address
         setSocket(newSocket);
-    
+
         // Emit 'joinRoom' event to the server with display name and room ID
         newSocket.emit("joinRoom", { displayName, roomId });
         // console.log("Connected to room", roomId);
         setShowCreateRoomModal(false);
         setRoomCreated(true);
-      };
+    };
 
-        return connectToRoom
-  
+    return connectToRoom;
 }
 
-export default useSocket
+export default useSocket;
