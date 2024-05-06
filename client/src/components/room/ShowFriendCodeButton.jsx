@@ -24,6 +24,9 @@ export default function ShowFriendCodeButton({ isOpen, setIsOpen }) {
           </div>
         </button>
       )}
+
+  
+     
     </header>
   );
 }
