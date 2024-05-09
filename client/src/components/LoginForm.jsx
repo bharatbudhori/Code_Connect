@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { json, useActionData, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { isLoggedin, saveAuthToken } from "../utlis/loginUtils";
+import { emailToUsername, isLoggedin, saveAuthToken } from "../utlis/loginUtils";
 import { serverUrl } from "../constants";
 import GlobalContext from "../context/GlobalContext";
 import { useContext } from "react";
@@ -14,7 +14,7 @@ const LoginForm = ({ isOpen }) => {
   const [signup, setSignup] = useState(false);
   const [loading, setLoading] = useState(false);
   const data = useActionData();
-  const { loggedIn, setLoggedIn } = useContext(GlobalContext);
+  const {  setLoggedIn,setUsername, setEmail } = useContext(GlobalContext);
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(isOpen);
 
@@ -66,7 +66,9 @@ const LoginForm = ({ isOpen }) => {
 
       if (token != null) {
         setLoggedIn(true);
-        saveAuthToken(token); //logged in
+        saveAuthToken(token,authData.email); //logged in
+        setUsername(emailToUsername(authData.email));
+        setEmail(authData.email);
         navigate("/", { replace: true });
       }
     } catch (error) {
@@ -100,7 +102,7 @@ const LoginForm = ({ isOpen }) => {
   return (
     <>
       {/* <Modal isOpen={true} style={customStyles}> */}
-      <ul>
+      {/* <ul>
         {data &&
           data.error &&
           Object.values(data.error).map((err) => (
@@ -108,7 +110,7 @@ const LoginForm = ({ isOpen }) => {
               {err}
             </li>
           ))}
-      </ul>
+      </ul> */}
 
       <section className=" bg-gray-50 dark:bg-gray-900 z-10">
         {/* <div className="absolute  transform -translate-x-1/2 left-1/2 z-20   "> */}

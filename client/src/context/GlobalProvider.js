@@ -14,6 +14,8 @@ const GlobalProvider = ({ children }) => {
   const [roomId, setRoomId] = useState("");
   const [roomCreated, setRoomCreated] = useState(false);
   const [problems, setProblems] = useState([]);
+  const[username,setUsername] = useState(localStorage.getItem('username')||"");
+  const[email,setEmail] = useState(localStorage.getItem('email')||"");
 
   const value = {
     loggedIn,
@@ -38,6 +40,10 @@ const GlobalProvider = ({ children }) => {
     setProblems,
     memberCount,
     setMemberCount,
+    username,
+    setUsername,
+    email,
+    setEmail
   };
 
   return (
