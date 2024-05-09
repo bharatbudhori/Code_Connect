@@ -2,8 +2,15 @@ import React, { useContext, useEffect } from "react";
 import { useRef } from "react";
 import Editor from "@monaco-editor/react";
 import CodeEditorContext from "../../context/CodeEditorContext";
-const FriendCodeEditor = ({ friendText, language, memberCount }) => {
+import GlobalContext from "../../context/GlobalContext";
+const FriendCodeEditor = ({language}) => {
     const { theme } = useContext(CodeEditorContext);
+
+    const {
+        friendText, 
+        memberCount,
+        memberIndex
+    } = useContext(GlobalContext);
 
     const editorRef = useRef(null);
 
@@ -12,8 +19,10 @@ const FriendCodeEditor = ({ friendText, language, memberCount }) => {
     }
 
     useEffect(() => {
-        if (editorRef.current && friendText[memberCount[1]]) editorRef.current.setValue(friendText[memberCount[1]] ?? "");
-    }, [friendText]);
+        if (editorRef.current && friendText[memberCount[memberIndex]]) editorRef.current.setValue(friendText[memberCount[memberIndex]] ?? "");
+        // console.log(memberIndex)
+        console.log(memberCount[memberIndex])
+    }, [friendText, memberIndex]);
 
     useEffect(() => {
         if (editorRef.current && language)

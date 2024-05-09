@@ -8,6 +8,7 @@ const GlobalProvider = ({ children }) => {
     useState(false);
   const [friendText, setFriendText] = useState({});
   const [memberCount, setMemberCount] = useState([]);
+  const [memberIndex, setMemberIndex] = useState(1);
   const [friendLanguage, setFriendLanguage] = useState("cpp");
   const [socket, setSocket] = useState(null);
   const [displayName, setDisplayName] = useState("");
@@ -43,7 +44,9 @@ const GlobalProvider = ({ children }) => {
     username,
     setUsername,
     email,
-    setEmail
+    setEmail,
+    memberIndex,
+    setMemberIndex
   };
 
   return (
