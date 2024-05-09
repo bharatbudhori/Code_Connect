@@ -47,8 +47,9 @@ const ProfilePage = () => {
                 <div className="image overflow-hidden border-bottom">
                   <img
                     className="h-52 w-52 rounded-full mx-auto border-x-gray-300 border-y-gray-800 border-4"
-                    src="https://media.licdn.com/dms/image/D5603AQGk1IcPa0-G_g/profile-displayphoto-shrink_400_400/0/1700127327417?e=1720051200&v=beta&t=NmEb20uBWDKe3H_X1A1Ryo818kQCPsSGWUoZ9UGckfc"
-                    alt=""
+                    src={`https://api.dicebear.com/7.x/bottts/svg?seed=${localStorage.getItem(
+                      "username"
+                    )}`}  alt=""
                   />
                 </div>
                 <div className="relative">

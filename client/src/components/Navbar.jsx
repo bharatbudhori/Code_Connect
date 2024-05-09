@@ -7,7 +7,6 @@ import { isLoggedin, logout } from "../utlis/loginUtils";
 import GlobalContext from "../context/GlobalContext";
 import { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { use } from "react-router-dom";
 import useProblems from "./hooks/useProblems";
 
 const navigation = [
@@ -28,7 +27,7 @@ export default function Navbar() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isProblemPage, setIsProblemPage] = useState(false);
   // const [loggedIn, setLoggedIn] = useState(isLoggedin());
-  const { loggedIn, setLoggedIn } = useContext(GlobalContext);
+  const { loggedIn, setLoggedIn, username, email } = useContext(GlobalContext);
   useEffect(() => {
     setLoggedIn(isLoggedin());
   }, [setLoggedIn]);
@@ -82,12 +81,12 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                <img
-                  className="w-8 h-8 mr-2 rounded-full"
-                  src="mainLogo2.png"
-                  alt="logo"
-                />
-                Code Connect
+                  <img
+                    className="w-8 h-8 mr-2 rounded-full"
+                    src="mainLogo2.png"
+                    alt="logo"
+                  />
+                  Code Connect
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -111,7 +110,7 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
+                {/* <button
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
@@ -120,21 +119,27 @@ export default function Navbar() {
                   {loggedIn ? (
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   ) : null}
-                </button>
+                </button> */}
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     {loggedIn ? (
-                      <Menu.Button className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Menu.Button className="flex text-sm rounded-md  ">
                         <span className="sr-only">Open user menu</span>
                         <img
-                          className="h-8 w-8 rounded-full"
+                          className="h-11 w-11 mr-2 rounded-full border-2 border-sky-400 p-1"
                           src={`https://api.dicebear.com/7.x/bottts/svg?seed=${localStorage.getItem(
-                            "authToken"
+                            "username"
                           )}`}
                           alt=""
                         />
+                        <div className="font-medium text-gray-100 my-auto">
+                          <div>{username}</div>
+                          {/* <div className="text-sm text-gray-500 dark:text-gray-400">
+                            Joined in August 2014
+                          </div> */}
+                        </div>
                       </Menu.Button>
                     ) : (
                       <Link
@@ -154,50 +159,95 @@ export default function Navbar() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md  bg-gray-700 text-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
+                      {/* display username */}
                       <Menu.Item>
+                        <div className="z-10  bg-gray-700 divide-y   shadow border-b border-gray-400   ">
+                          <div className="px-4 py-3 text-sm ">
+                            <div>{username}</div>
+                            <div className="font-medium truncate">{email}</div>
+                          </div>
+                        </div>
+                      </Menu.Item>
+
+                      <Menu.Item className="pt-3">
                         {({ active }) => (
                           <Link
-                            to="/yourProfile"
+                            to={`/u/${localStorage.getItem("username")}`}
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? "bg-gray-600" : "",
+                              "block px-4 py-2 text-sm "
                             )}
                           >
                             Your Profile
                           </Link>
                         )}
                       </Menu.Item>
-                      {/* <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item> */}
+         
                       <Menu.Item>
                         {({ active }) => (
                           <Link
                             to="/"
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? "bg-gray-600" : "",
+                              "block px-4 py-2 text-sm "
                             )}
                             onClick={() => {
                               setLoggedIn(false);
                               logout();
                             }}
                           >
-                            Sign out
+                            Log out
                           </Link>
                         )}
                       </Menu.Item>
+                      {/* <Menu.Item>
+                        <div className="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                          <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                            <div>Bonnie Green</div>
+                            <div className="font-medium truncate">
+                              name@flowbite.com
+                            </div>
+                          </div>
+                          <ul
+                            className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="avatarButton"
+                          >
+                            <li>
+                              <a
+                                href="#"
+                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                Dashboard
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="#"
+                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                Settings
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="#"
+                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                Earnings
+                              </a>
+                            </li>
+                          </ul>
+                          <div className="py-1">
+                            <a
+                              href="#"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                            >
+                              Sign out
+                            </a>
+                          </div>
+                        </div>
+                      </Menu.Item> */}
                     </Menu.Items>
                   </Transition>
                 </Menu>
