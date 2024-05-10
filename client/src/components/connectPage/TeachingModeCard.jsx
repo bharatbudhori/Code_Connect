@@ -5,7 +5,7 @@ const TeachingModeCard = () => {
     <>
       <div className="rounded bg-gray-800 w-1/3 flex flex-col justify-center items-center p-4">
         <h1 className="text-4xl">Teaching Mode</h1>
-        <img src="/Teacher.png" alt="Teacher" className="mt-2 h-72" />
+        <img src="/Teacher.png" alt="Teacher" className="mt-2 w-72 h-40" />
         <div className="my-4 text-white text-justify">
         In Teaching Mode, instructors have the capability to establish a virtual classroom tailored for their students. Within this setup, teachers maintains unrestricted access to review, evaluate and correct the codes from the students. Students are unable to view the codes of their peers. This Unrestricted access empowers teachers to monitor progress effectively and offer personalized guidance, fostering student development.
         </div>

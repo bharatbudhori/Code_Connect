@@ -5,7 +5,7 @@ const GroupStudyModeCard = () => {
     <>
       <div className=" rounded bg-gray-800 w-1/3 flex flex-col justify-center items-center p-4 ml-4">
         <h1 className="text-4xl">Group Study Mode</h1>
-        <img src="/student.png" alt="student" className="mt-2 h-72"/>
+        <img src="/student.png" alt="student" className="mt-2 w-72 h-34"/>
         <div className="my-4 text-white text-justify">
         In Group Study Mode, students can create a room for their collaborative study sessions. Within these sessions, students have the ability to view the codes of their peers. This enriches their learning experiences to new heights. This exchange of perspectives and approaches not only promotes deeper understanding but also cultivates a supportive learning community. Students are unable to edit the code of other students in the room.
         </div>
