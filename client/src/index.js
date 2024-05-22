@@ -5,7 +5,6 @@ import reportWebVitals from "./reportWebVitals.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CodeEnvironment from "./components/CodeEnvironment.jsx";
 import CodeEditorProvider from "./context/CodeEditorProvider.jsx";
-import Room from "./components/room.jsx";
 import Layout from "./components/Layout.jsx";
 import ProblemSet from "./components/problemListPage/ProblemSet.jsx";
 import ProblemProvider from "./context/ProblemProvider.jsx";
@@ -16,6 +15,7 @@ import JoinRoom from "./components/room/joinRoom/JoinRoom.jsx";
 import ConnectHomePage from "./components/connectPage/ConnectHomePage.jsx";
 import ProfilePage from "./components/userProfilePage/ProfilePage.jsx";
 import Heatmap from "./components/userProfilePage/Heatmap.jsx";
+import WaitingRoom from "./components/waitingRoom/WaitingRoom.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,16 +35,20 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/room",
-        element: <Room />,
+        path: "/room/:roomId/problems/:problemId",
+        element: (
+          <CodeEditorProvider>
+            <CodeEnvironment />
+          </CodeEditorProvider>
+        ),
+      },
+      {
+        path: "/room/:roomId",
+        element: <WaitingRoom />,
       },
       {
         path: "/problems",
-        element: (
-          <ProblemProvider>
-            <ProblemSet />
-          </ProblemProvider>
-        ),
+        element: <ProblemSet />,
       },
       {
         path: "/about",
@@ -58,9 +62,9 @@ const router = createBrowserRouter([
       {
         path: "/join",
         element: (
-          <CodeEditorProvider> Programmer's cod
+          <CodeEditorProvider>
             {" "}
-            <JoinRoom />
+            Programmer's cod <JoinRoom />
           </CodeEditorProvider>
         ),
       },
@@ -82,9 +86,9 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 reportWebVitals();

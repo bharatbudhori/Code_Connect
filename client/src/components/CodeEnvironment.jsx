@@ -18,7 +18,7 @@ const CodeEnviornment = () => {
   const { problemId } = useParams();
   const { problems } = useContext(GlobalContext);
 
-  const { socket, roomId, displayName, memberCount, friendText } =
+  const { socket, roomId, displayName, membersList, friendText } =
     useContext(GlobalContext);
 
   let problemIndex = 0;
@@ -199,7 +199,7 @@ const CodeEnviornment = () => {
           {socket && (
             <h1 className="text-3xl mt-1 mx-10">
               {" "}
-              Number of participants : {memberCount.length}
+              Number of participants : {membersList.length}
             </h1>
           )}
         </div>

@@ -6,14 +6,18 @@ import ShowFriendCodeButton from "../ShowFriendCodeButton";
 
 function FriendCodeDrawer() {
   const [isOpen, setIsOpen] = useState(false);
-  const { friendLanguage, friendText, memberCount } = useContext(GlobalContext);
+  const { friendLanguage, friendText, membersList } = useContext(GlobalContext);
 
   return (
     <>
       <ShowFriendCodeButton isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen} language={friendLanguage}>
-        <FriendCodeEditor friendText={friendText} language={friendLanguage} memberCount = {memberCount} />
+        <FriendCodeEditor
+          friendText={friendText}
+          language={friendLanguage}
+          membersList={membersList}
+        />
       </Drawer>
     </>
   );

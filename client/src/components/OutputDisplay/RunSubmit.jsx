@@ -7,14 +7,19 @@ import GlobalContext from "../../context/GlobalContext";
 import { serverUrl } from "../../constants";
 // import problems from "../../Data/problems";
 
-const RunSubmit = ({ editorRef }) => {
-  const { setRunResponse, setSubmitResponse, setSubmitOutput, setOutput } =
-    useContext(CodeEditorContext);
-  const { setActiveComponent } = useContext(CodeEditorContext);
+const RunSubmit = () => {
+  const {
+    setRunResponse,
+    setSubmitResponse,
+    setSubmitOutput,
+    setOutput,
+    setActiveComponent,
+    editorRef,
+    language,
+  } = useContext(CodeEditorContext);
   // const [showAccepted, setShowAccepted] = useState(false);
   // const [accepted, setAccepted] = useState(false);
-  const { language } = useContext(CodeEditorContext);
-  const { problems } = useContext(GlobalContext);
+  const { problems, username } = useContext(GlobalContext);
 
   const { problemId } = useParams();
   let problemIndex = 0;
@@ -55,18 +60,53 @@ const RunSubmit = ({ editorRef }) => {
   }
 
   useEffect(() => {
+    console.log("Language from useeffect: ", language);
     if (!editorRef.current) return;
-    if (language === "python") {
-      editorRef.current.setValue(`# write your code here in ${language}`);
-    } else {
-      editorRef.current.setValue(`// write your code here in ${language}`);
+    console.log("EditorRef: ", editorRef.current.getModel());
+    if (language === "cpp") {
+      editorRef.current.setValue(`// write your code here in C++
+#include <bits/stdc++.h>
+using namespace std;
+      
+int main() {
+    int t;
+    cin >> t;
+    while(t--){
+      // write your logic here
+      
+    }
+    return 0;
+}`);
+    } else if (language === "python") {
+      editorRef.current.setValue(`# write your code here in Python
+def main():
+t = int(input())
+for _ in range(t):
+  # write your logic here
+-
+
+if __name__ == "__main__":
+  main()`);
+    } else if (language === "c") {
+      editorRef.current.setValue(`// write your code here in C
+#include <stdio.h>
+      
+int main() {
+  int t;
+  scanf("%d", &t);
+  while (t--) {
+    // write your logic here
+
+  }
+  return 0;
+}`);
     }
 
     if (!editorRef.current.getModel()) {
       return;
     }
     editorRef.current.getModel().setLanguage(language);
-  }, [language]);
+  }, [language, editorRef]);
 
   const makePostRequest = async (code, inp, language, reqType) => {
     // var lang = language;
@@ -96,6 +136,8 @@ const RunSubmit = ({ editorRef }) => {
         input: inp,
         language: language,
         reqType: reqType,
+        problem: problem,
+        username: username,
       });
       // Update the state with the response data
       if (inp === api_input_run) {

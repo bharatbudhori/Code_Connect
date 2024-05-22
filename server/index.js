@@ -7,6 +7,7 @@ const {
   getProblems,
   setAllProblemsInFirebase,
   checkUser,
+  addQuestionSolvedInFirebase,
 } = require("./firebase.js");
 const path = require("path");
 const axios = require("axios");
@@ -47,8 +48,10 @@ app.post("/signup", (req, res) => {
     password: req.body.password,
     name: req.body.email.split("@")[0],
     createdAt: new Date().toISOString(),
-    codingScore: 0,
-    solved: [
+    userDescription: "I am a coder",
+    designation: "Software Engineer",
+    location: "India",
+    problemsSolved: [
       // {
       //   id: 1,
       //   status: "solved",
@@ -58,13 +61,10 @@ app.post("/signup", (req, res) => {
       //   input: "",
       //   output: "Hello World",
       // },
-
     ],
- 
-
-    
+    heatmapData: {},
   };
-  // Check if email already exist
+  // Check if email already exist `checkEmail` function returns a promise`
   checkEmail(user.email)
     .then(([exists]) => {
       if (exists) {
@@ -79,7 +79,7 @@ app.post("/signup", (req, res) => {
               expiresIn: "1h",
             });
 
-            // Return token 
+            // Return token
             res.json({ token });
           }
         })
@@ -100,10 +100,10 @@ app.post("/login", (req, res) => {
   const { email, password } = req.body;
   let error = {};
   // Check if email and password are provided
-  
+
   if (!email || !password) {
-  // if(true){ 
-  error.email = "Email is required";
+    // if(true){
+    error.email = "Email is required";
     error.password = "Password is required";
 
     return res.status(400).json({ error });
@@ -135,10 +135,10 @@ app.post("/login", (req, res) => {
       // Return token
       const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
       res.json({ token });
-      })
-      .catch((error) => {
-        console.error("Error checking email:", error);
-        return res.status(500).json({ error: "Internal Server Error" });
+    })
+    .catch((error) => {
+      console.error("Error checking email:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
     });
 });
 
@@ -169,20 +169,22 @@ app.get("/setAllProblems", (req, res) => {
   }
 });
 
-app.get("/getUserProfile", (req, res) => {
-  const user = req.query?.user;
+app.get("/api/getUserProfile/:username", (req, res) => {
+  // const user = req.query?.user;
+  const user = req.params.username;
   console.log("Received get user profile request:", user);
   // console.log(req)
   checkUser(user).then((data) => {
     if (!data) {
       return res.status(400).json({ error: "User not found" });
     }
+
     res.json(data);
   });
 });
 
 app.post("/api/run-submit", (req, res) => {
-  console.log("Received run-submit request:", req.body);
+  // console.log("Received run-submit request:", req.body);
   const { code, input, language, reqType } = req.body;
   if (!code || !input || !language || !reqType) {
     return res
@@ -206,23 +208,58 @@ app.post("/api/run-submit", (req, res) => {
       input: input,
     },
   };
+  console.log("API call lang : " + language);
   try {
     axios(options)
       .then((response) => {
+        console.log("Aya API ki nahi");
         console.log("API response:", response.data);
         if (reqType === "run") {
           return res.json(response.data);
         } else if (reqType === "submit") {
+          const arr1 = req.body.problem.submitOutput.split("\n");
+          const totalTestCases = arr1.length;
+          const SubmitTestCasesChecking = () => {
+            let totalSuccessfulTestCases = 0;
+            if (!response?.data?.output?.includes("\n")) return 0;
+            const arr2 = response.data.output.split("\n");
+            for (let i = 0; i < arr1.length; i++) {
+              let str1 = arr1[i],
+                str2 = arr2[i],
+                str3,
+                str4;
+              if (str1 && str1.includes(" ")) {
+                str3 = str1.replaceAll(" ", "");
+              }
+              if (str2 && str2.includes(" ")) {
+                str4 = str2.replaceAll(" ", "");
+              }
+              if (str3 === str4) {
+                totalSuccessfulTestCases++;
+              }
+            }
+            return totalSuccessfulTestCases;
+          };
+          const totalSuccessfulTestCases = SubmitTestCasesChecking();
 
           // update the data in firebase
-          
+          addQuestionSolvedInFirebase(
+            req.body.username,
+            req.body.problem,
+            req.body.language,
+            totalTestCases,
+            totalSuccessfulTestCases
+          );
+          console.log("Submit request");
 
           return res.json(response.data);
         }
       })
       .catch((error) => {
         console.error("Error running code:", error);
-        return res.status(500).json({ error: "Internal Server Error from rapid api" });
+        return res
+          .status(500)
+          .json({ error: "Internal Server Error from rapid api" });
       });
   } catch (error) {
     console.error("Error running code:", error);
@@ -259,65 +296,93 @@ const server = app.listen(port, () => {
 });
 
 let io = require("socket.io")(server, {
-    cors: {
-        origin: "*",
-    },
-    methods: ["GET", "POST"],
+  cors: {
+    origin: "*",
+  },
+  methods: ["GET", "POST"],
 });
 
 const roomUsersCount = new Map();
+const roomAdminMap = new Map();
+const roomQuestionMap = new Map();
 
 io.on("connection", function (socket) {
-    console.log("a user connected");
+  console.log("a user connected");
 
-    // Handle joining a room
-    socket.on("joinRoom", (room) => {
-        const { roomId, displayName } = room;
-        socket.join(roomId);
-        console.log(`User joined room: ${roomId} as ${displayName}`);
+  // Handle joining a room
+  socket.on("joinRoom", (room) => {
+    try {
+      const { roomId, username } = room;
+      socket.join(roomId);
+      console.log(`User joined room: ${roomId} as ${username}`);
 
-        // Increment the user count for the joined room
-        if (roomUsersCount.has(roomId)) {
-            roomUsersCount.set(roomId, [...roomUsersCount.get(roomId), displayName]);
-        } else {
-            roomUsersCount.set(roomId, [displayName]);
+      // Increment the user count for the joined room
+      if (roomUsersCount.has(roomId)) {
+        if (!roomUsersCount.get(roomId).includes(username)) {
+          roomUsersCount.set(roomId, [...roomUsersCount.get(roomId), username]);
+          io.to(roomId).emit("roomAdmin", roomAdminMap.get(roomId));
         }
-
-        // Broadcast the updated user count to all users in the room
-        io.to(roomId).emit("userCount", roomUsersCount.get(roomId));
-    });
-
-    // Handle sending messages to the room
-    socket.on("sendMessageToRoom", (data) => {
-        const { room, message, from, to } = data;
-        console.log(
-            `Sending message to room ${room} by ${from} to ${to} : ${message}`
-        );
-        io.to(room).emit("message", { to, message });
-    });
-
-    // Handle language change
-    socket.on("changeLanguage", (data) => {
-        const { room, language, displayName } = data;
-        console.log(
-            `Changing language to ${language} by ${displayName} in room ${room}`
-        );
-        io.to(room).emit("language", { displayName, language });
-    });
-
-    // Handle disconnection
-    socket.on("disconnectUser", (data) => {
-      const { room, displayName } = data;
-        console.log("User disconnected");
-
-        if (roomUsersCount.has(room)) {
-            // roomUsersCount.set(room, roomUsersCount.get(room) - 1);
-            // io.to(room).emit("userCount", roomUsersCount.get(room));
-            const index = roomUsersCount.get(room).indexOf(displayName);
-            if (index > -1) {
-                roomUsersCount.get(room).splice(index, 1);
-                io.to(room).emit("userCount", roomUsersCount.get(room));
-            }
+        if (roomQuestionMap.has(roomId)) {
+          setTimeout(() => {
+            io.to(roomId).emit("questionSelected", roomQuestionMap.get(roomId));
+          }, 100);
+          // io.to(room).emit("questionSelected", roomQuestionMap.get(roomId));
         }
-    });
+      } else {
+        roomUsersCount.set(roomId, [username]);
+        roomAdminMap.set(roomId, username);
+        io.to(roomId).emit("roomAdmin", roomAdminMap.get(roomId));
+      }
+
+      // Broadcast the updated user count to all users in the room
+      io.to(roomId).emit("userCount", roomUsersCount.get(roomId));
+      console.log(roomUsersCount.get(roomId));
+    } catch (error) {
+      console.log("Error from server side: ", error);
+    }
+  });
+
+  // Handle redirect to specific question in a room
+  socket.on("selectedQuestion", (data) => {
+    const { room, questionId } = data;
+    console.log(`Selected question in room ${room} is ${questionId}`);
+    roomQuestionMap.set(room, questionId);
+    io.to(room).emit("questionSelected", questionId);
+  });
+
+  // Handle sending messages to the room
+  socket.on("sendMessageToRoom", (data) => {
+    const { room, message, from, to } = data;
+    console.log(
+      `Sending message to room ${room} by ${from} to ${to} : ${message}`
+    );
+    io.to(room).emit("message", { to, message });
+  });
+
+  // Handle language change
+  socket.on("changeLanguage", (data) => {
+    const { room, language, username } = data;
+    console.log(
+      `Changing language to ${language} by ${username} in room ${room}`
+    );
+    io.to(room).emit("language", { username, language });
+  });
+
+  // Handle disconnection
+  socket.on("disconnectUser", (data) => {
+    const { room, displayName } = data;
+    console.log("User disconnected");
+
+    if (roomUsersCount.has(room)) {
+      // roomUsersCount.set(room, roomUsersCount.get(room) - 1);
+      // io.to(room).emit("userCount", roomUsersCount.get(room));
+      const index = roomUsersCount.get(room).indexOf(displayName);
+      console.log(index);
+      if (index > -1) {
+        roomUsersCount.get(room).splice(index, 1);
+        io.to(room).emit("userCount", roomUsersCount.get(room));
+        console.log(roomUsersCount.get(room));
+      }
+    }
+  });
 });

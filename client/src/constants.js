@@ -36,3 +36,18 @@ int main() {
     return 0;
 }
 `
+
+
+export const DEFAUTL_CODE = `// write your code here in C++
+#include <bits/stdc++.h>
+using namespace std;
+                
+int main() {
+  int t;
+  cin >> t;
+  while(t--){
+    // write your logic here
+    
+  }
+  return 0;
+}` 

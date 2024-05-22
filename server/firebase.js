@@ -8,6 +8,7 @@ const {
   Timestamp,
   FieldValue,
   Filter,
+  find,
 } = require("firebase-admin/firestore");
 
 const serviceAccount = require("./serviceAccountKey.json");
@@ -55,16 +56,19 @@ function setUser(user) {
 
 //check if email already exists
 async function checkEmail(email) {
-  const snapshot = await db.collection("users").where("email", "==", email).get();
-  if (snapshot.empty) { // email does not exist
+  const snapshot = await db
+    .collection("users")
+    .where("email", "==", email)
+    .get();
+  if (snapshot.empty) {
+    // email does not exist
     return [false];
   }
-  return [true, snapshot.docs[0].data().password ]; // email exists, return password;
-
+  return [true, snapshot.docs[0].data().password]; // email exists, return password;
 }
 
 async function checkUser(username) {
-  if(!username) return false;
+  if (!username || username == "") return false;
   try {
     const snapshot = await db
       .collection("users")
@@ -74,9 +78,9 @@ async function checkUser(username) {
       return false;
     }
     const data = snapshot.docs[0].data();
-    const dataWithoutPassword = { ...data `` };
-    
-    return data;
+    const dataWithoutPassword = { ...data };
+
+    return dataWithoutPassword;
   } catch (error) {
     console.log("Error checking user:", error);
     return false;
@@ -141,4 +145,75 @@ function setAllProblemsInFirebase() {
   });
 }
 
-module.exports = { setUser, checkEmail, setAllProblemsInFirebase, getProblems ,checkUser};
+async function addQuestionSolvedInFirebase(
+  username,
+  problem,
+  language,
+  totalTestCases,
+  testCasesPassed
+) {
+  if (!username || username === "") return false;
+
+  try {
+    const userRef = db.collection("users").where("name", "==", username);
+    const snapshot = await userRef.get();
+
+    if (snapshot.empty) return false;
+
+    const userDoc = snapshot.docs[0];
+    const userRefToUpdate = userDoc.ref;
+    const problemsSolved = userDoc.data().problemsSolved || [];
+    if (problemsSolved.find((prob) => prob.problem.id === problem.id)) {
+      problemsSolved.forEach((prob) => {
+        if (prob.problem.id === problem.id) {
+          prob.language = language;
+          prob.submittedOn = Timestamp.now();
+          prob.totalTestCases = totalTestCases;
+          prob.testCasesPassed = testCasesPassed;
+        }
+      });
+      await userRefToUpdate.update({ problemsSolved: problemsSolved });
+      // return true;
+    } else {
+      problemsSolved.push({
+        problem,
+        language,
+        submittedOn: Timestamp.now(),
+        totalTestCases,
+        testCasesPassed,
+      });
+      await userRefToUpdate.update({ problemsSolved: problemsSolved });
+    }
+    //update heatmap Data
+    const today = new Date();
+    const date = today.getDate();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+    const dateStr = `${year}/${month}/${date}`;
+    const heatmapData = userDoc.data().heatmapData || {};
+    if (heatmapData[dateStr]) {
+      heatmapData[dateStr] += 1;
+    } else {
+      heatmapData[dateStr] = 1;
+    }
+    await userRefToUpdate.update({ heatmapData: heatmapData });
+
+    // await userRefToUpdate.update({
+    //   questionsSolved: FieldValue.arrayUnion({ problem, language }),
+    // });
+
+    return true;
+  } catch (error) {
+    console.error("Error adding question solved:", error);
+    return false;
+  }
+}
+
+module.exports = {
+  setUser,
+  checkEmail,
+  setAllProblemsInFirebase,
+  getProblems,
+  checkUser,
+  addQuestionSolvedInFirebase,
+};

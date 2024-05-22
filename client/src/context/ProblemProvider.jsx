@@ -9,7 +9,8 @@ function ProblemProvider({ children }) {
   const [searchFilter, setSearchFilter] = useState("");
   const [tagsFilter, setTagsFilter] = useState([]);
   const [statusFilter, setStatusFilter] = useState("All");
-
+  const [statusList, setStatusList] = useState([]);
+  const [attemptedList, setAttemptedList] = useState([]); 
   const value = {
     allProblems,
     setAllProblems,
@@ -23,6 +24,10 @@ function ProblemProvider({ children }) {
     setTagsFilter,
     statusFilter,
     setStatusFilter,
+    statusList,
+    setStatusList,
+    attemptedList,
+    setAttemptedList
   };
 
   return (
