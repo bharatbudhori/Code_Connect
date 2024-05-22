@@ -3,11 +3,14 @@ import { useRef } from "react";
 import Editor from "@monaco-editor/react";
 import CodeEditorContext from "../../context/CodeEditorContext";
 import CodeEditorTop from "./CodeEditorTop";
+import GlobalContext from "../../context/GlobalContext";
+import { DEFAUTL_CODE } from "../../constants";
 // import SubmitReport from "./sub-components/SubmitReport";
 
 const CodeEditor = ({ socket, displayName, roomId, friendText }) => {
   const { theme, language } = useContext(CodeEditorContext);
-  const { editorRef} = useContext(CodeEditorContext);
+  const { editorRef } = useContext(CodeEditorContext);
+  const { username } = useContext(GlobalContext);
 
   // const editorRef = useRef(null);
 
@@ -15,9 +18,9 @@ const CodeEditor = ({ socket, displayName, roomId, friendText }) => {
     editorRef.current = editor;
   }
 
-//   useEffect(() => {
-//     console.log(friendText);
-// }, [friendText]);
+  //   useEffect(() => {
+  //     console.log(friendText);
+  // }, [friendText]);
 
   return (
     <div className="bg-gray-900 text-white">
@@ -35,16 +38,29 @@ const CodeEditor = ({ socket, displayName, roomId, friendText }) => {
         <Editor
           height="44vh"
           defaultLanguage={language}
-          defaultValue={`// write your code here in ${language}`}
-          onMount={handleEditorDidMount}
+          defaultValue={DEFAUTL_CODE}
+          options={{
+            wordWrap: "on",
+          }}
+          onMount={() => {
+            handleEditorDidMount();
+            if (socket == null) return;
+
+            socket.emit("sendMessageToRoom", {
+              room: roomId,
+              message: DEFAUTL_CODE,
+              from: username,
+              to: username,
+            });
+          }}
           onChange={(value, event) => {
             if (socket == null) return;
 
             socket.emit("sendMessageToRoom", {
               room: roomId,
               message: value,
-              from : displayName,
-              to : displayName,
+              from: username,
+              to: username,
             });
           }}
           theme={`vs-${theme}`}

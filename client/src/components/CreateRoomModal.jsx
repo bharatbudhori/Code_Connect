@@ -25,7 +25,7 @@ const CreateRoomModal = ({ onCreateRoom }) => {
   const {
     showCreateRoomModal,
     setShowCreateRoomModal,
-    displayName,
+    username,
     setDisplayName,
     roomId,
     setRoomId,
@@ -49,8 +49,9 @@ const CreateRoomModal = ({ onCreateRoom }) => {
             label="Username"
             type="text"
             fullWidth
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
+            value={username}
+            disabled
+            // onChange={(e) => setDisplayName(e.target.value)}
           />
           <TextField
             margin="dense"

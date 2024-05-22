@@ -5,7 +5,7 @@ import ProblemContext from "../../../context/ProblemContext";
 import CancelIcon from "@mui/icons-material/Cancel";
 import TagsFilter from "./TagsFilter";
 import SearchFilter from "./SearchFilter";
-import { statusList } from "../../../Data/problems";
+// import { statusList } from "../../../Data/problems";
 
 function ProblemFilter() {
   const {
@@ -20,6 +20,8 @@ function ProblemFilter() {
     setTagsFilter,
     statusFilter,
     setStatusFilter,
+    statusList,
+    attemptedList,
   } = React.useContext(ProblemContext);
   useEffect(() => {
     setFilteredProblems(allProblems);
@@ -45,6 +47,10 @@ function ProblemFilter() {
         newData = newData.filter((problem) => statusList.includes(problem.id));
       } else if (statusFilter === "Unsolved") {
         newData = newData.filter((problem) => !statusList.includes(problem.id));
+      } else if (statusFilter === "Attempted") {
+        newData = newData.filter((problem) =>
+          attemptedList.includes(problem.id)
+        );
       }
     }
     setFilteredProblems(newData);

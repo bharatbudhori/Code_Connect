@@ -7,8 +7,8 @@ const ConnectHomePage = () => {
     <>
       
       <div className="flex justify-center items-center my-4">
-        <TeachingModeCard></TeachingModeCard>
-        <GroupStudyModeCard></GroupStudyModeCard>
+        <TeachingModeCard/>
+        <GroupStudyModeCard/>
       </div>
     </>
   );

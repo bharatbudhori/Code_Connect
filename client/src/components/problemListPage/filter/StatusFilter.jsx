@@ -65,7 +65,7 @@ export default function ProblemFilter() {
               {({ active }) => (
                 <div
                   className={classNames(
-                    active ? "bg-gray-700 text-white" : "text-yellow-500",
+                    active ? "bg-gray-700 text-white" : "text-gray-1000",
                     "block px-4 py-2 text-sm"
                   )}
                   onClick={() => handleClick("Unsolved")}
@@ -94,12 +94,15 @@ export default function ProblemFilter() {
               {({ active }) => (
                 <div
                   className={classNames(
-                    active ? "bg-gray-700 text-white" : "text-red-500",
+                    active ? "bg-gray-700 text-white" : "text-red-500 ",
                     "block px-4 py-2 text-sm"
                   )}
                   onClick={() => handleClick("Attempted")}
                 >
-                  <ShowChartIcon className="mr-2" fontSize="small" />
+                  <ShowChartIcon
+                    className="mr-2 text-red-500 border rounded-full border-red-500 p-[1px]"
+                    fontSize="small"
+                  />
                   Attempted
                 </div>
               )}

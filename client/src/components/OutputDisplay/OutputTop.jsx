@@ -8,7 +8,6 @@ import RunSubmit from "./RunSubmit";
 
 const OutputTop = () => {
   const { activeComponent, setActiveComponent } = useContext(CodeEditorContext);
-  const { editorRef } = useContext(CodeEditorContext);
 
   const showComponent = (component) => {
     setActiveComponent(component);
@@ -68,7 +67,7 @@ const OutputTop = () => {
                 </li>
               </ul>
             </div>
-            <RunSubmit editorRef={editorRef} />
+            <RunSubmit  />
           </div>
         </div>
         

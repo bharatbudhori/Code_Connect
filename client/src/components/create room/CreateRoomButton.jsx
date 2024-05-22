@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 function CreateRoomButton() {
   const {
     loggedIn,
-    showCreateRoomModal,
     setShowCreateRoomModal,
     showLoginToContinueModal,
     setShowLoginToContinueModal,

@@ -19,13 +19,24 @@ const value = [
   { date: "2024/05/04", count: 11 },
   { date: "2024/05/08", count: 32 },
 ];
+// console.log(value);
 
-const Demo = () => {
+const Heatmap = ({ heatmapData }) => {
+  // console.log(heatmapData);
+  const newData = [];
+  Object.keys(heatmapData).map((key) => {
+    const date = key;
+    const count = heatmapData[key];
+    newData.push({ date, count });
+  });
+
+  // console.log(newData);
+
   return (
     <div className="flex items-center justify-center">
       <div className="w-full max-w-[910px]">
         <HeatMap
-          value={value}
+          value={newData}
           startDate={new Date("2024/01/01")}
           endDate={new Date("2024/12/31")}
           rectSize={15}
@@ -37,14 +48,14 @@ const Demo = () => {
             fontSize: "12px",
             "--rhm-rect": "#4a6283",
           }}
-          // rectRender={(props, data) => (
-          //   <Tooltip placement="top" content={`count: ${data.count || 0}`}>
-          //     <rect {...props} />
-          //   </Tooltip>
-          // )}
+          rectRender={(props, data) => (
+            <Tooltip placement="top" content={`count: ${data.count || 0}`}>
+              <rect {...props} />
+            </Tooltip>
+          )}
         />
       </div>
     </div>
   );
 };
-export default Demo;
+export default Heatmap;
