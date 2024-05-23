@@ -45,8 +45,9 @@ function useSocket() {
   //   }
   // }, [socket]);
 
-  const connectToRoom = (callback) => {
+  const connectToRoom = (mode) => {
     console.log("hello from useScoket",roomId, username);
+    console.log(mode);
     if (username.trim() === "" || roomId.trim() === "") {
       toast.error("Please enter a display name and room ID");
       return;
@@ -56,13 +57,13 @@ function useSocket() {
       setSocket(newSocket);
 
       // Emit 'joinRoom' event to the server with display name and room ID
-      newSocket.emit("joinRoom", { username, roomId });
+      newSocket.emit("joinRoom", { username, roomId, mode });
       // console.log("Connected to room", roomId);
       setShowCreateRoomModal(false);
       setRoomCreated(true);
-      if (callback !== undefined && typeof callback === "function") {
-        callback();
-      }
+      // if (callback !== undefined && typeof callback === "function") {
+      //   callback();
+      // }
     } catch (err) {
       console.log(err);
     }

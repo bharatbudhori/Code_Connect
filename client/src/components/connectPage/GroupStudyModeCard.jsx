@@ -51,10 +51,10 @@ const GroupStudyModeCard = () => {
       <img
         src="/student.png"
         alt="student"
-        className="mt-2 w-72 h-34"
+        className="mt-2"
         onClick={copyLinkToClipboard}
-        style={{ cursor: "pointer" }}
-      />
+        style={{ cursor: "pointer" , width:"300px", height :"200px"}}
+      />
       <div className="my-4 text-white text-justify">
         In Group Study Mode, students can create a room for their collaborative
         study sessions. Within these sessions, students have the ability to view

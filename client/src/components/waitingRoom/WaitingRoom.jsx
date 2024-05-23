@@ -22,7 +22,8 @@ function WaitingRoom() {
     console.log("useEffect called in waiting room", loggedIn, roomId);
     setRoomId(roomId);
     if (loggedIn) {
-      connectToRoom();
+      var mode = window.location.href.split("=")[1];;
+      connectToRoom(mode);
       console.log("connected to room");
     }
   }, [loggedIn]);

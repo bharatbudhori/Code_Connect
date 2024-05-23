@@ -52,8 +52,9 @@ const GlobalProvider = ({ children }) => {
       });
 
       socket.on("questionSelected", (data) => {
+        const {questionId, roomMode} = data;
         console.log("Selected question", data);
-        navigate(`/room/${roomId}/problems/${data}`);
+        navigate(`/room/${roomId}/problems/${questionId}?mode=${roomMode}`);
       });
     }
   }, [socket]);

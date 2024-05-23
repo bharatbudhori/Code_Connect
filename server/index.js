@@ -305,6 +305,7 @@ let io = require("socket.io")(server, {
 const roomUsersCount = new Map();
 const roomAdminMap = new Map();
 const roomQuestionMap = new Map();
+const roomModeMap = new Map();
 
 io.on("connection", function (socket) {
   console.log("a user connected");
@@ -312,9 +313,13 @@ io.on("connection", function (socket) {
   // Handle joining a room
   socket.on("joinRoom", (room) => {
     try {
-      const { roomId, username } = room;
+      const { roomId, username, mode } = room;
       socket.join(roomId);
-      console.log(`User joined room: ${roomId} as ${username}`);
+      console.log(`User joined room: ${roomId} as ${username} in mode ${mode}`);
+
+      // Set the room mode for the joined room
+      roomModeMap.set(roomId, mode);
+
 
       // Increment the user count for the joined room
       if (roomUsersCount.has(roomId)) {
@@ -347,7 +352,8 @@ io.on("connection", function (socket) {
     const { room, questionId } = data;
     console.log(`Selected question in room ${room} is ${questionId}`);
     roomQuestionMap.set(room, questionId);
-    io.to(room).emit("questionSelected", questionId);
+    var roomMode = roomModeMap.get(room) ?? "GSMode";
+    io.to(room).emit("questionSelected", {questionId, roomMode});
   });
 
   // Handle sending messages to the room
