@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import GlobalContext from "../../context/GlobalContext";
-import { API_URL } from "../../utlis/constants";
+import { API_URL } from "../../constants";
 // import {db} from '../../firebase';
 // import {collection,getDocs} from 'firebase/firestore';
 

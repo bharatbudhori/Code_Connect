@@ -3,13 +3,23 @@ import GlobalContext from "../../context/GlobalContext";
 import GlobalProvider from "../../context/GlobalProvider";
 
 export default function Drawer({ children, isOpen, setIsOpen, language }) {
-  const { memberIndex, setMemberIndex, socket, membersList, username } =
+  const { memberIndex, setMemberIndex, socket, membersList, username, roomAdmin} =
     useContext(GlobalContext);
   // console.log(`Drawing ${membersList} members`);
 
   const [selectedMemberName, setSelectedMemberName] = useState(null);
+  const [mode,setMode]=useState('');
 
   useEffect(() => {
+    // For getting Querry parameter mode
+    const url = window.location.href;
+    console.log("url at drawer:",url)
+    const params = url.split('=')[1];
+    console.log("param mode :",params)
+    setMode(params);
+    console.log("mode : ",mode);
+
+
     // Select the first available member upon initial load, excluding self
     if (membersList.length > 0) {
       const firstAvailableMember = membersList.find(
@@ -100,7 +110,7 @@ export default function Drawer({ children, isOpen, setIsOpen, language }) {
             <nav className="bg-blue-900 h-full justify-between flex flex-col ">
               <div className="mt-2 mb-2 w-24 h-full">
                 <div className="flex items-start">
-                  <ul className=" flex list-none flex-col flex-wrap">
+                  {(mode==="GSMode")?(<ul className=" flex list-none flex-col flex-wrap">
                     {socket &&
                       membersList
                         // .sort((a, b) => a.localeCompare(b))
@@ -126,14 +136,66 @@ export default function Drawer({ children, isOpen, setIsOpen, language }) {
                             </li>
                           );
                         })}
-                  </ul>
+                  </ul>):((roomAdmin===username)?(<ul className=" flex list-none flex-col flex-wrap">
+                    {socket &&
+                      membersList
+                        // .sort((a, b) => a.localeCompare(b))
+                        .map((member, index) => {
+                          if (member === username) return null;
+                          return (
+                            <li key={index}>
+                              <button
+                                className={`hover:bg-600  p-7 pb-1 ${
+                                  memberIndex === index ? "bg-blue-500" : ""
+                                }`}
+                                onClick={() => handleButtonClick(index, member)}
+                              >
+                                <img
+                                  src={`https://api.dicebear.com/7.x/bottts/svg?seed=${member}`}
+                                  className="rounded-full  mb-3 mx-auto"
+                                  alt="profile"
+                                />
+                                <h2 className="flex items-center justify-center my-2 rounded text-2xl font-medium  leading-tight text-white">
+                                  {member}
+                                </h2>
+                              </button>
+                            </li>
+                          );
+                        })}
+                  </ul>):(<ul className=" flex list-none flex-col flex-wrap">
+                    {socket &&
+                      membersList
+                        // .sort((a, b) => a.localeCompare(b))
+                        .map((member, index) => {
+                          if (member === username) return null;
+                          if(member!= roomAdmin) return null;
+                          return (
+                            <li key={index}>
+                              <button
+                                className={`hover:bg-600  p-7 pb-1 ${
+                                  memberIndex === index ? "bg-blue-500" : ""
+                                }`}
+                                onClick={() => handleButtonClick(index, member)}
+                              >
+                                <img
+                                  src={`https://api.dicebear.com/7.x/bottts/svg?seed=${member}`}
+                                  className="rounded-full  mb-3 mx-auto"
+                                  alt="profile"
+                                />
+                                <h2 className="flex items-center justify-center my-2 rounded text-2xl font-medium  leading-tight text-white">
+                                  {member}
+                                </h2>
+                              </button>
+                            </li>
+                          );
+                        })}
+                  </ul>))} 
                 </div>
               </div>
             </nav>
           </div>
         </article>
       </section>
-
       <section
         className=" w-screen h-full cursor-pointer"
         onClick={() => {

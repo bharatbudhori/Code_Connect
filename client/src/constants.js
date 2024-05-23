@@ -1,5 +1,7 @@
 export const serverUrl = 'http://localhost:5000/';
 
+export const API_URL = 'http://localhost:5000';
+
 export const tempCode = `#include <iostream>
 
 using namespace std;
@@ -38,7 +40,7 @@ int main() {
 `
 
 
-export const DEFAUTL_CODE = `// write your code here in C++
+export const CPP_DEFAUTL_CODE = `// write your code here in C++
 #include <bits/stdc++.h>
 using namespace std;
                 
@@ -51,3 +53,28 @@ int main() {
   }
   return 0;
 }` 
+
+
+export const C_DEFAUTL_CODE = `// write your code here in C
+#include <stdio.h>
+      
+int main() {
+  int t;
+  scanf("%d", &t);
+  while (t--) {
+    // write your logic here
+
+  }
+  return 0;
+}`
+
+
+export const PYTHON_DEFAUTL_CODE = `# write your code here in Python
+def main():
+  t = int(input())
+  for _ in range(t):
+    # write your logic here
+
+
+if __name__ == "__main__":
+  main()`
