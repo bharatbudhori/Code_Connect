@@ -4,7 +4,7 @@ import axios from "axios";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useParams } from "react-router-dom";
 import GlobalContext from "../../context/GlobalContext";
-import { serverUrl } from "../../constants";
+import { serverUrl,CPP_DEFAUTL_CODE,C_DEFAUTL_CODE,PYTHON_DEFAUTL_CODE } from "../../constants";
 // import problems from "../../Data/problems";
 
 const RunSubmit = () => {
@@ -64,42 +64,11 @@ const RunSubmit = () => {
     if (!editorRef.current) return;
     console.log("EditorRef: ", editorRef.current.getModel());
     if (language === "cpp") {
-      editorRef.current.setValue(`// write your code here in C++
-#include <bits/stdc++.h>
-using namespace std;
-      
-int main() {
-    int t;
-    cin >> t;
-    while(t--){
-      // write your logic here
-      
-    }
-    return 0;
-}`);
+      editorRef.current.setValue(CPP_DEFAUTL_CODE);
     } else if (language === "python") {
-      editorRef.current.setValue(`# write your code here in Python
-def main():
-t = int(input())
-for _ in range(t):
-  # write your logic here
--
-
-if __name__ == "__main__":
-  main()`);
+      editorRef.current.setValue(PYTHON_DEFAUTL_CODE);
     } else if (language === "c") {
-      editorRef.current.setValue(`// write your code here in C
-#include <stdio.h>
-      
-int main() {
-  int t;
-  scanf("%d", &t);
-  while (t--) {
-    // write your logic here
-
-  }
-  return 0;
-}`);
+      editorRef.current.setValue(C_DEFAUTL_CODE);
     }
 
     if (!editorRef.current.getModel()) {

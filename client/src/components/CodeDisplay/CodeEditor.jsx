@@ -4,7 +4,7 @@ import Editor from "@monaco-editor/react";
 import CodeEditorContext from "../../context/CodeEditorContext";
 import CodeEditorTop from "./CodeEditorTop";
 import GlobalContext from "../../context/GlobalContext";
-import { DEFAUTL_CODE } from "../../constants";
+import { CPP_DEFAUTL_CODE } from "../../constants";
 // import SubmitReport from "./sub-components/SubmitReport";
 
 const CodeEditor = ({ socket, displayName, roomId, friendText }) => {
@@ -23,7 +23,7 @@ const CodeEditor = ({ socket, displayName, roomId, friendText }) => {
 
         socket.emit("sendMessageToRoom", {
             room: roomId,
-            message: DEFAUTL_CODE,
+            message: CPP_DEFAUTL_CODE,
             from: username,
             to: username,
         });
@@ -45,7 +45,7 @@ const CodeEditor = ({ socket, displayName, roomId, friendText }) => {
                 <Editor
                     height="44vh"
                     defaultLanguage={language}
-                    defaultValue={DEFAUTL_CODE}
+                    defaultValue={CPP_DEFAUTL_CODE}
                     options={{
                         wordWrap: "on",
                     }}

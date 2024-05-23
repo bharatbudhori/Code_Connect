@@ -196,12 +196,12 @@ const CodeEnviornment = () => {
             {" "}
             {problem?.title}{" "}
           </h3>
-          {socket && (
+          {/* {socket && (
             <h1 className="text-3xl mt-1 mx-10">
               {" "}
               Number of participants : {membersList.length}
             </h1>
-          )}
+          )} */}
         </div>
         <div className="flex justify-between item-center">
           <Timer />
