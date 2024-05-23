@@ -1,14 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect, useMemo } from "react";
 import CodeEditorContext from "../../context/CodeEditorContext";
-// import problems from "../../Data/problems";
 import { useParams } from "react-router-dom";
 import GlobalContext from "../../context/GlobalContext";
+import SubmitReport from "./SubmitReport";
 
 const SubmitResut = () => {
   const { submitOutput, submitResponse } = useContext(CodeEditorContext);
   const { problems } = useContext(GlobalContext);
 
   const { problemId } = useParams();
+  const [showAccepted, setShowAccepted] = useState(false);
+  const [accepted, setAccepted] = useState(false);
+
   let problemIndex = 0;
   for (let i = 0; i < problems.length; i++) {
     if (problems[i].id === parseInt(problemId)) {
@@ -18,17 +21,12 @@ const SubmitResut = () => {
   }
   const problem = problems[problemIndex]?.submitOutput;
   const arr1 = problem.split("\n");
-  // Initialize an array with a specific length
-  let res = new Array(arr1.length);
-  res.fill(0); // Fills the array with zeros
 
   const func = () => {
+    let res = new Array(arr1.length).fill(0);
     if (!submitOutput?.output?.includes("\n")) return res;
     if (submitOutput?.output.includes("error")) return res;
     const arr2 = submitOutput.output.split("\n");
-    console.log("aaiye aapka intzaar tha");
-    console.log("arr1=" + arr1);
-    console.log("arr2=" + arr2);
     for (let i = 0; i < arr1.length; i++) {
       let str1 = arr1[i],
         str2 = arr2[i],
@@ -46,6 +44,18 @@ const SubmitResut = () => {
     }
     return res;
   };
+
+  // Use useMemo to calculate the results only when submitOutput changes
+  const resultArray = useMemo(() => func(), [submitOutput]);
+
+  // Use useEffect to check the correct count after rendering
+  useEffect(() => {
+    const correctCount = resultArray.filter(value => value === 1).length;
+    if (correctCount === 5) {
+      setAccepted(true);
+      setShowAccepted(true);
+    }
+  }, [resultArray]);
 
   return (
     <>
@@ -72,35 +82,32 @@ const SubmitResut = () => {
           </div>
         ) : (
           <>
-            <>
-              {submitOutput?.output ? (
-                func().map((value, index) => {
-                  return (
-                    <div className="">
-                      Test Case {index + 1}
-                      {value == 1 ? (
-                        <img
-                          className="w-5 h-5 m-2 inline"
-                          src="/correct.png"
-                          alt="correct"
-                        />
-                      ) : (
-                        <img
-                          className="w-5 h-5 m-2 inline"
-                          src="/wrong.png"
-                          alt="wrong"
-                        />
-                      )}
-                    </div>
-                  );
-                })
-              ) : (
-                <>No Submission Yet</>
-              )}
-            </>
+            {submitOutput?.output ? (
+              resultArray.map((value, index) => (
+                <div key={index}>
+                  Test Case {index + 1}
+                  {value === 1 ? (
+                    <img
+                      className="w-5 h-5 m-2 inline"
+                      src="/correct.png"
+                      alt="correct"
+                    />
+                  ) : (
+                    <img
+                      className="w-5 h-5 m-2 inline"
+                      src="/wrong.png"
+                      alt="wrong"
+                    />
+                  )}
+                </div>
+              ))
+            ) : (
+              <>No Submission Yet</>
+            )}
           </>
         )}
       </div>
+      <SubmitReport accepted={accepted} showAccepted={showAccepted} setShowAccepted={setShowAccepted} />
     </>
   );
 };

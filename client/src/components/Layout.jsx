@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import GlobalProvider from "../context/GlobalProvider";
@@ -10,18 +9,18 @@ import ProblemProvider from "../context/ProblemProvider";
 
 function Layout() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <ToastContainer />
       <GlobalProvider>
         <ProblemProvider>
           <Navbar />
-          {/* <div className="min-h-[74vh] mb-48"> */}
+          <div className="flex-grow">
             <Outlet />
-          {/* </div> */}
+          </div>
         </ProblemProvider>
-        {/* <Footer /> */}
       </GlobalProvider>
-    </>
+      <Footer />
+    </div>
   );
 }
 

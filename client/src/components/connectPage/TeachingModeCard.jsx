@@ -3,15 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useSocket from "../hooks/useSocket";
 import GlobalContext from "../../context/GlobalContext";
+import LoginToContinue from "../room/LoginToContinue";
 
 const TeachingModeCard = () => {
-  const { setRoomId } = useContext(GlobalContext);
+  const { setRoomId, loggedIn, setShowLoginToContinueModal } =
+    useContext(GlobalContext);
   const navigate = useNavigate();
   const connectToRoom = useSocket();
 
   const shareableLink = useRef("");
 
   const handleCreateRoom = () => {
+    if (!loggedIn) {
+      setShowLoginToContinueModal(true);
+      return;
+    }
     const newTeachingModeId = Math.random().toString(36).substring(2, 10); // Generate new room ID
     console.log(newTeachingModeId);
     setRoomId(newTeachingModeId); // Set the room ID in the global context
@@ -42,7 +48,8 @@ const TeachingModeCard = () => {
   };
 
   return (
-    <div className="rounded bg-gray-800 w-1/3 flex flex-col justify-center items-center p-4 ml-4">
+    <div className="rounded bg-gray-800 w-1/3 flex flex-col justify-center items-center p-4 ml-4 ">
+      <LoginToContinue />
       <h1 className="text-4xl">Teaching Mode</h1>
       <img
         src="/Teacher.png"

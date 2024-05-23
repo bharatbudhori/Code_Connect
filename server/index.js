@@ -150,6 +150,11 @@ app.get("/getProblems", (req, res) => {
         problems.push({ id: doc.id, ...doc.data() });
       });
       problems.sort((a, b) => a.id - b.id);
+      // simulate delay
+      // setTimeout(() => {
+      //   res.json(problems);
+      //   console.log("Problems sent", Date(Date.now()));
+      // }, 3000);
       res.json(problems);
       console.log("Problems sent", Date(Date.now()));
     });

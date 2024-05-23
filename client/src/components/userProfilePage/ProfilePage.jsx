@@ -14,7 +14,7 @@ const ProfilePage = () => {
   const { user, loading } = useUserDetails(username);
   // console.log(user);
   const { problems } = useContext(GlobalContext);
-  const { statusList, attemptedList } =
+  const { statusList, attemptedList, setAttemptedList, setStatusList } =
     useContext(ProblemContext);
   const [topics, setTopics] = useState([]);
   const [languages, setLanguages] = useState([]);
@@ -31,8 +31,7 @@ const ProfilePage = () => {
   };
 
   // console.log(username);
-  const wrongSubmissions = 15;
-  const correctSubmissions = 32;
+
   useEffect(() => {
     const topicSet = new Map();
     const topicTemp = user?.problemsSolved
@@ -66,6 +65,18 @@ const ProfilePage = () => {
     setLanguages(
       Array.from(languageSet).map(([name, count]) => ({ name, count }))
     );
+    setStatusList([]);
+    setAttemptedList([]);
+    const solvedProblems = user?.problemsSolved;
+    // console.log(solvedProblems);
+    solvedProblems?.forEach((problem) => {
+      // console.log(problem.problem.title);
+      if (problem.totalTestCases === problem.testCasesPassed) {
+        setStatusList((prev) => [...prev, problem.problem.id]);
+      } else {
+        setAttemptedList((prev) => [...prev, problem.problem.id]);
+      }
+    });
   }, [user]);
 
   // console.log(user?.problemsSolved);

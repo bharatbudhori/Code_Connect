@@ -64,12 +64,12 @@ const CodeEditor = ({ socket, displayName, roomId, friendText }) => {
                     onChange={(value, event) => {
                         if (socket == null) return;
 
-                        socket.emit("sendMessageToRoom", {
+                        socket.emit("sendMessageToRoom", {   
                             room: roomId,
                             message: value,
                             from: username,
                             to: username,
-                        });
+                        });  
                     }}
                     theme={`vs-${theme}`}
                     sx={{
