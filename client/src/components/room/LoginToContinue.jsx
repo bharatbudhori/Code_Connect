@@ -58,6 +58,8 @@ import {
 import "tailwindcss/tailwind.css";
 import GlobalContext from "../../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import loginAnimation from "./loginAnimation.json";
 
 // Create the LoginToContinue component
 const LoginToContinue = () => {
@@ -88,13 +90,18 @@ const LoginToContinue = () => {
         open={showLoginToContinueModal}
         onClose={() => setShowLoginToContinueModal(false)}
       >
-        <DialogTitle>Create Room</DialogTitle>
+         <DialogTitle className="text-center">
+          Please login / Sign-up to continue.
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please login / Sign up create to create new room.
+            <div >
+              <Lottie animationData={loginAnimation} loop={true} style={{height:350}} />
+            </div>
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+       
+        <DialogActions className="-mt-10">
           <Button onClick={() => setShowLoginToContinueModal(false)}>
             Cancel
           </Button>

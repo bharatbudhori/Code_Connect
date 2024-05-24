@@ -11,12 +11,14 @@ import GlobalContext from "../context/GlobalContext";
 import QuestionDataDisplay from "./questionDisplay/QuestionDataDisplay";
 import CreateRoomButton from "./room/createRoom/CreateRoomButton";
 import FriendCodeDrawer from "./room/createRoom/FriendCodeDrawer";
+import loadingAnimation from "./loadingAnimation.json";
 
 import Timer from "./timerComp/Timer";
+import Lottie from "lottie-react";
 
 const CodeEnviornment = () => {
   const { problemId } = useParams();
-  const { problems } = useContext(GlobalContext);
+  const { problems, problemLoading } = useContext(GlobalContext);
 
   const { socket, roomId, displayName, membersList, friendText } =
     useContext(GlobalContext);
@@ -35,14 +37,14 @@ const CodeEnviornment = () => {
       // horizontal direction
       (function resizableX() {
         const resizer = document.querySelector(".resizer-x");
-        resizer.addEventListener("mousedown", onmousedown);
-        resizer.addEventListener("touchstart", ontouchstart);
+        resizer?.addEventListener("mousedown", onmousedown);
+        resizer?.addEventListener("touchstart", ontouchstart);
 
         // for mobile
         function ontouchstart(e) {
           e.preventDefault();
-          resizer.addEventListener("touchmove", ontouchmove);
-          resizer.addEventListener("touchend", ontouchend);
+          resizer?.addEventListener("touchmove", ontouchmove);
+          resizer?.addEventListener("touchend", ontouchend);
         }
         function ontouchmove(e) {
           e.preventDefault();
@@ -74,8 +76,8 @@ const CodeEnviornment = () => {
         // for desktop
         function onmousedown(e) {
           e.preventDefault();
-          document.addEventListener("mousemove", onmousemove);
-          document.addEventListener("mouseup", onmouseup);
+          document?.addEventListener("mousemove", onmousemove);
+          document?.addEventListener("mouseup", onmouseup);
         }
         function onmousemove(e) {
           e.preventDefault();
@@ -108,14 +110,14 @@ const CodeEnviornment = () => {
       // vertical direction
       // (function resizableY() {
       //   const resizer = document.querySelector(".resizer-y");
-      //   resizer.addEventListener("mousedown", onmousedown);
-      //   resizer.addEventListener("touchstart", ontouchstart);
+      //   resizer?.addEventListener("mousedown", onmousedown);
+      //   resizer?.addEventListener("touchstart", ontouchstart);
 
       //   // for mobile
       //   function ontouchstart(e) {
       //     e.preventDefault();
-      //     resizer.addEventListener("touchmove", ontouchmove);
-      //     resizer.addEventListener("touchend", ontouchend);
+      //     resizer?.addEventListener("touchmove", ontouchmove);
+      //     resizer?.addEventListener("touchend", ontouchend);
       //   }
       //   function ontouchmove(e) {
       //     e.preventDefault();
@@ -147,8 +149,8 @@ const CodeEnviornment = () => {
       //   // for desktop
       //   function onmousedown(e) {
       //     e.preventDefault();
-      //     document.addEventListener("mousemove", onmousemove);
-      //     document.addEventListener("mouseup", onmouseup);
+      //     document?.addEventListener("mousemove", onmousemove);
+      //     document?.addEventListener("mouseup", onmouseup);
       //   }
       //   function onmousemove(e) {
       //     e.preventDefault();
@@ -180,6 +182,20 @@ const CodeEnviornment = () => {
     })();
   }, []);
 
+  if (problemLoading) {
+    return (
+      <div className="h-screen flex flex-col justify-center items-center">
+        <Lottie
+          animationData={loadingAnimation}
+          loop={true}
+          style={{ height: 350 }}
+        />
+        <h1 className="text-2xl mt-4 tracking-widest text-gray-200 font-semibold">
+          Loading...
+        </h1>
+      </div>
+    );
+  }
   return (
     <>
       <CreateRoomButton className="absolute right-0  p-1 px-4" />

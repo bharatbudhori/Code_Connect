@@ -6,7 +6,7 @@ const ConnectHomePage = () => {
   return (
     <>
       
-      <div className="flex justify-center items-center my-4">
+      <div className="flex justify-center  my-4">
         <TeachingModeCard/>
         <GroupStudyModeCard/>
       </div>

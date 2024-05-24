@@ -21,6 +21,7 @@ const GlobalProvider = ({ children }) => {
     localStorage.getItem("username") || ""
   );
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
+  const [problemLoading, setProblemLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,6 +91,8 @@ const GlobalProvider = ({ children }) => {
     setMemberIndex,
     roomAdmin,
     setRoomAdmin,
+    problemLoading,
+    setProblemLoading,
   };
 
   return (

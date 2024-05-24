@@ -7,6 +7,7 @@ import Lottie from "lottie-react";
 // import groovyWalkAnimation from "./groovyWalk.json";
 import animation from "./animation.json";
 import ShareModal from "./ShareModal";
+import LoginToContinue from "../../components/room/LoginToContinue";
 
 function WaitingRoom() {
   const { membersList, loggedIn, setRoomId, roomAdmin, username } =
@@ -22,22 +23,26 @@ function WaitingRoom() {
     console.log("useEffect called in waiting room", loggedIn, roomId);
     setRoomId(roomId);
     if (loggedIn) {
-      var mode = window.location.href.split("=")[1];;
+      var mode = window.location.href.split("=")[1];
       connectToRoom(mode);
       console.log("connected to room");
     }
   }, [loggedIn]);
-
+  const { showLoginToContinueModal, setShowLoginToContinueModal } =
+    useContext(GlobalContext);
   if (!loggedIn) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-2xl font-bold">Please login to continue</div>
-      </div>
+      // <div className="flex items-center justify-center h-screen">
+      //   <div className="text-2xl font-bold">Please login to continue</div>
+      // </div>
+      setShowLoginToContinueModal(true), (<LoginToContinue />)
     );
   }
   return (
     <>
+    <ShareModal />
       <div className="flex bg-gray">
+      
         <aside className="h-screen bg-gray sticky top-0 border-r-2 p-6 pt-10 whitespace-nowrap z-10 closed shadow-xl w-1/3">
           <div className="mb-10 flex items-center justify-center underline underline-offset-2 text-xl ">
             Users
@@ -112,9 +117,10 @@ function WaitingRoom() {
               You are the admin of this room
               <main className="px-6 py-8 lg:px-8 bg-gray flex flex-col gap-6 ">
                 Select a Question
+                
                 <ProblemSet />
               </main>
-              <ShareModal />
+              
             </div>
           ) : (
             <>
@@ -130,11 +136,11 @@ function WaitingRoom() {
                   />
                 </div>
               </div>
-              
             </>
           )}
         </div>
       </div>
+      
     </>
   );
 }
