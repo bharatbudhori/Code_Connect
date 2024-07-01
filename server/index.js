@@ -19,6 +19,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "build")));
 
+
+
 app.post("/signup", (req, res) => {
   console.log("Received signup request:", req.body);
   const { email, password } = req.body;
