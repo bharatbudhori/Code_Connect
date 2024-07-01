@@ -53,7 +53,7 @@ const JoinRoom = () => {
       return;
     }
 
-    const newSocket = io("http://code-dual.vercel.app"); // Replace with your server address
+    const newSocket = io("https://code-dual.vercel.app"); // Replace with your server address
     setSocket(newSocket);
 
     // Emit 'joinRoom' event to the server with display name and room ID
