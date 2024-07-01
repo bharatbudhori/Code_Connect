@@ -17,12 +17,11 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.resolve(__dirname, "build")));
+// app.use(express.static(path.resolve(__dirname, "build")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "build", "index.html"));
-}
-);
+  res.send("Hello World");
+});
 
 app.post("/signup", (req, res) => {
   console.log("Received signup request:", req.body);
@@ -330,7 +329,6 @@ io.on("connection", function (socket) {
       // Set the room mode for the joined room
       roomModeMap.set(roomId, mode);
 
-
       // Increment the user count for the joined room
       if (roomUsersCount.has(roomId)) {
         if (!roomUsersCount.get(roomId).includes(username)) {
@@ -363,7 +361,7 @@ io.on("connection", function (socket) {
     console.log(`Selected question in room ${room} is ${questionId}`);
     roomQuestionMap.set(room, questionId);
     var roomMode = roomModeMap.get(room) ?? "GSMode";
-    io.to(room).emit("questionSelected", {questionId, roomMode});
+    io.to(room).emit("questionSelected", { questionId, roomMode });
   });
 
   // Handle sending messages to the room
