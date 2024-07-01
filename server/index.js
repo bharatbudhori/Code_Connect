@@ -23,6 +23,8 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
+
+
 app.post("/signup", (req, res) => {
   console.log("Received signup request:", req.body);
   const { email, password } = req.body;
