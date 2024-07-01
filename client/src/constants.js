@@ -1,6 +1,6 @@
-export const serverUrl = 'http://localhost:5000/';
+export const serverUrl = 'https://code-dual.vercel.app/';
 
-export const API_URL = 'http://localhost:5000';
+export const API_URL = 'https://code-dual.vercel.app';
 
 export const tempCode = `#include <iostream>
 
