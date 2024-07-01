@@ -19,6 +19,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "build")));
 
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+}
+);
+
 app.post("/signup", (req, res) => {
   console.log("Received signup request:", req.body);
   const { email, password } = req.body;
